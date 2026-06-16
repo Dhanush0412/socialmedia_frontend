@@ -16,15 +16,15 @@ function App() {
     <Routes>
 
       {/* Initial Page */}
-       <Route
-path="/"
-element={<Home />}
-/>
-      
       <Route
-path="/profile"
-element={<Profile />}
-/>
+        path="/"
+        element={<Home />}
+      />
+
+      <Route
+        path="/profile"
+        element={<Profile />}
+      />
 
       <Route
         path="/login"

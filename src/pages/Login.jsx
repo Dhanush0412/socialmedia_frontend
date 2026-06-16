@@ -1,4 +1,4 @@
-import "../Auth.css";
+import "../css/login.css";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -118,24 +118,41 @@ function Login() {
     <div className="container">
       <div className="auth-card">
 
+       
+
+         
         <div className="auth-image">
 
-          <div className="overlay">
+  <div className="chat-logo">
 
-            <h1>
-              Welcome Back
-            </h1>
+    <div className="logo-circle">
+      💬
+    </div>
 
-            <p>
-              Login and
-              continue
-              chatting with
-              friends.
-            </p>
+    <div className="sound-wave">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-          </div>
+  </div>
 
-        </div>
+  <div className="overlay">
+
+    <h1>
+      Welcome Back
+    </h1>
+
+    <p>
+      Login and continue
+      chatting with friends.
+    </p>
+
+  </div>
+
+</div>
 
         <div className="form-section">
 

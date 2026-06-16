@@ -1,4 +1,5 @@
-import "../Auth.css";
+import "../css/ForgotPassword.css";
+import { URL } from "../../config";
 
 import axios from "axios";
 
@@ -49,91 +50,61 @@ function ForgotPassword() {
   } =
     useForgotPassword();
 
-  const onSubmit =
-    async (
-      data
-    ) => {
+ 
+ const onSubmit = (data)=>{
 
-      try {
 
-        const res =
-          await axios.get(
-            "https://6985ac756964f10bf2540df1.mockapi.io/user"
-          );
+    mutate(
+        {
 
-        const user =
-          res.data.find(
-            (
-              item
-            ) =>
-              item.email ===
-                data.login ||
+            login:data.login,
 
-              item.phone ===
-                data.login
-          );
+            password:data.password,
 
-        if (
-          !user
-        ) {
-          toast.error(
-            "User not found"
-          );
+            confirmPassword:data.confirmPassword
 
-          return;
-        }
+        },
 
-        mutate(
-          {
-            id:
-              user.id,
+        {
 
-            password:
-              data.password,
-          },
+            onSuccess:(response)=>{
 
-          {
-
-            onSuccess:
-              () => {
 
                 toast.success(
-                  "Password Updated 🎉"
+                    "Password Updated Successfully 🎉"
                 );
 
-                navigate(
-                  "/login"
-                );
 
-              },
+                navigate("/login");
 
-            onError:
-              () => {
+
+            },
+
+
+            onError:(error)=>{
+
 
                 toast.error(
-                  "Update Failed"
+
+                    error?.response?.data ||
+                    "Password update failed"
+
                 );
 
-              },
 
-          }
-        );
+            }
 
-      }
+        }
 
-      catch {
+    );
 
-        toast.error(
-          "Something went wrong"
-        );
 
-      }
-
-    };
+};
+      
 
   return (
 
-    <div className="container">
+    <div className="forgot-container">
 
       <div className="forgot-card">
 
@@ -163,7 +134,7 @@ function ForgotPassword() {
           </h2>
 
           <form
-            className="form"
+            className="forgot-form"
             onSubmit={
               handleSubmit(
                 onSubmit
@@ -180,7 +151,7 @@ function ForgotPassword() {
               }
             />
 
-            <p className="error">
+            <p className="forgot-error">
               {
                 errors.login
                   ?.message
@@ -197,7 +168,7 @@ function ForgotPassword() {
               }
             />
 
-            <p className="error">
+            <p className="forgot-error">
               {
                 errors.password
                   ?.message
@@ -214,7 +185,7 @@ function ForgotPassword() {
               }
             />
 
-            <p className="error">
+            <p className="forgot-error">
               {
                 errors
                   .confirmPassword
@@ -222,7 +193,7 @@ function ForgotPassword() {
               }
             </p>
 
-            <button
+            <button className="forgot-button"
               disabled={
                 isPending
               }
@@ -236,7 +207,7 @@ function ForgotPassword() {
 
           </form>
 
-          <div className="link">
+          <div className="forgot-link">
 
             <Link to="/login">
 

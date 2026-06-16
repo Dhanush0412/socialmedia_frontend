@@ -1,0 +1,619 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    font-family:Inter,Arial,sans-serif;
+}
+
+
+/* Main Background */
+
+.register-container{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #0b141a,
+        #17202a,
+        #075e54
+    );
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+/* Telegram Chat Pattern */
+
+.register-container::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+
+    background-image:
+
+    radial-gradient(
+        rgba(255,255,255,.08) 1px,
+        transparent 1px
+    );
+
+
+    background-size:
+    25px 25px;
+
+
+    opacity:.3;
+
+}
+
+
+
+/* Register Card */
+
+.register-card{
+
+
+    width:950px;
+
+    height:650px;
+
+
+    display:flex;
+
+
+    overflow:hidden;
+
+
+    border-radius:28px;
+
+
+    position:relative;
+
+
+    z-index:2;
+
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+
+
+    backdrop-filter:
+    blur(20px);
+
+
+    box-shadow:
+
+    0 25px 60px
+    rgba(
+        0,
+        0,
+        0,
+        .5
+    );
+
+}
+
+
+
+/* Left Image */
+
+.register-image{
+
+
+    flex:1;
+
+
+    position:relative;
+
+
+    background:
+
+
+    linear-gradient(
+        rgba(0,0,0,.25),
+        rgba(0,0,0,.85)
+    ),
+
+    url(
+    "https://images.unsplash.com/photo-1614680376593-902f74cf0d41"
+    );
+
+
+    background-size:cover;
+
+
+    background-position:center;
+
+}
+
+
+
+/* Left Content */
+
+.register-overlay{
+
+
+    position:absolute;
+
+
+    inset:0;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    justify-content:end;
+
+
+    padding:45px;
+
+
+    color:white;
+
+
+    background:
+
+    linear-gradient(
+        transparent,
+        rgba(0,0,0,.85)
+    );
+
+
+}
+
+
+
+.register-overlay h1{
+
+
+    font-size:42px;
+
+
+    font-weight:800;
+
+
+    margin-bottom:15px;
+
+
+}
+
+
+
+.register-overlay p{
+
+
+    font-size:17px;
+
+
+    line-height:1.7;
+
+
+    color:#d1d5db;
+
+
+    max-width:360px;
+
+}
+
+
+
+/* Feature Cards */
+
+
+.feature-box{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:12px;
+
+
+    margin-top:25px;
+
+
+}
+
+
+
+.feature-box div{
+
+
+    width:240px;
+
+
+    padding:12px 16px;
+
+
+    border-radius:14px;
+
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .12
+    );
+
+
+    backdrop-filter:
+    blur(10px);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.feature-box div:hover{
+
+
+    transform:
+    translateX(8px);
+
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .2
+    );
+
+
+}
+
+
+
+
+/* Form Section */
+
+
+.register-form-section{
+
+
+    flex:1;
+
+
+    padding:45px;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    justify-content:center;
+
+
+    background:
+
+    rgba(
+        15,
+        23,
+        42,
+        .65
+    );
+
+}
+
+
+
+.register-form-section h2{
+
+
+    text-align:center;
+
+
+    color:white;
+
+
+    font-size:32px;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+/* Form */
+
+
+.register-form{
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:8px;
+
+
+}
+
+
+
+.register-form input{
+
+
+    height:48px;
+
+
+    padding:0 16px;
+
+
+    border:none;
+
+
+    outline:none;
+
+
+    border-radius:14px;
+
+
+    color:white;
+
+
+    font-size:15px;
+
+
+    background:
+
+    rgba(
+        255,
+        255,
+        255,
+        .12
+    );
+
+
+}
+
+
+
+.register-form input::placeholder{
+
+
+    color:#cbd5e1;
+
+
+}
+
+
+
+.register-form input:focus{
+
+
+    border:
+
+    1px solid #38bdf8;
+
+
+}
+
+
+
+/* Error */
+
+.register-error,
+.error{
+
+
+    color:#fb7185;
+
+
+    font-size:12px;
+
+
+    margin-top:-5px;
+
+
+}
+
+
+
+/* Button */
+
+
+.register-button{
+
+
+    height:50px;
+
+
+    margin-top:10px;
+
+
+    border:none;
+
+
+    border-radius:14px;
+
+
+    cursor:pointer;
+
+
+    font-size:17px;
+
+
+    font-weight:600;
+
+
+    color:white;
+
+
+    background:
+
+
+    linear-gradient(
+        90deg,
+        #0ea5e9,
+        #2563eb
+    );
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.register-button:hover{
+
+
+    transform:
+
+    translateY(-3px);
+
+
+}
+
+
+
+/* Login Link */
+
+
+.link{
+
+
+    text-align:center;
+
+
+    margin-top:12px;
+
+
+}
+
+
+
+.link a{
+
+
+    color:#38bdf8;
+
+
+    text-decoration:none;
+
+
+}
+
+
+
+.link a:hover{
+
+
+    color:white;
+
+
+}
+
+
+
+
+/* Responsive */
+
+
+@media(max-width:768px){
+
+
+.register-card{
+
+
+    width:95%;
+
+
+    height:auto;
+
+
+    flex-direction:column;
+
+
+}
+
+
+
+.register-image{
+
+
+    height:300px;
+
+
+}
+
+
+
+.register-form-section{
+
+
+    padding:30px;
+
+
+}
+
+
+
+.register-overlay{
+
+
+    padding:25px;
+
+
+}
+
+
+
+.register-overlay h1{
+
+
+    font-size:32px;
+
+
+}
+
+
+
+}

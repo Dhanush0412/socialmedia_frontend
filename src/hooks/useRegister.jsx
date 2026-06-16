@@ -1,18 +1,24 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { URL } from "../../config";
 
-const registerUser = async (userData) => {
-  const response = await axios.post(
-    // "http://localhost:5000/user/signup",
-    "https://6985ac756964f10bf2540df1.mockapi.io/user",
-    userData
-  );
+// const Api="http://localhost:5000"
+const registerUser = async(userData)=>{
 
-  return response.data;
+    const response = await axios.post(
+        `${URL}/user/signup`,
+        userData
+    );
+
+    return response.data;
 };
 
-export const useRegister = () => {
-  return useMutation({
-    mutationFn: registerUser,
-  });
+
+
+export const useRegister = ()=>{
+
+    return useMutation({
+        mutationFn: registerUser,
+    });
+
 };

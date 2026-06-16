@@ -1,32 +1,39 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { URL } from "../../config";
 
-const updatePassword =
-async ({ id, password }) => {
 
-const response =
-await axios.put(
+const updatePassword = async (data)=>{
 
-`https://6985ac756964f10bf2540df1.mockapi.io/user/${id}`,
+    const response = await axios.put(
 
-{
-password
-}
+        `${URL}/user/forgot`,
 
-);
+        {
+            login:data.login,
 
-return response.data;
+            newpassword:data.password,
+
+            confirmpassword:data.confirmPassword
+        }
+
+    );
+
+
+    return response.data;
 
 };
 
-export const useForgotPassword =
-() => {
 
-return useMutation({
 
-mutationFn:
-updatePassword,
+export const useForgotPassword = ()=>{
 
-});
+
+    return useMutation({
+
+        mutationFn:updatePassword
+
+    });
+
 
 };

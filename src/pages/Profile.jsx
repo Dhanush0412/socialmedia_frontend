@@ -1,80 +1,132 @@
-import "../Profile.css";
+import "../css/Profile.css";
 
-import { useForm } from "react-hook-form";
+import {
+  useForm
+} from "react-hook-form";
 
-import { useSelector } from "react-redux";
+import {
+  useSelector
+} from "react-redux";
 
-import { toast } from "react-toastify";
+import {
+  toast
+} from "react-toastify";
 
-import axios from "axios";
+import {
+  useCreateProfile
+} from "../hooks/useCreateProfile";
 
-function Profile() {
+import {
+  useFriends
+} from "../hooks/useFriends";
+
+import { useNavigate } from "react-router-dom";
+function Profile(){
+
 
 const auth =
 useSelector(
-(state)=>
-state.auth
+(state)=>state.auth.user
 );
+const navigate=useNavigate();
+
+
+const userid =
+auth?.id;
+
+
 
 const {
 register,
 handleSubmit,
 formState:{
-errors,
-},
-}=
-useForm();
+errors
+}
 
-const onSubmit =
-async(data)=>{
+}=useForm();
 
-try{
+
+
+const {
+mutate,
+isPending
+
+}=useCreateProfile();
+
+
+
+const {
+data:friends
+
+}=useFriends(userid);
+
+
+
+
+
+const onSubmit=(data)=>{
+
 
 const payload={
 
-userid:
-auth?.id
-||
-auth?.userid
-||
-"USER_ID",
+userid,
+
+username:
+auth?.username,
+
 
 bio:
-data.bio,
+data.bio
 
-role:
-data.role,
 
 };
 
-await axios.post(
-"https://6985ac756964f10bf2540df1.mockapi.io/profile",
-payload
-);
+
+
+mutate(payload,{
+
+onSuccess:()=>{
 
 toast.success(
-"Profile Saved 🎉"
+"Profile Updated "
 );
 
-}
+},
 
-catch{
+
+onError:()=>{
 
 toast.error(
-"Failed to save profile"
+"Profile update failed"
 );
 
 }
 
+});
+
+
 };
+
+
+const handlelogout=()=>{
+    navigate("/login")
+}
+
 
 return(
 
 <div className="profile-page">
 
+
 <div className="profile-card">
 
+
+
+{/* PROFILE HEADER */}
+
+
 <div className="profile-header">
+
 
 <div className="avatar">
 
@@ -82,149 +134,204 @@ return(
 auth?.username
 ?.charAt(0)
 ?.toUpperCase()
-
 ||
-
 "U"
 }
 
 </div>
 
+
+
 <h1>
 
-Profile Setup
+{
+auth?.username
+}
 
 </h1>
 
+
 <p>
-
 Complete your profile
-to personalize your account
-
 </p>
+
 
 </div>
 
+
+
+
+
+{/* PROFILE FORM */}
+
+
 <form
+
 className="profile-form"
 
 onSubmit={
-handleSubmit(
-onSubmit
-)
+handleSubmit(onSubmit)
 }
+
 >
 
-<div className="input-group">
+
 
 <label>
-
-User ID
-
+Username
 </label>
+
 
 <input
 
 value={
-auth?.id
-||
-auth?.userid
-||
-"USER_ID"
+auth?.username || ""
 }
 
 readOnly
 
 />
 
-</div>
 
-<div className="input-group">
 
-<label>
 
-Role
-
-</label>
-
-<input
-
-placeholder=
-"Frontend Developer"
-
-{
-...register(
-"role",
-{
-required:
-"Role is required"
-}
-)
-}
-
-/>
-
-<p className="error">
-
-{
-errors.role
-?.message
-}
-
-</p>
-
-</div>
-
-<div className="input-group">
 
 <label>
-
 Bio
-
 </label>
+
 
 <textarea
 
-placeholder=
-"Node.js Developer"
 
-{
-...register(
+
+{...register(
 "bio",
 {
 required:
 "Bio is required"
 }
-)
-}
+)}
 
-/>
+>
+
+
+</textarea>
+
 
 <p className="error">
 
 {
-errors.bio
-?.message
+errors.bio?.message
 }
 
 </p>
 
-</div>
 
-<button>
 
-Save Profile
+
+<button
+disabled={isPending}
+>
+
+{
+isPending
+?
+"Saving..."
+:
+"Save Profile"
+}
 
 </button>
 
+
+<button onClick={handlelogout}>logout</button>
 </form>
 
-</div>
+
+
+
+
+{/* CONNECTIONS SECTION */}
+
+
+
+<div className="connection-section">
+
+
+<h2>
+Your Connections
+</h2>
+
+
+
+<div className="profile-stats">
+
+
+<div>
+
+<h2>
+{
+friends?.length || 0
+}
+</h2>
+
+<span>
+Friends
+</span>
 
 </div>
+
+
+
+<div>
+
+<h2>
+0
+</h2>
+
+<span>
+Posts
+</span>
+
+</div>
+
+
+
+
+<div>
+
+<h2>
+0
+</h2>
+
+<span>
+Groups
+</span>
+
+</div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
 
 );
 
+
 }
+
 
 export default Profile;

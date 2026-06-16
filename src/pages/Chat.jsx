@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useGetUsers } from "../hooks/useGetUsers";
 
 function Chat() {
 
