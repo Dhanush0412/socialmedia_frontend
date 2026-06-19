@@ -1,25 +1,16 @@
 import "../css/Home.css";
 
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Home(){
-
-  return(
-
+function Home() {
+  return (
     <div className="home-page">
-
       <div className="home-card">
 
         <div className="home-content">
-
           <h1>
             Welcome to
-            <span>
-              {" "}
-              Chat Connect 💬
-            </span>
+            <span>{" "}Chat Connect 💬</span>
           </h1>
 
           <p>
@@ -30,7 +21,6 @@ function Home(){
           </p>
 
           <div className="home-buttons">
-
             <Link
               to="/login"
               className="login-link"
@@ -44,14 +34,10 @@ function Home(){
             >
               Create Account
             </Link>
-
           </div>
-
         </div>
 
-
         <div className="home-image">
-
           <div className="chat-box">
 
             <div className="message received">
@@ -67,16 +53,11 @@ function Home(){
             </div>
 
           </div>
-
         </div>
 
-
       </div>
-
     </div>
-
   );
-
 }
 
 export default Home;
