@@ -1,38 +1,17 @@
 import "../css/login.css";
-
+import PandaLogo from "../assets/Panda.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { loginSchema } from "../validation/loginSchema";
-
-import {
-  useNavigate,
-  Link,
-} from "react-router-dom";
-
-import {
-  useDispatch,
-} from "react-redux";
- 
-import {
-  loginSuccess,
-} from "../redux/authSlice";
-
-import {
-  toast,
-} from "react-toastify";
-
-import {
-  useLogin,
-} from "../hooks/useLogin";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/authSlice";
+import { toast } from "react-toastify";
+import { useLogin } from "../hooks/useLogin";
 
 function Login() {
-  const dispatch =
-    useDispatch();
-
-  const navigate =
-    useNavigate();
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -46,113 +25,92 @@ function Login() {
       ),
   });
 
-  const {
-    mutate,
-    isPending,
-  } = useLogin();
+  const { mutate, isPending } = useLogin();
 
-  const onSubmit = (
-    data
-  ) => {
-    const payload = {
-      login:
-        data.login,
-      password:
-        data.password,
-    };
-
-    mutate(payload, {
-      onSuccess:
-        (
-          response
-        ) => {
-          if (
-            response
-              ?.success ||
-            response
-          ) {
-            dispatch(
-              loginSuccess(
-                response
-              )
-            );
-
-            if (
-              response?.token
-            ) {
-              localStorage.setItem(
-                "token",
-                response.token
-              );
-            }
-
-            toast.success(
-              `Logged-in Successfully`
-            );
-
-            navigate(
-              "/Profile"
-            );
-          }
-        },
-
-      onError:
-        (
-          error
-        ) => {
-          const message =
-            error
-              ?.response
-              ?.data
-              ?.message ||
-            "User not found or invalid password";
-
-          toast.error(
-            message
-          );
-        },
-    });
+  const onSubmit = (data) => {
+  const payload = {
+    login: data.login,
+    password: data.password,
   };
+
+  mutate(payload, {
+    onSuccess: (response) => {
+      dispatch(loginSuccess(response));
+      localStorage.setItem(
+        "userid",
+        response.userid
+      );
+
+      localStorage.setItem(
+    "profileid",
+    response.profileid || ""
+  );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          username: response.username,
+          email: response.email,
+          phone: response.phone,
+        })
+      );
+
+      toast.success(
+        "Logged-in Successfully"
+      );
+
+      if (response.profileexists) {
+    navigate("/dashboard");
+  } else {
+    navigate("/profile");
+  }
+    },
+
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        "User not found or invalid password";
+
+      toast.error(message);
+    },
+  });
+};  
 
   return (
     <div className="container">
       <div className="auth-card">
-
-       
-
-         
         <div className="auth-image">
 
-  <div className="chat-logo">
+          <div className="chat-logo">
 
-    <div className="logo-circle">
-      💬
-    </div>
+            <div className="logo-circle">
+              💬
+            </div>
 
-    <div className="sound-wave">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+            <div className="sound-wave">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
 
-  </div>
+          </div>
 
-  <div className="overlay">
+          <div className="overlay">
 
-    <h1>
-      Welcome Back
-    </h1>
+            <h1>
+              Welcome Back
+            </h1>
 
-    <p>
-      Login and continue
-      chatting with friends.
-    </p>
+            <p>
+              Login and continue
+              chatting with friends.
+            </p>
 
-  </div>
+          </div>
 
-</div>
+        </div>
 
         <div className="form-section">
 

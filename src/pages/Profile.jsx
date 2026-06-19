@@ -1,337 +1,253 @@
 import "../css/Profile.css";
 
-import {
-  useForm
-} from "react-hook-form";
-
-import {
-  useSelector
-} from "react-redux";
-
-import {
-  toast
-} from "react-toastify";
-
-import {
-  useCreateProfile
-} from "../hooks/useCreateProfile";
-
-import {
-  useFriends
-} from "../hooks/useFriends";
-
+import { FaUserCircle, FaEdit } from "react-icons/fa";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-function Profile(){
+import { useCreateProfile } from "../hooks/useProfile";
+import { toast } from "react-toastify";
+import PandaLogo from "../assets/panda 2.png";
 
+function Profile() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
 
-const auth =
-useSelector(
-(state)=>state.auth.user
-);
-const navigate=useNavigate();
+  const [previewImage, setPreviewImage] = useState(null);
 
+  const [showPopup, setShowPopup] = useState(false);
 
-const userid =
-auth?.id;
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
 
+    if (file) {
+      setProfileImage(file);
 
+      const imageUrl =
+        URL.createObjectURL(file);
 
-const {
-register,
-handleSubmit,
-formState:{
-errors
-}
+      setPreviewImage(imageUrl);
+      setShowPopup(true);
+    }
+  };
 
-}=useForm();
+  const handleUpload = () => {
+    // setProfileImage(previewImage);
+    setShowPopup(false);
+  };
 
+  const handleCancel = () => {
+    // setPreviewImage(null);
+    setShowPopup(false);
+  };
 
+  // const saveProfile = () => {
+  //   const profileData = {
+  //     bio,
+  //     profileImage,
+  //   };
 
-const {
-mutate,
-isPending
+  //   localStorage.setItem(
+  //     "profile",
+  //     JSON.stringify(profileData)
+  //   );
 
-}=useCreateProfile();
+  //   alert(
+  //     "Profile Created Successfully!"
+  //   );
 
+  //   navigate("/login");
+  // };
 
+const saveProfile = () => {
+  const userid = localStorage.getItem("userid");
 
-const {
-data:friends
+  if (!userid) {
+    toast.error("User ID not found");
+    return;
+  }
 
-}=useFriends(userid);
+  const formData = new FormData();
 
+  formData.append("userid", userid);
+  formData.append("bio", bio);
 
+  if (profileImage) {
+    formData.append("profilepic", profileImage);
+  }
 
+  mutate(formData, {
+    onSuccess: (data) => {
+  console.log("Profile Response:", data);
 
+  if (data.profileid) {
+    localStorage.setItem(
+      "profileid",
+      data.profileid
+    );
+  }
 
-const onSubmit=(data)=>{
+  toast.success(
+    "Profile Created Successfully"
+  );
 
-
-const payload={
-
-userid,
-
-username:
-auth?.username,
-
-
-bio:
-data.bio
-
-
-};
-
-
-
-mutate(payload,{
-
-onSuccess:()=>{
-
-toast.success(
-"Profile Updated "
-);
-
+  navigate("/dashboard");
 },
 
+    onError: (error) => {
+      console.error(error);
 
-onError:()=>{
-
-toast.error(
-"Profile update failed"
-);
-
-}
-
-});
-
-
+      toast.error(
+        error?.response?.data?.message ||
+        "Profile creation failed"
+      );
+    },
+  });
 };
 
+  const { mutate, isPending } =
+    useCreateProfile();
 
-const handlelogout=()=>{
-    navigate("/login")
+  useEffect(() => {
+    const user = JSON.parse(
+      localStorage.getItem("user")
+    );
+
+    if (user) {
+      setUsername(user.username);
+    }
+  }, []);
+
+  return (
+    <div className="profile-page">
+
+      {/* LEFT SIDE */}
+      <div className="profile-left">
+
+        <img
+          src={PandaLogo}
+          alt="Panda"
+          className="panda-logo"
+        />
+
+      </div>
+
+      {/* RIGHT SIDE */}
+      <div className="profile-right">
+
+        <div className="profile-content">
+
+          <div className="profile-header">
+
+            <div className="profile-image-wrapper">
+
+              <div className="profile-image">
+
+                {previewImage ? (
+                  <img
+                    src={previewImage}
+                    alt="Profile"
+                  />
+                ) : (
+                  <FaUserCircle />
+                )}
+
+              </div>
+
+              <label
+                htmlFor="imageUpload"
+                className="image-edit-icon"
+              >
+                <FaEdit />
+              </label>
+
+              <input
+                id="imageUpload"
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageSelect}
+              />
+
+            </div>
+
+            <div className="username-section">
+              <h1>{username || "User"}</h1>
+            </div>
+
+          </div>
+
+          {/* BIO */}
+
+          <div className="bio-box">
+
+            <div className="bio-title">
+              <h2>Bio</h2>
+            </div>
+
+            <textarea
+              placeholder="Write something about yourself..."
+              value={bio}
+              onChange={(e) =>
+                setBio(e.target.value)
+              }
+            />
+
+            <button
+              className="save-profile-btn"
+              onClick={saveProfile}
+            >
+              Save Profile
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* IMAGE POPUP */}
+
+      {showPopup && (
+        <div className="popup-overlay">
+
+          <div className="popup-box">
+
+            <h3>
+              Profile Picture Preview
+            </h3>
+
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="popup-preview"
+            />
+
+            <div className="popup-buttons">
+
+              <button
+                className="upload-btn"
+                onClick={handleUpload}
+              >
+                Upload
+              </button>
+
+              <button
+                className="cancel-btn"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
+    </div>
+  );
 }
-
-
-return(
-
-<div className="profile-page">
-
-
-<div className="profile-card">
-
-
-
-{/* PROFILE HEADER */}
-
-
-<div className="profile-header">
-
-
-<div className="avatar">
-
-{
-auth?.username
-?.charAt(0)
-?.toUpperCase()
-||
-"U"
-}
-
-</div>
-
-
-
-<h1>
-
-{
-auth?.username
-}
-
-</h1>
-
-
-<p>
-Complete your profile
-</p>
-
-
-</div>
-
-
-
-
-
-{/* PROFILE FORM */}
-
-
-<form
-
-className="profile-form"
-
-onSubmit={
-handleSubmit(onSubmit)
-}
-
->
-
-
-
-<label>
-Username
-</label>
-
-
-<input
-
-value={
-auth?.username || ""
-}
-
-readOnly
-
-/>
-
-
-
-
-
-<label>
-Bio
-</label>
-
-
-<textarea
-
-
-
-{...register(
-"bio",
-{
-required:
-"Bio is required"
-}
-)}
-
->
-
-
-</textarea>
-
-
-<p className="error">
-
-{
-errors.bio?.message
-}
-
-</p>
-
-
-
-
-<button
-disabled={isPending}
->
-
-{
-isPending
-?
-"Saving..."
-:
-"Save Profile"
-}
-
-</button>
-
-
-<button onClick={handlelogout}>logout</button>
-</form>
-
-
-
-
-
-{/* CONNECTIONS SECTION */}
-
-
-
-<div className="connection-section">
-
-
-<h2>
-Your Connections
-</h2>
-
-
-
-<div className="profile-stats">
-
-
-<div>
-
-<h2>
-{
-friends?.length || 0
-}
-</h2>
-
-<span>
-Friends
-</span>
-
-</div>
-
-
-
-<div>
-
-<h2>
-0
-</h2>
-
-<span>
-Posts
-</span>
-
-</div>
-
-
-
-
-<div>
-
-<h2>
-0
-</h2>
-
-<span>
-Groups
-</span>
-
-</div>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-</div>
-
-
-);
-
-
-}
-
 
 export default Profile;
