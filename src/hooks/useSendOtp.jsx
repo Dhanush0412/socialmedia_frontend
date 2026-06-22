@@ -11,14 +11,9 @@ data
 );
 
 return response.data;
-
 }
-
-
 export const useSendOtp=()=>{
-
 return useMutation({
-
 mutationFn:sendOtp
 
 });
