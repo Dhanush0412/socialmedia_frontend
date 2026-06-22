@@ -1,0 +1,149 @@
+.sidebar {
+  width: 240px;
+  height: 100vh;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  background: linear-gradient(
+    180deg,
+    #fffdf9,
+    #fff6ea
+  );
+
+  border-right: 1px solid #ffd9b3;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 18px 14px;
+}
+
+/* Logo */
+
+.sidebar-logo {
+  text-align: center;
+
+  color: #f68b1f;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  margin-bottom: 25px;
+}
+
+/* Menu */
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu li {
+  margin-bottom: 6px;
+}
+
+/* Nav Link */
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+
+  color: #555;
+
+  padding: 12px 14px;
+
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  transition: all 0.25s ease;
+}
+
+.sidebar-link svg {
+  font-size: 18px;
+}
+
+/* Hover */
+
+.sidebar-link:hover {
+  background: rgba(
+    246,
+    139,
+    31,
+    0.1
+  );
+
+  color: #d96f00;
+
+  transform: translateX(4px);
+}
+
+/* Active */
+
+.sidebar-link.active {
+  background: linear-gradient(
+    135deg,
+    #f68b1f,
+    #ff9f43
+  );
+
+  color: white;
+
+  box-shadow: 0 6px 15px
+    rgba(
+      246,
+      139,
+      31,
+      0.25
+    );
+}
+
+/* Bottom Settings */
+
+.sidebar-settings {
+  margin-top: auto;
+}
+
+/* User Card */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #ffe0bd;
+  border-radius: 16px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba( 246, 139, 31, 0.08);
+}
+
+.sidebar-user img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar-user-info h4 {
+  font-size: 14px;
+  color: #222;
+}
+
+.sidebar-user-info p {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Scroll Support */
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+}
