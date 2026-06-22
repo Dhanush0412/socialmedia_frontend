@@ -229,6 +229,101 @@ body {
   min-height: 14px;
 }
 
+/* OTP Section */
+
+.otp-section{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+
+.otp-button,
+.verify-button{
+
+  height:42px;
+
+  border:none;
+
+  border-radius:10px;
+
+  background:#e79e77;
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+
+}
+
+
+.otp-button:hover,
+.verify-button:hover{
+
+  background:#e55e0f;
+
+}
+
+
+
+.verify-section{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+}
+
+
+
+.verify-section input{
+
+  width:100%;
+
+  height:50px;
+
+  padding:0 16px;
+
+  border:1.5px solid #eaeaea;
+
+  border-radius:11px;
+
+  outline:none;
+
+  background:#fafafa;
+
+}
+
+
+
+.verify-section input:focus{
+
+  border-color:#ec9566;
+
+  box-shadow:
+  0 0 0 3px rgba(255,107,26,0.1);
+
+}
+
+
+
+.verified-message{
+
+  color:#16a34a;
+
+  font-size:13px;
+
+  font-weight:600;
+
+}
 .register-form button {
   height: 45px;
   border: none;
