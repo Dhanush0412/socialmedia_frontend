@@ -1,5 +1,4 @@
 import "../css/Profile.css";
-
 import { FaUserCircle, FaEdit } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +11,11 @@ function Profile() {
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-
   const [previewImage, setPreviewImage] = useState(null);
-
   const [showPopup, setShowPopup] = useState(false);
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-
     if (file) {
       setProfileImage(file);
 
@@ -59,51 +55,51 @@ function Profile() {
   //   navigate("/login");
   // };
 
-const saveProfile = () => {
-  const userid = localStorage.getItem("userid");
+  const saveProfile = () => {
+    const userid = localStorage.getItem("userid");
 
-  if (!userid) {
-    toast.error("User ID not found");
-    return;
-  }
+    if (!userid) {
+      toast.error("User ID not found");
+      return;
+    }
 
-  const formData = new FormData();
+    const formData = new FormData();
 
-  formData.append("userid", userid);
-  formData.append("bio", bio);
+    formData.append("userid", userid);
+    formData.append("bio", bio);
 
-  if (profileImage) {
-    formData.append("profilepic", profileImage);
-  }
+    if (profileImage) {
+      formData.append("profilepic", profileImage);
+    }
 
-  mutate(formData, {
-    onSuccess: (data) => {
-  console.log("Profile Response:", data);
+    mutate(formData, {
+      onSuccess: (data) => {
+        console.log("Profile Response:", data);
 
-  if (data.profileid) {
-    localStorage.setItem(
-      "profileid",
-      data.profileid
-    );
-  }
+        if (data.profileid) {
+          localStorage.setItem(
+            "profileid",
+            data.profileid
+          );
+        }
 
-  toast.success(
-    "Profile Created Successfully"
-  );
+        toast.success(
+          "Profile Created Successfully"
+        );
 
-  navigate("/dashboard");
-},
+        navigate("/dashboard");
+      },
 
-    onError: (error) => {
-      console.error(error);
+      onError: (error) => {
+        console.error(error);
 
-      toast.error(
-        error?.response?.data?.message ||
-        "Profile creation failed"
-      );
-    },
-  });
-};
+        toast.error(
+          error?.response?.data?.message ||
+          "Profile creation failed"
+        );
+      },
+    });
+  };
 
   const { mutate, isPending } =
     useCreateProfile();
@@ -210,9 +206,7 @@ const saveProfile = () => {
 
       {showPopup && (
         <div className="popup-overlay">
-
-          <div className="popup-box">
-
+          <div className="popup-box"> 
             <h3>
               Profile Picture Preview
             </h3>
@@ -224,7 +218,6 @@ const saveProfile = () => {
             />
 
             <div className="popup-buttons">
-
               <button
                 className="upload-btn"
                 onClick={handleUpload}
@@ -238,11 +231,8 @@ const saveProfile = () => {
               >
                 Cancel
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
