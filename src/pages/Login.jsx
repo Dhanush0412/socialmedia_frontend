@@ -8,12 +8,18 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/authSlice";
 import { toast } from "react-toastify";
 import { useLogin } from "../hooks/useLogin";
+<<<<<<< HEAD
+=======
 
+>>>>>>> upstream/main
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
 
+>>>>>>> upstream/main
   const {
     register,
     handleSubmit,
@@ -23,6 +29,11 @@ function Login() {
   const { mutate, isPending } = useLogin();
 
   const onSubmit = (data) => {
+<<<<<<< HEAD
+  const payload = {
+    login: data.login,
+    password: data.password,
+=======
     mutate(
       { login: data.login, password: data.password },
       {
@@ -41,11 +52,88 @@ function Login() {
         },
       }
     );
+>>>>>>> upstream/main
   };
+
+  mutate(payload, {
+    onSuccess: (response) => {
+      dispatch(loginSuccess(response));
+      localStorage.setItem(
+        "userid",
+        response.userid
+      );
+
+      localStorage.setItem(
+    "profileid",
+    response.profileid || ""
+  );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          username: response.username,
+          email: response.email,
+          phone: response.phone,
+        })
+      );
+
+      toast.success(
+        "Logged-in Successfully"
+      );
+
+      if (response.profileexists) {
+    navigate("/dashboard");
+  } else {
+    navigate("/profile");
+  }
+    },
+
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message ||
+        "User not found or invalid password";
+
+      toast.error(message);
+    },
+  });
+};  
 
   return (
     <div className="container">
       <div className="auth-card">
+<<<<<<< HEAD
+        <div className="auth-image">
+
+          <div className="chat-logo">
+
+            <div className="logo-circle">
+              💬
+            </div>
+
+            <div className="sound-wave">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+          </div>
+
+          <div className="overlay">
+
+            <h1>
+              Welcome Back
+            </h1>
+
+            <p>
+              Login and continue
+              chatting with friends.
+            </p>
+
+          </div>
+
+=======
 
         {/* ══ LEFT — completely unchanged ══ */}
         <div className="auth-left">
@@ -95,6 +183,7 @@ function Login() {
               </div>
             </div>
           </div>
+>>>>>>> upstream/main
         </div>
 
         {/* ══ RIGHT — PandaChat brand + bubble + form ══ */}

@@ -4,28 +4,32 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
-import ForgotPassword from "./pages/ForgotPassword"
-import Home from "./pages/Home"
+import Dashboard from "./pages/Dashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import Chat from "./pages/Chat";
+
+// Sidebar Pages
+import NewPost from "./pages/NewPost";
+import Feed from "./pages/Feed";
+import Groups from "./pages/Groups";
+import Messages from "./pages/Messages";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
     <Routes>
 
-      {/* Initial Page */}
+      {/* Home */}
       <Route
         path="/"
         element={<Home />}
       />
 
-      <Route
-        path="/profile"
-        element={<Profile />}
-      />
-
+      {/* Auth */}
       <Route
         path="/login"
         element={<Login />}
@@ -37,14 +41,58 @@ function App() {
       />
 
       <Route
+        path="/forgot-password"
+        element={<ForgotPassword />}
+      />
+
+      {/* Profile */}
+      <Route
+        path="/profile"
+        element={<Profile />}
+      />
+
+      {/* Dashboard */}
+      <Route
+        path="/dashboard"
+        element={<Dashboard />}
+      />
+
+      {/* Sidebar Routes */}
+      <Route
+        path="/newpost"
+        element={<NewPost />}
+      />
+
+      <Route
+        path="/feed"
+        element={<Feed />}
+      />
+
+      <Route
+        path="/groups"
+        element={<Groups />}
+      />
+
+      <Route
+        path="/messages"
+        element={<Messages />}
+      />
+
+      <Route
+        path="/settings"
+        element={<Settings />}
+      />
+
+      {/* Chat
+      <Route
         path="/chat"
         element={<Chat />}
-      />
+      /> */}
+
+      {/* Invalid Route */}
       <Route
-        path="/forgot-password"
-        element={
-          <ForgotPassword />
-        }
+        path="*"
+        element={<Navigate to="/" />}
       />
 
     </Routes>
