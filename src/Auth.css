@@ -9,7 +9,6 @@ font-family:Inter,sans-serif;
 }
 .overlay{
 position:absolute;
-
 inset:0;
 
 display:flex;
