@@ -9,11 +9,8 @@ const registerUser = async(userData)=>{
         `${URL}/user/signup`,
         userData
     );
-
-    return response.data;
+      return response.data;
 };
-
-
 
 export const useRegister = ()=>{
 

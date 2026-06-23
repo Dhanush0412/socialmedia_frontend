@@ -1,21 +1,15 @@
 import { FaUser, FaPlusCircle, FaNewspaper, FaUsers, FaComments, FaCog } from "react-icons/fa";
-
 import { NavLink } from "react-router-dom";
-
 import "../css/Sidebar.css";
 
 function Sidebar() {
   return (
     <div className="sidebar">
-
       <div>
-
         <h2 className="sidebar-logo">
           🐼 Panda Chat
         </h2>
-
         <ul className="sidebar-menu">
-
           <li>
             <NavLink
               to="/dashboard"

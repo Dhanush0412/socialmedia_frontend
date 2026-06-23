@@ -239,3 +239,14 @@ body {
   display: flex;
   min-height: 100vh;
 }
+
+.dashboard-user-info h1 {
+    margin-bottom: 5px;
+}
+
+.profile-id {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+    word-break: break-all;
+}

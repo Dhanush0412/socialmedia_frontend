@@ -7,7 +7,6 @@ function NewPost() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [caption, setCaption] = useState("");
-
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
 
@@ -21,7 +20,6 @@ function NewPost() {
     <Layout>
       <div className="newpost-card">
         <h2 className="newpost-title">New Post</h2>
-
         <label className="upload-box">
           <input
             type="file"
@@ -29,9 +27,7 @@ function NewPost() {
             accept="image/*,video/*"
             onChange={handleFileChange}
           />
-
           <span>Select photos / videos</span>
-
           <FaCloudUploadAlt className="upload-icon" />
         </label>
 
