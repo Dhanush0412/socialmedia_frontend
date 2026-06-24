@@ -1,5 +1,5 @@
 import {
-  BrowserRouter,
+ 
   Routes,
   Route,
 } from "react-router-dom";
@@ -8,6 +8,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import Dashboard from "../pages/Dashboard";
+import Home from "../pages/Home"
+
 import MyPosts from "./pages/MyPosts";
 import NewPost from "../pages/NewPost";
 import Feed from "../pages/Feed";
@@ -17,13 +19,13 @@ import Settings from "../pages/Settings";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+   
 
       <Routes>
 
         {/* Auth */}
 
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -41,7 +43,7 @@ function AppRoutes() {
 
       </Routes>
 
-    </BrowserRouter>
+  
   );
 }
 
