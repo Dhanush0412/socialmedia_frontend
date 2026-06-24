@@ -3,10 +3,20 @@ import { FaUserCircle } from "react-icons/fa";
 import { useDashboard } from "../hooks/useDashboard";
 import Sidebar from "../components/Sidebar";
 import Layout from "../components/Layout";
+import { useState } from "react";
+import { useMyPosts } from "../hooks/useMyPost";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
     const profileid = localStorage.getItem("profileid");
     // console.log("profileid =", profileid);
+    const [showPosts, setShowPosts] = useState(false);
+    const navigate = useNavigate();
+    const {
+        data: posts,
+        refetch,
+    } = useMyPosts(profileid);
+
     const { data, isLoading, error } = useDashboard(profileid);
     if (isLoading) {
         return (
@@ -25,6 +35,9 @@ function Dashboard() {
     }
 
     const profile = data?.profile || data?.data || data;
+
+    console.log("Dashboard Data:", data);
+    console.log("Profile Data:", profile);
 
     return (
         <div className="dashboard-layout">
@@ -49,8 +62,8 @@ function Dashboard() {
                                     "User"}
                             </h1>
                             <p className="profile-id">
-        Profile ID: {profile?._id || profileid}
-    </p>
+                                Profile ID: {profile?._id || profileid}
+                            </p>
                             {/* <p>
                             Welcome to Panda Chat 🐼
                         </p> */}
@@ -60,10 +73,19 @@ function Dashboard() {
                     {/* Bio */}
 
                     <div className="dashboard-card">
-                        <h2>Bio</h2>
+                        <div className="bio-header">
+                            <h2>Bio</h2>
+
+                            <button
+                                className="view-post-btn"
+                                onClick={() => navigate("/myposts")}
+                            >
+                                View Posts
+                            </button>
+                        </div>
+
                         <p>
-                            {profile?.bio ||
-                                "No bio available"}
+                            {profile?.bio || "No bio available"}
                         </p>
                     </div>
 
@@ -81,6 +103,12 @@ function Dashboard() {
                             <h3>Connections</h3>
                             <div className="count-circle">
                                 {profile?.connections || 0}
+                            </div>
+                        </div>
+                        <div className="stat-card">
+                            <h3>Posts</h3>
+                            <div className="count-circle">
+                                {profile?.posts || 0}
                             </div>
                         </div>
                     </div>

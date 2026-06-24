@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home"
 
+import MyPosts from "./pages/MyPosts";
 import NewPost from "../pages/NewPost";
 import Feed from "../pages/Feed";
 import Groups from "../pages/Groups";
@@ -38,6 +39,7 @@ function AppRoutes() {
         <Route path="/groups" element={<Groups />} />
         <Route path="/messages" element={<Messages />}/>
         <Route path="/settings" element={<Settings />}/>
+        <Route path="/myposts" element={<MyPosts />}/>
 
       </Routes>
 
