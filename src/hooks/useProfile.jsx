@@ -1,3 +1,4 @@
+
 // // import { useMutation } from "@tanstack/react-query";
 // // import axios from "axios";
 // // import { URL } from "../../config";
@@ -55,10 +56,13 @@ import {
     useQueryClient
 } from "@tanstack/react-query";
  
+
+import { useMutation } from "@tanstack/react-query";
+
 import axios from "axios";
  
 import { URL } from "../../config";
- 
+
  
 const createProfile = async(data)=>{
  
@@ -75,6 +79,23 @@ const createProfile = async(data)=>{
  
     return response.data;
  
+
+const createProfile = async (formData) => {
+  const token = localStorage.getItem("token");
+
+  const { data } = await axios.post(
+    `${URL}/profile/create`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return data;
+
 };
  
  

@@ -1,16 +1,12 @@
 import Layout from "../components/Layout";
 import { useMyPosts } from "../hooks/useMyPost";
 import "../css/MyPosts.css";
+import { useState } from "react";
 
 function MyPosts() {
   const profileid = localStorage.getItem("profileid");
-
-  const {
-    data: posts,
-    isLoading,
-  } = useMyPosts(profileid);
-
-  console.log("Posts Response:", posts);
+  const [expandedPost, setExpandedPost] = useState(null);
+  const { data: posts, isLoading } = useMyPosts();
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -30,12 +26,47 @@ function MyPosts() {
                 className="post-card"
                 key={post._id}
               >
-                <img
-                  src={`http://localhost:5000/${post.media.replace(/\\/g, "/")}`}
-                  alt="post"
-                />
+                {post.media.match(/\.(mp4|webm|ogg)$/i) ? (
+                  <video
+                    controls
+                    className="post-media"
+                  >
+                    <source
+                      src={`http://localhost:5000/${post.media.replace(/\\/g, "/")}`}
+                      type="video/mp4"
+                    />
+                    Your browser does not support video.
+                  </video>
+                ) : (
+                  <img
+                    src={`http://localhost:5000/${post.media.replace(/\\/g, "/")}`}
+                    alt="post"
+                  />
+                )}
 
-                <p>{post.caption}</p>
+                <div className="caption-container">
+                  <p>
+                    {expandedPost === post._id
+                      ? post.caption
+                      : post.caption?.slice(0, 100)}
+
+                    {post.caption?.length > 100 && (
+                      <span
+                        className="read-more"
+                        onClick={() =>
+                          setExpandedPost(
+                            expandedPost === post._id ? null : post._id
+                          )
+                        }
+                      >
+                        {expandedPost === post._id
+                          ? " Show Less"
+                          : "... Read More"}
+                      </span>
+                    )}
+                  </p>
+                </div>
+
               </div>
             ))}
           </div>
