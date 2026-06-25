@@ -52,27 +52,23 @@ function Register() {
   };
 
   const verifyOTP = async () => {
-try{
-const response = await axios.post(
-`${URL}/user/verifyotp`,
-{
-email,
-otp
-}
-);
+    try {
+      const response = await axios.post(
+        `${URL}/user/verifyotp`,
+        {
+          email,
+          otp,
+        }
+      );
 
-toast.success(response.data.message);
-setEmailVerified(true);
-
-}catch(error){
-setEmailVerified(false);
-
-toast.error(
-error?.response?.data?.message ||
-"Invalid OTP"
-);
-}
-};
+      toast.success(response.data);
+      setEmailVerified(true);
+    } catch (error) {
+      toast.error(
+        error?.response?.data || "Invalid OTP"
+      );
+    }
+  };
 
   const onSubmit = (data) => {
     if (!emailVerified) {
@@ -246,7 +242,6 @@ error?.response?.data?.message ||
 
             <input
               type="number"
-              disabled={!emailVerified}
               placeholder="Phone Number"
               {...register("phone")}
             />
@@ -257,7 +252,6 @@ error?.response?.data?.message ||
 
             <input
               type="password"
-              disabled={!emailVerified}
               placeholder="Password"
               {...register("password")}
             />
@@ -268,7 +262,6 @@ error?.response?.data?.message ||
 
             <input
               type="password"
-              disabled={!emailVerified}
               placeholder="Confirm Password"
               {...register("confirmPassword")}
             />
@@ -279,7 +272,7 @@ error?.response?.data?.message ||
 
             <button
               type="submit"
-              disabled={isPending || !emailVerified}
+              disabled={isPending}
             >
               {isPending
                 ? "Creating..."

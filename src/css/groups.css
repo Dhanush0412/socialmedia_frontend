@@ -1,0 +1,26 @@
+.groups-container{
+padding:20px;
+}
+
+.group-wrapper{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.group-card{
+width:250px;
+padding:20px;
+background:white;
+border-radius:10px;
+box-shadow:0 4px 10px #ddd;
+}
+
+.group-card button{
+padding:10px 15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
