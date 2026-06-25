@@ -2,18 +2,24 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { URL } from "../../config";
 
-const getDashboard = async (profileid) => {
-  const response = await axios.get(
-    `${URL}/profile/dashboard/${profileid}`
+const getDashboard = async () => {
+  const token = localStorage.getItem("token");
+
+  const {data} = await axios.get(
+    `${URL}/profile/dashboard`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
   );
 
-  return response.data;
+  return data;
 };
 
-export const useDashboard = (profileid) => {
+export const useDashboard = () => {
   return useQuery({
-    queryKey: ["dashboard", profileid],
-    queryFn: () => getDashboard(profileid),
-    enabled: !!profileid,
+    queryKey: ["dashboard"],
+    queryFn: () => getDashboard(),
   });
 };
