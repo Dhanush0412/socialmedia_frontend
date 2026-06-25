@@ -1,26 +1,26 @@
 import "../Css/login.css";
 import PandaLogo from "../assets/Panda.png";
- 
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
- 
+
 import { loginSchema } from "../validation/loginSchema";
- 
+
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
- 
+
 import { loginSuccess } from "../redux/authSlice";
- 
+
 import { toast } from "react-toastify";
- 
+
 import { useLogin } from "../hooks/useLogin";
- 
- 
+
+
 function Login() {
- 
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+
   const {
     register,
     handleSubmit,
@@ -28,9 +28,9 @@ function Login() {
   } = useForm({
     resolver: yupResolver(loginSchema)
   });
- 
+
   const { mutate, isPending } = useLogin();
- 
+
   const onSubmit = (data) => {
     mutate(
       {
@@ -41,15 +41,18 @@ function Login() {
         onSuccess: (response) => {
           if (response?.success || response) {
             dispatch(loginSuccess(response));
-            // if (response?.token) {
-            //   localStorage.setItem("token", response.token);
-            // }
-
-            localStorage.setItem("token", response.token);
-            localStorage.setItem("userid", response.userid);
-            localStorage.setItem("user", JSON.stringify({ username: response.username }));
+            if (response?.token) {
+              localStorage.setItem("token", response.token);
+            }
             toast.success("Logged-in Successfully");
-            navigate("/Profile");
+            // Check profile exists
+            const profileid = localStorage.getItem("profileid");
+
+            if (profileid) {
+              navigate("/dashboard");
+            } else {
+              navigate("/Profile");
+            }
           }
         },
         onError: (error) => {
@@ -61,17 +64,17 @@ function Login() {
       }
     );
   };
- 
+
   return (
     <div className="container">
       <div className="auth-card">
- 
+
         {/* LEFT */}
         <div className="auth-left">
           <div className="orb-1"></div>
           <div className="orb-2"></div>
           <div className="orb-3"></div>
- 
+
           <div className="logo-block">
             <div className="logo-ring">
               <div className="logo-ring-inner">
@@ -80,21 +83,21 @@ function Login() {
                     d="M6 8C6 6.9 6.9 6 8 6h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H10l-4 4V8z"
                     fill="white"
                   />
-                  <circle cx="12" cy="14" r="1.5" fill="#ff6b1a"/>
-                  <circle cx="16" cy="14" r="1.5" fill="#ff6b1a"/>
-                  <circle cx="20" cy="14" r="1.5" fill="#ff6b1a"/>
+                  <circle cx="12" cy="14" r="1.5" fill="#ff6b1a" />
+                  <circle cx="16" cy="14" r="1.5" fill="#ff6b1a" />
+                  <circle cx="20" cy="14" r="1.5" fill="#ff6b1a" />
                 </svg>
               </div>
             </div>
- 
+
             <h1 className="left-brand-name">
               Welcome <em>Back</em>
             </h1>
- 
+
             <p className="left-brand-tag">
               Continue your conversations
             </p>
- 
+
             <div className="login-content">
               <div className="login-message-card">
                 <div className="chat-icon">💬</div>
@@ -103,7 +106,7 @@ function Login() {
                   <p>Open your conversations and continue where you stopped.</p>
                 </div>
               </div>
- 
+
               <div className="login-message-card">
                 <div className="chat-icon">⚡</div>
                 <div>
@@ -111,7 +114,7 @@ function Login() {
                   <p>Send messages faster with smooth experience.</p>
                 </div>
               </div>
- 
+
               <div className="login-message-card">
                 <div className="chat-icon">🔐</div>
                 <div>
@@ -122,11 +125,11 @@ function Login() {
             </div>
           </div>
         </div>
- 
+
         {/* RIGHT */}
         <div className="form-section">
           <div className="right-bg"></div>
- 
+
           {/* PandaLogo pinned at top */}
           <div className="brand-top">
             <div className="brand-icon">
@@ -137,10 +140,10 @@ function Login() {
               <p className="brand-subtitle">Smart messaging companion</p>
             </div>
           </div>
- 
+
           {/* Everything else centered */}
           <div className="form-center">
- 
+
             <div className="panda-chat-wrap">
               <div className="panda-chat-av">
                 <img src={PandaLogo} alt="Panda" className="panda-chat-image" />
@@ -148,15 +151,15 @@ function Login() {
               <div className="panda-bubble">
                 <p>
                   Hey Buddy! 🐾 <strong>Sign in</strong> to keep chatting.
-                  <br/>
+                  <br />
                   Your friends are waiting for you!
                 </p>
               </div>
             </div>
- 
+
             <h2>Welcome back Buddy 👋</h2>
             <p className="sub">Sign in to continue your conversations</p>
- 
+
             <form className="form" onSubmit={handleSubmit(onSubmit)}>
               <input
                 type="text"
@@ -164,41 +167,40 @@ function Login() {
                 {...register("login")}
               />
               <p className="error">{errors.login?.message}</p>
- 
+
               <input
                 type="password"
                 placeholder="Password"
                 {...register("password")}
               />
               <p className="error">{errors.password?.message}</p>
- 
+
               <div className="forgot-row">
                 <Link to="/forgot-password">Forgot password?</Link>
               </div>
- 
+
               <button disabled={isPending}>
                 {isPending ? "Checking..." : "Sign In"}
               </button>
- 
+
               <div className="divider">
                 <div className="divider-line"></div>
                 <span className="divider-text">Don't have an account?</span>
                 <div className="divider-line"></div>
               </div>
- 
+
               <div className="register-row">
                 <span>New here?</span>
                 <Link to="/register">Create Account</Link>
               </div>
             </form>
- 
+
           </div>
         </div>
- 
+
       </div>
     </div>
   );
 }
- 
+
 export default Login;
- 
