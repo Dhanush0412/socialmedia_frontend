@@ -3,23 +3,23 @@ import axios from "axios";
 import { URL } from "../../config";
 
 const createPost = async (formData) => {
-    const profileid = formData.get("profileid");
+    const token = localStorage.getItem("token");
 
     const { data } = await axios.post(
-        `${URL}/post/create/${profileid}`,
+        `${URL}/post/create`,
         formData,
         {
             headers: {
-                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
             },
         }
     );
 
     return data;
-};
+}
 
-export const useCreatePost = () => {
-    return useMutation({
-        mutationFn: createPost,
-    });
-};
+    export const useCreatePost = () => {
+        return useMutation({
+            mutationFn: createPost,
+        });
+    };

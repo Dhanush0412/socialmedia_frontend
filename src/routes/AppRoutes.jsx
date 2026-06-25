@@ -9,8 +9,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home"
-
-import MyPosts from "./pages/MyPosts";
+import MyPosts from "../pages/MyPosts";
 import NewPost from "../pages/NewPost";
 import Feed from "../pages/Feed";
 import Groups from "../pages/Groups";

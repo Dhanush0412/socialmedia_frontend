@@ -41,9 +41,13 @@ function Login() {
         onSuccess: (response) => {
           if (response?.success || response) {
             dispatch(loginSuccess(response));
-            if (response?.token) {
-              localStorage.setItem("token", response.token);
-            }
+            // if (response?.token) {
+            //   localStorage.setItem("token", response.token);
+            // }
+
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("userid", response.userid);
+            localStorage.setItem("user", JSON.stringify({ username: response.username }));
             toast.success("Logged-in Successfully");
             navigate("/Profile");
           }
