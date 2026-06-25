@@ -100,6 +100,9 @@ function Profile() {
       },
     });
   };
+  const logout=()=>{
+    navigate("/login")
+  }
 
   const { mutate, isPending } =
     useCreateProfile();
@@ -194,6 +197,13 @@ function Profile() {
               onClick={saveProfile}
             >
               Save Profile
+            </button>
+
+<button
+              className="save-profile-btn"
+              onClick={logout}
+            >
+             Logout
             </button>
 
           </div>

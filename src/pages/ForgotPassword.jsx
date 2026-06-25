@@ -1,7 +1,10 @@
 import "../css/ForgotPassword.css";
 import PandaLogo from "../assets/Panda.png";
+import { useState } from "react";
+import axios from "axios";
 
 import { toast } from "react-toastify";
+import { URL } from "../../config";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,15 +14,81 @@ import { useForgotPassword } from "../hooks/useForgotPassword";
 function ForgotPassword() {
   const navigate = useNavigate();
 
+  const [otpSent, setOtpSent] = useState(false);
+    const [otp, setOtp] = useState("");
+    const [emailVerified, setEmailVerified] = useState(false);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
+   const login = watch("login");
 
   const { mutate, isPending } = useForgotPassword();
+  const sendOTP = async () => {
+  try {
+    if (!login) {
+      return toast.error("Enter email or phone first");
+    }
+
+    const response = await axios.post(
+      `${URL}/user/sendforgototp`,
+      {
+        login
+      }
+    );
+
+    toast.success(response.data);
+    console.log(response.data);
+    setOtpSent(true);
+
+  } catch(error) {
+    toast.error(
+      error?.response?.data ||
+      "OTP sending failed",
+      console.log(error?.response?.data)
+    );
+  }
+  
+};
+    
+  
+    const verifyOTP = async () => {
+  try {
+
+    if(!otp){
+      return toast.error("Enter OTP");
+    }
+
+    const response = await axios.post(
+      `${URL}/user/verifyotp`,
+      {
+        login,
+        otp
+      }
+    );
+
+    toast.success(
+      response.data.message ||
+      "OTP Verified"
+    );
+
+    setEmailVerified(true);
+
+  } catch(error){
+
+    setEmailVerified(false);
+
+    toast.error(
+      error?.response?.data?.message ||
+      "Invalid OTP"
+    );
+  }
+};
 
   const onSubmit = (data) => {
     mutate(
@@ -28,6 +97,7 @@ function ForgotPassword() {
         password: data.password,
         confirmPassword: data.confirmPassword,
       },
+      
       {
         onSuccess: () => {
           toast.success("Password Updated Successfully 🎉");
@@ -40,6 +110,11 @@ function ForgotPassword() {
         },
       }
     );
+    if(!emailVerified){
+    return toast.error(
+      "Please verify OTP first"
+    );
+  }
   };
 
   return (
@@ -141,8 +216,51 @@ function ForgotPassword() {
               {errors.login?.message}
             </p>
 
+ <div className="otp-section">
+              {!emailVerified && (
+                <button
+                  type="button"
+                  className="otp-button"
+                  onClick={sendOTP}
+                  disabled={otpSent}
+                >
+                  {otpSent
+                    ? "OTP Sent"
+                    : "Send OTP"}
+                </button>
+              )}
+              {otpSent && !emailVerified && (
+                <div className="verify-section">
+                  <input
+                    type="text"
+                    placeholder="Enter OTP"
+                    value={otp}
+                    onChange={(e) =>
+                      setOtp(e.target.value)
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    className="verify-button"
+                    onClick={verifyOTP}
+                  >
+                    Verify OTP
+                  </button>
+                </div>
+              )}
+
+              {emailVerified && (
+                <p className="verified-message">
+                  ✅ Email Verified Successfully
+                </p>
+              )}
+            </div>
+
+
             <input
               type="password"
+              disabled={!emailVerified}
               placeholder="New Password"
               {...register("password")}
             />
@@ -152,6 +270,7 @@ function ForgotPassword() {
 
             <input
               type="password"
+                 disabled={!emailVerified}
               placeholder="Confirm Password"
               {...register("confirmPassword")}
             />
