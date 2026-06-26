@@ -39,22 +39,24 @@ function Login() {
       },
       {
         onSuccess: (response) => {
-          if (response?.success || response) {
-            dispatch(loginSuccess(response));
-            if (response?.token) {
-              localStorage.setItem("token", response.token);
-            }
-            toast.success("Logged-in Successfully");
-            // Check profile exists
-            const profileid = localStorage.getItem("profileid");
+          dispatch(loginSuccess(response));
 
-            if (profileid) {
-              navigate("/dashboard");
-            } else {
-              navigate("/Profile");
-            }
+          // Save login details
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("userid", response.userid);
+          localStorage.setItem("username", response.username);
+
+          toast.success("Logged-in Successfully");
+
+          if (response.profileexists) {
+            localStorage.setItem("profileid", response.profileid);
+            navigate("/dashboard");
+          } else {
+            localStorage.removeItem("profileid");
+            navigate("/Profile");
           }
         },
+        
         onError: (error) => {
           toast.error(
             error?.response?.data?.message ||

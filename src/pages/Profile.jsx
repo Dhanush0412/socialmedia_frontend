@@ -100,20 +100,15 @@ function Profile() {
       },
     });
   };
-  const logout=()=>{
-    navigate("/login")
-  }
 
   const { mutate, isPending } =
     useCreateProfile();
 
   useEffect(() => {
-    const user = JSON.parse(
-      localStorage.getItem("user")
-    );
+    const username = localStorage.getItem("username");
 
-    if (user) {
-      setUsername(user.username);
+    if (username) {
+      setUsername(username);
     }
   }, []);
 
@@ -198,14 +193,6 @@ function Profile() {
             >
               Save Profile
             </button>
-
-<button
-              className="save-profile-btn"
-              onClick={logout}
-            >
-             Logout
-            </button>
-
           </div>
 
         </div>
@@ -216,7 +203,7 @@ function Profile() {
 
       {showPopup && (
         <div className="popup-overlay">
-          <div className="popup-box"> 
+          <div className="popup-box">
             <h3>
               Profile Picture Preview
             </h3>
