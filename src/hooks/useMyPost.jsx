@@ -3,24 +3,20 @@ import axios from "axios";
 import { URL } from "../../config";
 
 const getMyPosts = async () => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    const { data } = await axios.get(
-        `${URL}/post/getmypost`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
+  const { data } = await axios.get(`${URL}/post/getmypost`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return data;
+  return data;
 };
 
 export const useMyPosts = () => {
-    return useQuery({
-        queryKey: ["myposts"],
-        queryFn: () => getMyPosts(),
-
-    });
+  return useQuery({
+    queryKey: ["myposts"],
+    queryFn: getMyPosts,
+  });
 };
