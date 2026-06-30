@@ -2,16 +2,16 @@ import {useState} from "react";
 
 function ChatInput(){
 
-const [message,setMessage]=useState("");
+const [text,setText]=useState("");
 
-const sendMessage=()=>{
+const send=()=>{
 
-if(!message.trim())
+if(!text.trim())
 return;
 
-console.log(message);
+console.log(text);
 
-setMessage("");
+setText("");
 
 };
 
@@ -20,12 +20,12 @@ return(
 
 <input
 type="text"
-placeholder="Type message..."
-value={message}
-onChange={(e)=>setMessage(e.target.value)}
+placeholder="Type text..."
+value={text}
+onChange={(e)=>setText(e.target.value)}
 />
 
-<button onClick={sendMessage}>
+<button onClick={send}>
 Send
 </button>
 

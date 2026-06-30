@@ -2,17 +2,22 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { URL } from "../../../config";
 
-const getMyGroups=async(profileid)=>{
+const getMyGroups=async()=>{
   const response=await axios.get(
-    `${URL}/group/mygroups/${profileid}`
+    `${URL}/group/mygroups/`,
+{
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
   );
   return response.data;
 };
 
-export const useMyGroups=(profileid)=>{
+export const useMyGroups=()=>{
   return useQuery({
-    queryKey:["my-groups",profileid],
-    queryFn:()=>getMyGroups(profileid),
-    enabled:!!profileid
+    queryKey:["my-groups"],
+    queryFn:()=>getMyGroups,
+    
   });
 };

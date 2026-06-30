@@ -14,7 +14,6 @@ isLoading
 
 if(isLoading)
 return <h2>Loading...</h2>;
-
 return(
 <div className="groups-container">
 
@@ -24,14 +23,14 @@ My Groups
 
 <div className="group-wrapper">
 
-{/* {
+ {
 data?.map((group)=>(
 <GroupCard
 key={group.id}
 group={group}
 />
 ))
-} */}
+} 
 
 </div>
 

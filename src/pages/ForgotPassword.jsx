@@ -61,11 +61,11 @@ function ForgotPassword() {
   try {
 
     if(!otp){
-      return toast.error("Enter OTP");
+      return toast.info("Enter OTP");
     }
 
     const response = await axios.post(
-      `${URL}/user/verifyotp`,
+      `${URL}/user/verifyforgototp`,
       {
         login,
         otp

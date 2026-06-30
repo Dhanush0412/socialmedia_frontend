@@ -1,11 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { URL } from "../../config";
+import { URL } from "../../../config";
 
-const getPendingInvites=async(profileid)=>{
+const getPendingInvites=async()=>{
   const response=await axios.get(
-    `${URL}/group/invite/${profileid}`
-  );
+    `${URL}/group/invite/`,
+    {
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
+);
   return response.data;
 };
 

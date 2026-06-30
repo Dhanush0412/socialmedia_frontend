@@ -25,6 +25,7 @@ function Register() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(registerSchema),
+    mode: "onChange",
   });
 
   const email = watch("email");
@@ -51,28 +52,85 @@ function Register() {
     }
   };
 
-  const verifyOTP = async () => {
-try{
-const response = await axios.post(
-`${URL}/user/verifyotp`,
-{
-email,
-otp
-}
-);
+  
+const verifyOTP = async () => {
+  try {
+    if (!otp) {
+      return toast.error("Enter OTP");
+    }
 
-toast.success(response.data.message);
-setEmailVerified(true);
+    const response = await axios.post(
+      `${URL}/user/verifyotp`,
+      {
+        email,
+        otp
+      }
+    );
 
-}catch(error){
-setEmailVerified(false);
+    // if (
+    //   response.data.success === true ||
+    //   response.data.message?.toLowerCase().includes("success")
+    // )
+    if ( 
+  response.data.toLowerCase().includes("verified")
+) {
+      toast.success("Email Verified Successfully");
+      setEmailVerified(true);
+    } else {
+      setEmailVerified(false);
+      toast.error("Invalid OTP");
+    }
 
-toast.error(
-error?.response?.data?.message ||
-"Invalid OTP"
-);
-}
+  } catch (error) {
+    setEmailVerified(false);
+
+    toast.error(
+      error?.response?.data?.message ||
+      error?.response?.data ||
+      "Invalid OTP"
+    );
+  }
 };
+// const verifyOTP = async () => {
+//   try {
+
+//     if (!otp) {
+//       return toast.error("Enter OTP");
+//     }
+
+//     const response = await axios.post(
+//       `${URL}/user/verifyotp`,
+//       {
+//         email,
+//         otp
+//       }
+//     );
+
+//     if (
+//       response.data.toLowerCase().includes("verified")
+//     ) {
+
+//       toast.success("Email Verified Successfully");
+//       setEmailVerified(true);
+
+//     } else {
+
+//       setEmailVerified(false);
+//       toast.error(response.data);
+
+//     }
+
+//   } catch(error) {
+
+//     setEmailVerified(false);
+
+//     toast.error(
+//       error?.response?.data ||
+//       "Invalid OTP"
+//     );
+
+//   }
+// };
 
   const onSubmit = (data) => {
     if (!emailVerified) {
