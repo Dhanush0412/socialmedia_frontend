@@ -13,7 +13,7 @@ return(
 Members: {group.members?.length || 0}
 </p>
 
-<button onClick={()=>navigate(`/chat/${group.id}`)}>
+<button onClick={()=>navigate(`/dashboard/chat/${group.id}`)}>
 Open Chat
 </button>
 

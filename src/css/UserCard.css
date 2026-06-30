@@ -1,0 +1,136 @@
+.user-card{
+  width:100%;
+  display:flex;
+  align-items:center;
+  padding:18px;
+  gap:16px;
+  background:rgba(255,255,255,0.9);
+  border-radius:18px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 10px 30px rgba(15,23,42,0.08);
+  transition:0.3s ease;
+  backdrop-filter:blur(10px);
+}
+
+.user-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px rgba(15,23,42,0.15);
+}
+
+.profile-image{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  padding:3px;
+  background:linear-gradient(
+    135deg,
+    #06b6d4,
+    #8b5cf6,
+    #ec4899
+  );
+  flex-shrink:0;
+  position:relative;
+}
+
+.profile-image img,
+.avatar{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+}
+
+.profile-image img{
+  object-fit:cover;
+  border:3px solid white;
+}
+
+.avatar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(
+    135deg,
+    #6366f1,
+    #ec4899
+  );
+  color:white;
+  font-size:30px;
+  font-weight:700;
+  border:3px solid white;
+}
+
+.profile-image__online{
+  position:absolute;
+  width:15px;
+  height:15px;
+  right:2px;
+  bottom:5px;
+  border-radius:50%;
+  background:#22c55e;
+  border:3px solid white;
+}
+
+.user-details{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.user-name{
+  margin:0;
+  color:#111827;
+  font-size:18px;
+  font-weight:700;
+}
+
+.connect-btn{
+  border:none;
+  padding:10px 22px;
+  border-radius:30px;
+  background:linear-gradient(
+    135deg,
+    #6366f1,
+    #8b5cf6
+  );
+  color:white;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.connect-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 8px 20px rgba(99,102,241,0.35);
+}
+
+.connect-btn:disabled{
+  cursor:not-allowed;
+  opacity:0.7;
+}
+
+.connect-btn--sent{
+  background:#22c55e;
+}
+
+.connect-btn__inner{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.btn-spinner{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  border:2px solid white;
+  border-top-color:transparent;
+  animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+  to{
+    transform:rotate(360deg);
+  }
+}

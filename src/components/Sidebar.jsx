@@ -1,6 +1,9 @@
-import { FaUser, FaPlusCircle, FaNewspaper, FaUsers, FaComments, FaCog } from "react-icons/fa";
+import { FaUser, FaPlusCircle,FaUserFriends, FaNewspaper, FaUsers, FaComments, FaCog, FaUserPlus,FaSearch, FaPlusSquare } from "react-icons/fa";
+import { HiUserAdd, HiOutlineUserGroup } from "react-icons/hi";
+import { IoPersonAdd } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import "../css/Sidebar.css";
+import { FiUser, FiUserCheck } from "react-icons/fi";
 
 function Sidebar() {
   return (
@@ -22,10 +25,42 @@ function Sidebar() {
 
           <li>
             <NavLink
+              to="/search-users"
+              className="sidebar-link"
+            >
+              <FaSearch />
+              <span>Find Friends</span>
+            </NavLink>
+          </li>
+
+          
+
+          <li>
+            <NavLink
+              to="/friends"
+              className="sidebar-link"
+            >
+              <FaUserFriends />
+              <span>My Friends</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/group-requests"
+              className="sidebar-link"
+            >
+              <FiUser />
+              <span>Group Requests</span>
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
               to="/newpost"
               className="sidebar-link"
             >
-              <FaPlusCircle />
+              <FaPlusSquare />
               <span>New Post</span>
             </NavLink>
           </li>

@@ -1,0 +1,102 @@
+.connection-card{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:18px;
+  width:100%;
+  background:rgba(255,255,255,0.95);
+  border-radius:22px;
+  border:1px solid #ffe0bd;
+  box-shadow:0 10px 30px rgba(246,139,31,0.08);
+  transition:all 0.3s ease;
+}
+.connection-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(246,139,31,0.18);
+}
+.friend-profile-image{
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  overflow:hidden;
+  position:relative;
+  flex-shrink:0;
+  border:3px solid #f68b1f;
+  background:#fff1df;
+}
+.friend-profile-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.profile-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(
+    135deg,
+    #f68b1f,
+    #ff9f43
+  );
+  color:white;
+  font-size:30px;
+  font-weight:700;
+}
+.online-status{
+  position:absolute;
+  right:2px;
+  bottom:3px;
+  width:15px;
+  height:15px;
+  background:#22c55e;
+  border-radius:50%;
+  border:3px solid white;
+}
+.friend-info{
+  flex:1;
+  min-width:0;
+}
+.friend-info h3{
+  margin:0;
+  color:#222;
+  font-size:18px;
+  font-weight:700;
+}
+.friend-info p{
+  margin:6px 0 0;
+  color:#777;
+  font-size:14px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.chat-button{
+  border:none;
+  padding:11px 25px;
+  border-radius:30px;
+  background:linear-gradient(
+    135deg,
+    #f68b1f,
+    #ff9f43
+  );
+  color:white;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+.chat-button:hover{
+  transform:scale(1.05);
+  background:linear-gradient(
+    135deg,
+    #d96f00,
+    #f68b1f
+  );
+  box-shadow:0 8px 20px rgba(246,139,31,0.35);
+}
+.chat-button:active{
+  transform:scale(0.95);
+}
