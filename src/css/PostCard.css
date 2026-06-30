@@ -1,0 +1,175 @@
+/* ================= POST CARD ================= */
+
+.post-card {
+  background: #fff;
+  border-radius: 15px;
+  margin: 15px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.post-media {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.caption-container {
+  padding: 10px;
+}
+
+/* ================= ACTIONS ================= */
+
+.post-actions {
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+/* ================= OVERLAY ================= */
+
+.comment-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* ================= DRAWER ================= */
+
+.comment-drawer {
+  width: 100%;
+  max-height: 75%;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.25s ease-in-out;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* HANDLE BAR */
+.drawer-handle {
+  width: 50px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 10px;
+  margin: 0 auto 10px;
+}
+
+/* TITLE */
+.comment-drawer h3 {
+  margin: 5px 0 10px;
+  text-align: center;
+}
+
+/* ================= COMMENTS LIST ================= */
+
+.drawer-comments {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+/* ================= INPUT ================= */
+
+.drawer-input {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.drawer-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.drawer-input button {
+  padding: 10px 15px;
+  border-radius: 20px;
+  background: #f68b1f;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+.comment-section {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+.comment-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-box input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+}
+
+.comment-box button {
+  background: #f68b1f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
