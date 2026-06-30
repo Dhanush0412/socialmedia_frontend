@@ -1,5 +1,5 @@
-import Layout from "../components/Layout";
-import "../css/Dashboard.css";
+import Layout from "../components/Layout/Layout";
+import styles from "./Dashboard/Dashboard.module.css";
 import MyConnections from "./MyConnections";
 import PendingRequests from "./PendingRequests";
 import "../Css/friends.css"

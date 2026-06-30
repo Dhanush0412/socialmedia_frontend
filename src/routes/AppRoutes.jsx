@@ -6,8 +6,8 @@ import {
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Profile from "../pages/Profile";
-import Dashboard from "../pages/Dashboard";
+import Profile from "../pages/Profile/Profile";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import ForgotPassword from "../pages/ForgotPassword"
 import Home from "../pages/Home"
 

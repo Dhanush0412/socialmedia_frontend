@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 import "../css/NewPost.css";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { toast } from "react-toastify";

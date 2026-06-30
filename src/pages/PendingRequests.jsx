@@ -1,5 +1,5 @@
 
-import "../css/Dashboard.css";
+import styles from "./Dashboard/Dashboard.module.css";
 import { usePendingRequests } from "../hooks/connection/usePendingRequests";
 import RequestCard from "../components/RequestCard";
 import "../Css/PendingRequests.css";

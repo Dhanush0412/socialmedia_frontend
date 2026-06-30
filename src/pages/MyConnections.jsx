@@ -1,5 +1,5 @@
 
-import "../css/Dashboard.css";
+import styles from "./Dashboard/Dashboard.module.css";
 import { useState } from "react";
 import { useConnections } from "../hooks/connection/useConnections";
 import ConnectionCard from "../components/ConnectionCard";
