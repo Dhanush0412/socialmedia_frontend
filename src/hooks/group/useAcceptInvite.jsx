@@ -1,11 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { URL } from "../../config";
+import { URL } from "../../../config";
 
 const acceptInvite=async(inviteid)=>{
   const response=await axios.put(
-    `${URL}/group/accept/${inviteid}`
+    `${URL}/group/accept/${inviteid}`,
+    {},
+{
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
   );
   return response.data;
 };

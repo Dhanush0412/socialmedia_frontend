@@ -1,13 +1,18 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { URL } from "../../config";
+import { URL } from "../../../config";
 
 const createGroup = async(groupData)=>{
   const response=await axios.post(
     `${URL}/group/new`,
-    groupData
-  );
+    groupData,
+{
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
+  )
   return response.data;
 };
 

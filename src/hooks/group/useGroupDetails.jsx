@@ -4,7 +4,13 @@ import { URL } from "../../../config";
 
 const getGroupDetails=async(groupid)=>{
   const response=await axios.get(
-    `${URL}/group/details/${groupid}`
+    `${URL}/group/details/${groupid}`,
+    {},
+{
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
   );
   return response.data;
 };
