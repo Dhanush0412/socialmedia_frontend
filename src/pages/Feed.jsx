@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 import "../css/Feed.css";
 import { useState } from "react";
 import { FaHeart, FaRegHeart, FaComment } from "react-icons/fa";

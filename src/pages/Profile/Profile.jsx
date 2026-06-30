@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateProfile } from "../hooks/useProfile";
+import { useCreateProfile } from "../../hooks/useProfile";
 import { toast } from "react-toastify";
-import PandaLogo from "../assets/panda 2.png";
+import PandaLogo from "../../assets/panda 2.png";
 
 // MUI Components
 import {
@@ -30,7 +30,7 @@ import {
 } from "@mui/icons-material";
 
 // CSS Module
-import styles from "../css/Profile.module.css";
+import styles from "./Profile.module.css";
 
 function Profile() {
   const navigate = useNavigate();

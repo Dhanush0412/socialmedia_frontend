@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 import { useMyPosts } from "../hooks/useMyPost";
 import "../css/MyPosts.css";
 import PostCard from "../components/PostCard";

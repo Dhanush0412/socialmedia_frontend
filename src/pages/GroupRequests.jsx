@@ -1,7 +1,7 @@
 import {usePendingInvites} from "../hooks/group/usePendingInvites";
 import GroupInviteCard from "../components/GroupInviteCard";
-import Layout from "../components/Layout";
-import "../css/Dashboard.css";
+import Layout from "../components/Layout/Layout";
+import styles from "./Dashboard/Dashboard.module.css";
 
 function GroupRequests(){
 
