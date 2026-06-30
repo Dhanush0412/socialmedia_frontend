@@ -1,0 +1,183 @@
+.feed-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.feed-container h1 {
+  margin-bottom: 25px;
+}
+
+/* Feed Grid */
+
+.feed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Feed Card */
+
+.feed-card {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  border: 2px solid #ffd4a3;
+  box-shadow: 0 8px 20px rgba(246, 139, 31, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* User Info */
+
+.feed-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #f68b1f;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-details h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-details p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: gray;
+}
+
+/* Image / Video */
+
+.feed-media {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+/* Caption */
+
+.feed-caption {
+  padding: 10px;
+  flex: 1;
+  min-height: 60px;
+}
+
+.feed-caption p {
+  margin: 0;
+  color: #444;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.read-more {
+  color: #f68b1f;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Like & Comment */
+
+.feed-actions {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  margin-top: auto;
+}
+
+.action-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.action-btn svg {
+  font-size: 22px;
+}
+
+.action-btn:hover {
+  color: #f68b1f;
+}
+
+/* Empty Feed */
+
+.no-feed {
+  text-align: center;
+  margin-top: 100px;
+}
+
+.no-feed h2 {
+  color: #555;
+}
+
+.no-feed p {
+  color: gray;
+}
+
+/* Scrollbar */
+
+.feed-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.feed-grid::-webkit-scrollbar-thumb {
+  background: #f68b1f;
+  border-radius: 20px;
+}
+
+.feed-grid::-webkit-scrollbar-track {
+  background: #f7f7f7;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .feed-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feed-media {
+    height: 220px;
+  }
+}

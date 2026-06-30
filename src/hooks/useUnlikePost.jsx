@@ -24,7 +24,13 @@ export const useUnlikePost = () => {
   return useMutation({
     mutationFn: unlikePost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["myposts"] });
+      queryClient.invalidateQueries({
+        queryKey: ["feed"],
+      });
+
+      queryClient.invalidateQueries({ 
+        queryKey: ["myposts"] 
+      });
     },
   });
 };

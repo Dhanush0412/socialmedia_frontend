@@ -6,11 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
     const navigate = useNavigate();
-
     const { data, isLoading, error } = useDashboard();
 
     console.log("Dashboard Data:", data);
-    
+
     if (isLoading) {
         return (
             <div className="loading">
@@ -44,11 +43,16 @@ function Dashboard() {
                         <div className="dashboard-image">
                             {profile?.profilepic ? (
                                 <img
-                                    src={`http://localhost:5000/uploads/${profile.profilepic}`}
+                                    src={profile.profilepic}
                                     alt="Profile"
+                                    className="profile-image"
+                                    onError={(e) => {
+                                        e.target.src =
+                                            "https://res.cloudinary.com/dubjosis9/image/upload/v1782300064/demoimage_b0q161.jpg";
+                                    }}
                                 />
                             ) : (
-                                <FaUserCircle />
+                                <FaUserCircle className="default-profile-icon" />
                             )}
                         </div>
 

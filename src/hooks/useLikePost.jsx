@@ -20,11 +20,18 @@ const likePost = async (postid) => {
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: likePost,
+
     onSuccess: () => {
-       queryClient.invalidateQueries({ queryKey: ["myposts"] });
+      queryClient.invalidateQueries({
+        queryKey: ["feed"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["myposts"],
+      });
     },
   });
 };
