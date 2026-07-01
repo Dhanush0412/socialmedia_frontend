@@ -27,6 +27,7 @@ import Group from "../pages/Group";
 import SearchUsers from "../pages/SearchUsers";
 import PendingRequests from "../pages/PendingRequests";
 import MyConnections from "../pages/MyConnections";
+import Chat from "../pages/Chat";
 
 function AppRoutes() {
   return (
@@ -57,7 +58,7 @@ function AppRoutes() {
 
       {/*Group chat */}
       <Route path="/group" element={<Group />} />
-      <Route path="/chat/:groupid" element={<GroupChat />} />
+      <Route path="/chat/:id" element={<Chat />} />
 
       {/*Connection*/}
       <Route path="/search-users" element={<SearchUsers />} />

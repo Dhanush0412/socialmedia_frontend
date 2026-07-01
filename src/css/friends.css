@@ -1,9 +1,31 @@
 .friends-page{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+  grid-template-columns:2fr 1fr;
+  gap:25px;
   padding:25px;
+  background:#f5f7fb;
+  min-height:calc(100vh - 70px);
 }
+
+.friends-left,
+.friends-right{
+  background:white;
+  border-radius:15px;
+  padding:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.friends-left h2,
+.friends-right h2{
+  margin-bottom:20px;
+  font-size:22px;
+  font-weight:700;
+}
+
+.friends-right{
+  height:fit-content;
+}
+
 @media(max-width:900px){
   .friends-page{
     grid-template-columns:1fr;

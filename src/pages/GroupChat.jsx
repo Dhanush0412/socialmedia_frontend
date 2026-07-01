@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useGroupDetails} from "../hooks/group/useGroupDetails";
-import MessageList from "../components/MessageList";
+import MessageList from "../components/Chat";
 import ChatInput from "../components/ChatInput";
 import "../css/chat.css";
 
@@ -20,7 +20,7 @@ return(
 <div className="chat-container">
 
 <div className="chat-header">
-<h1>Hello Group chat</h1>
+<h1>Hello Group chat team memmbers</h1>
 <h2>
 {data?.name}
 </h2>
