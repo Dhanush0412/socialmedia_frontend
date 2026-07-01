@@ -32,6 +32,19 @@ function Sidebar({ isMinimized, onToggle }) {
 
   return (
     <div className={`${styles.sidebar} ${isMinimized ? styles.collapsed : ""}`}>
+
+      {/* Toggle Button */}
+        <button
+          className={`${styles.toggleButton} ${isMinimized ? styles.toggleCollapsed : ""}`}
+          onClick={onToggle}
+        >
+          <div className={styles.hamburgerIcon}>
+            <span className={styles.line}></span>
+            <span className={styles.line}></span>
+            <span className={styles.line}></span>
+          </div>
+        </button>
+        
       <div className={styles.sidebarContent}>
         {/* Logo */}
         <div className={styles.logoContainer}>
@@ -85,15 +98,6 @@ function Sidebar({ isMinimized, onToggle }) {
             {!isMinimized && <span className={styles.label}>Settings</span>}
           </NavLink>
         </div>
-
-        {/* Toggle Button */}
-        <button
-          className={styles.toggleButton}
-          onClick={onToggle}
-          aria-label={isMinimized ? "Expand sidebar" : "Collapse sidebar"}
-        >
-          {isMinimized ? <FaChevronRight /> : <FaChevronLeft />}
-        </button>
       </div>
     </div>
   );
