@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { useSendConnection } from "../hooks/connection/useSendConnection";
-import "../css/UserCard.css";
+import {
+  Card,
+  CardContent,
+  Avatar,
+  Button,
+  Typography,
+  Box
+} from "@mui/material";
 
 function UserCard({ user }) {
   const sendRequest = useSendConnection();
-  const [sent,setSent]=useState(false);
+  const [sent,setSent] = useState(false);
 
   const username = user?.user?.username || "Unknown User";
   const image = user?.profilepic;
@@ -18,45 +25,115 @@ function UserCard({ user }) {
   };
 
   return (
-    <div className="user-card">
-      <div className="profile-image">
-        {image ? (
-          <img src={image} alt={username}/>
-        ) : (
-          <div className="avatar">
-            {username.charAt(0).toUpperCase()}
-          </div>
-        )}
-        <div className="profile-image__online"/>
-      </div>
+    <Card
+      sx={{
+        width:"100%",
+        borderRadius:3,
+        boxShadow:3,
+        display:"flex",
+        alignItems:"center",
+        flexShrink:0
+      }}
+    >
 
-      <div className="user-details">
-        <div className="user-info">
-          <h3 className="user-name">{username}</h3>
-        </div>
+      <CardContent
+        sx={{
+          width:"100%",
+          display:"flex",
+          alignItems:"center",
+          gap:2,
+          padding:"18px !important"
+        }}
+      >
 
-        <button
-          className={`connect-btn ${sent ? "connect-btn--sent" : ""}`}
+        <Box
+          sx={{
+            position:"relative",
+            flexShrink:0
+          }}
+        >
+
+          <Avatar
+            src={image}
+            sx={{
+              width:65,
+              height:65,
+              fontSize:28
+            }}
+          >
+            {!image && username.charAt(0).toUpperCase()}
+          </Avatar>
+
+
+          <Box
+            sx={{
+              position:"absolute",
+              width:14,
+              height:14,
+              background:"#22c55e",
+              borderRadius:"50%",
+              right:2,
+              bottom:3,
+              border:"3px solid white"
+            }}
+          />
+
+        </Box>
+
+
+        <Box
+          sx={{
+            flex:1,
+            overflow:"hidden"
+          }}
+        >
+
+          <Typography
+            variant="h6"
+            fontWeight={700}
+            sx={{
+              whiteSpace:"nowrap",
+              overflow:"hidden",
+              textOverflow:"ellipsis"
+            }}
+          >
+            {username}
+          </Typography>
+
+        </Box>
+
+
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius:5,
+            textTransform:"none",
+            px:3,
+            flexShrink:0,
+            background: sent
+              ? "#22c55e"
+              : "linear-gradient(135deg,#6366f1,#8b5cf6)",
+            "&:hover":{
+              background: sent
+                ? "#16a34a"
+                : "linear-gradient(135deg,#4f46e5,#7c3aed)"
+            }
+          }}
           onClick={handleSendRequest}
           disabled={sendRequest.isPending || sent}
         >
-          {sendRequest.isPending ? (
-            <span className="connect-btn__inner">
-              <span className="btn-spinner"/>
-              Sending...
-            </span>
-          ) : sent ? (
-            <span className="connect-btn__inner">
-              ✓ Sent
-            </span>
-          ) : (
-            <span className="connect-btn__inner">
-              Connect
-            </span>
-          )}
-        </button>
-      </div>
-    </div>
+          {
+            sendRequest.isPending
+            ? "Sending..."
+            : sent
+            ? "✓ Sent"
+            : "Connect"
+          }
+        </Button>
+
+      </CardContent>
+
+    </Card>
   );
 }
 

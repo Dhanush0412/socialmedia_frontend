@@ -1,5 +1,5 @@
-import Layout from "../components/Layout/Layout";
-import styles from "./Dashboard/Dashboard.module.css";
+import Layout from "../../components/Layout/Layout";
+import styles from "./Settings.module.css";
 
 function Settings() {
   return (

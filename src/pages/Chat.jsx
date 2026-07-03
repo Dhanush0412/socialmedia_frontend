@@ -1,100 +1,239 @@
-import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDirectMessages } from "../hooks/chat/useDirectMessages";
+import { useSendMessage } from "../hooks/chat/useSendMessage";
+import { socket } from "../socket";
+import "../Css/Chat.css";
 
-function Chat() {
+function Chat(){
 
-  const auth = useSelector(
-    (state) => state.auth
-  );
+  const { id } = useParams();
+  const userId = localStorage.getItem("userid");
 
-  const {
-    data,
-    isLoading,
-  } = useGetUsers();
+  const [message,setMessage] = useState("");
+  const [messages,setMessages] = useState([]);
 
-  if (isLoading) {
-    return (
-      <h2>
-        Loading...
-      </h2>
-    );
+  const messageEndRef = useRef(null);
+
+  const { data, isLoading } = useDirectMessages(id);
+  const sendMutation = useSendMessage();
+useEffect(()=>{
+  if(data){
+    setMessages([...data].reverse());
+  }
+},[data]);
+
+useEffect(()=>{
+  socket.emit("joinprofile",userId);
+
+  const receiveMessage=(newMessage)=>{
+    const senderId=newMessage.sender?._id || newMessage.sender;
+    const receiverId=newMessage.receiver?._id || newMessage.receiver;
+
+    const isCurrentChat=
+      (senderId===id && receiverId===userId) ||
+      (senderId===userId && receiverId===id);
+
+    if(isCurrentChat){
+      setMessages(prev=>{
+        const exists=prev.some(
+          msg=>msg._id===newMessage._id
+        );
+
+        if(exists) return prev;
+
+        return [...prev,newMessage];
+      });
+    }
+  };
+
+  socket.on("receiveDirectMessage",receiveMessage);
+
+  return()=>{
+    socket.off("receiveDirectMessage",receiveMessage);
+  };
+},[id,userId]);
+
+
+  useEffect(()=>{
+
+    messageEndRef.current?.scrollIntoView({
+      behavior:"smooth"
+    });
+
+  },[messages]);
+
+const sendMessage=()=>{
+
+  if(!message.trim()){
+    return;
   }
 
-  const user = data?.find(
-    (item) =>
-      item.email === auth?.email ||
-      item.phone === auth?.login ||
-      item.username === auth?.login
+
+  sendMutation.mutate(
+    {
+      receiverid:id,
+      text:message.trim()
+    },
+    {
+      onSuccess:()=>{
+
+        setMessage("");
+
+      }
+    }
   );
 
-  return (
-    <div
-      style={{
-        padding: "40px",
-        minHeight: "100vh",
+};
 
-        display: "flex",
-        flexDirection: "column",
+    
+  if(isLoading){
 
-        justifyContent: "center",
-        alignItems: "center",
+    return(
+      <div className="chat-loading">
+        Loading chat...
+      </div>
+    );
 
-        background:
-          "linear-gradient(135deg,#0f172a,#1e293b)",
+  }
 
-        color: "#fff",
-      }}
-    >
 
-      <div
-        style={{
-          width: "420px",
 
-          padding: "40px",
+  return(
 
-          borderRadius: "20px",
+    <div className="chat-box">
 
-          background:
-            "rgba(255,255,255,0.08)",
+      <div className="chat-top">
 
-          backdropFilter:
-            "blur(12px)",
+  <div className="chat-top-left">
 
-          textAlign: "center",
+    <div className="chat-avatar">
+      <span>{id ? id.charAt(0).toUpperCase() : "U"}</span>
+    </div>
 
-          boxShadow:
-            "0 10px 30px rgba(0,0,0,.3)",
-        }}
-      >
+    <div className="chat-top-info">
+      <h2>Chat</h2>
+      <span className="chat-top-status">Online</span>
+    </div>
 
-        <h1
-          style={{
-            marginBottom: "12px",
-          }}
-        >
-          Welcome
-          {" "}
-          {
-            user?.username ||
-            "User"
-          }
-        </h1>
+  </div>
 
-        <p
-          style={{
-            color:
-              "#cbd5e1",
+</div>
 
-            fontSize:
-              "16px",
-          }}
-        >
-          Enjoy chatting
-        </p>
+
+      <div className="chat-body">
+
+
+        {
+          messages.map((msg,index)=>(
+
+            <div
+
+              key={msg._id || index}
+
+              className={
+                msg.sender?._id === userId
+                ?
+                "message-wrapper sent"
+                :
+                "message-wrapper received"
+              }
+
+            >
+
+              <div className="message-content">
+
+                <p>
+                  {msg.text}
+                </p>
+
+                <span>
+                  {
+                    msg.createdAt &&
+                    new Date(
+                      msg.createdAt
+                    ).toLocaleTimeString(
+                      [],
+                      {
+                        hour:"2-digit",
+                        minute:"2-digit"
+                      }
+                    )
+                  }
+                </span>
+
+              </div>
+
+
+            </div>
+
+          ))
+        }
+
+
+        <div ref={messageEndRef}/>
+
 
       </div>
 
+
+
+      <div className="chat-footer">
+
+
+        <input
+
+          value={message}
+
+          placeholder="Type a message..."
+
+          onChange={
+            e=>setMessage(e.target.value)
+          }
+
+
+          onKeyDown={
+            e=>{
+
+              if(e.key==="Enter"){
+                sendMessage();
+              }
+
+            }
+          }
+
+        />
+
+
+        <button
+
+          onClick={sendMessage}
+
+          disabled={
+            sendMutation.isPending ||
+            !message.trim()
+          }
+
+        >
+
+          {
+            sendMutation.isPending
+            ?
+            "..."
+            :
+            "Send"
+          }
+
+        </button>
+
+
+      </div>
+
+
     </div>
+
   );
+
 }
 
 export default Chat;

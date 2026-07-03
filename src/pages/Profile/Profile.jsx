@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCreateProfile } from "../../hooks/useProfile";
 import { toast } from "react-toastify";
-import PandaLogo from "../../assets/panda 2.png";
+import { useCreateProfile } from "../../hooks/useProfile";
+import PandaLogo from "../../assets/Panda1.png";
 
-// MUI Components
 import {
   Box,
   Typography,
@@ -16,39 +15,69 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  LinearProgress,
   Fade,
+  LinearProgress,
 } from "@mui/material";
 
-// MUI Icons
 import {
-  Edit as EditIcon,
-  Person as PersonIcon,
-  Close as CloseIcon,
-  CheckCircle as CheckCircleIcon,
-  ArrowForward as ArrowForwardIcon,
+  CameraAlt,
+  Person,
+  ArrowForward,
+  CheckCircle,
+  Close,
+  ShieldOutlined,
 } from "@mui/icons-material";
 
-// CSS Module
 import styles from "./Profile.module.css";
 
 function Profile() {
   const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
+
   const [profileImage, setProfileImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
+
   const [showPopup, setShowPopup] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+
+  const { mutate, isPending } = useCreateProfile();
+
+  useEffect(() => {
+    // Get username from localStorage (set during login)
+    const storedUsername = localStorage.getItem("username") || 
+                          localStorage.getItem("userName") || 
+                          localStorage.getItem("name");
+    
+    // Also try to get from user data if stored as object
+    const userData = localStorage.getItem("userData");
+    let userName = storedUsername;
+    
+    if (userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        userName = parsedUser.username || parsedUser.userName || parsedUser.name || userName;
+      } catch (e) {
+        // If parsing fails, use the stored username
+      }
+    }
+
+    if (userName) {
+      setUsername(userName);
+    } else {
+      // Fallback to a default or redirect to login
+      setUsername("User");
+    }
+  }, []);
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setProfileImage(file);
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImage(imageUrl);
-      setShowPopup(true);
-    }
+
+    if (!file) return;
+
+    setProfileImage(file);
+    setPreviewImage(URL.createObjectURL(file));
+    setShowPopup(true);
   };
 
   const handleUpload = () => {
@@ -60,16 +89,19 @@ function Profile() {
   };
 
   const saveProfile = () => {
-    const userid = localStorage.getItem("userid");
+    const userid = localStorage.getItem("userid") || localStorage.getItem("userId");
 
     if (!userid) {
-      toast.error("User ID not found");
+      toast.error("User ID not found. Please login again.");
+      navigate("/login");
       return;
     }
 
     const formData = new FormData();
+
     formData.append("userid", userid);
     formData.append("bio", bio);
+    formData.append("username", username);
 
     if (profileImage) {
       formData.append("profilepic", profileImage);
@@ -77,15 +109,15 @@ function Profile() {
 
     mutate(formData, {
       onSuccess: (data) => {
-        console.log("Profile Response:", data);
         if (data.profileid) {
           localStorage.setItem("profileid", data.profileid);
         }
+
         toast.success("Profile Created Successfully");
         navigate("/dashboard");
       },
+
       onError: (error) => {
-        console.error(error);
         toast.error(
           error?.response?.data?.message || "Profile creation failed"
         );
@@ -93,168 +125,199 @@ function Profile() {
     });
   };
 
-  const { mutate, isPending } = useCreateProfile();
-
-  useEffect(() => {
-    const username = localStorage.getItem("username");
-    if (username) {
-      setUsername(username);
-    }
-  }, []);
-
   return (
     <Box className={styles.root}>
       <Box className={styles.container}>
-        {/* Left Panel */}
+        {/* =========================== LEFT PANEL ============================ */}
         <Box className={styles.leftPanel}>
-          {/* Soft Corner Bubbles */}
-          <Box className={styles.cornerBubble1} />
-          <Box className={styles.cornerBubble2} />
-          <Box className={styles.cornerBubble3} />
-          <Box className={styles.cornerBubble4} />
-          
-          <Box className={styles.brandingContent}>
-            <Box className={styles.logoWrapper}>
-              <img src={PandaLogo} alt="Panda" className={styles.pandaLogo} />
+          {/* Decorative Circles */}
+          <Box className={styles.circleOne}></Box>
+          <Box className={styles.circleTwo}></Box>
+          <Box className={styles.circleThree}></Box>
+
+          {/* Wave Icon */}
+          <Box className={styles.waveBox}>👋</Box>
+
+          {/* Welcome Text */}
+          <Typography className={styles.welcomeTitle}>
+            Welcome Back!
+          </Typography>
+
+          <Typography className={styles.welcomeSubTitle}>
+            Let's complete your profile
+            <br />
+            and personalize your experience.
+          </Typography>
+
+          {/* Panda Section */}
+          <Box className={styles.pandaSection}>
+            <Box className={styles.orangeGlow}></Box>
+            <img src={PandaLogo} alt="Panda" className={styles.pandaImage} />
+          </Box>
+
+          {/* Feature Card */}
+          <Box className={styles.featureCard}>
+            <Box className={styles.featureItem}>
+              <Box className={`${styles.iconCircle} ${styles.orange}`}>👤</Box>
+              <Box>
+                <Typography className={styles.featureTitle}>Connect</Typography>
+                <Typography className={styles.featureText}>
+                  Find and connect with friends
+                </Typography>
+              </Box>
             </Box>
-            
-            <Typography variant="h3" className={styles.welcomeTitle}>
-              Welcome Back!
-            </Typography>
-            
-            <Typography variant="body1" className={styles.welcomeSubtitle}>
-              Complete your profile
-            </Typography>
+
+            <Box className={styles.featureItem}>
+              <Box className={`${styles.iconCircle} ${styles.pink}`}>💬</Box>
+              <Box>
+                <Typography className={styles.featureTitle}>Chat</Typography>
+                <Typography className={styles.featureText}>
+                  Share moments and messages
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box className={styles.featureItem}>
+              <Box className={`${styles.iconCircle} ${styles.yellow}`}>🔔</Box>
+              <Box>
+                <Typography className={styles.featureTitle}>
+                  Stay Updated
+                </Typography>
+                <Typography className={styles.featureText}>
+                  Get notified about activities
+                </Typography>
+              </Box>
+            </Box>
           </Box>
         </Box>
 
-        {/* Right Panel */}
+        {/* =========================== RIGHT PANEL ============================ */}
         <Box className={styles.rightPanel}>
           <Box className={styles.profileCard}>
-            {/* Avatar */}
-            <Box
-              className={styles.avatarWrapper}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-            >
-              <Avatar
-                src={previewImage}
-                className={styles.profileAvatar}
-                sx={{ width: 120, height: 120, bgcolor: "#f68b1f" }}
-              >
-                {!previewImage && <PersonIcon sx={{ fontSize: 60 }} />}
+            {/* HEADER */}
+            <Box className={styles.header}>
+              <Typography className={styles.heading}>
+                Complete Your Profile
+              </Typography>
+              <Box className={styles.dotGrid}>
+                {Array.from({ length: 12 }).map((_, index) => (
+                  <span key={index}></span>
+                ))}
+              </Box>
+            </Box>
+
+            <Box className={styles.headingLine}></Box>
+
+            {/* PROFILE IMAGE */}
+            <Box className={styles.avatarWrapper}>
+              <Avatar src={previewImage} className={styles.avatar}>
+                {!previewImage && <Person sx={{ fontSize: 75 }} />}
               </Avatar>
-              <IconButton
-                component="label"
-                className={`${styles.editButton} ${
-                  isHovering ? styles.editButtonVisible : ""
-                }`}
-              >
-                <EditIcon />
+              <IconButton component="label" className={styles.cameraButton}>
+                <CameraAlt />
                 <input
-                  type="file"
                   hidden
+                  type="file"
                   accept="image/*"
                   onChange={handleImageSelect}
                 />
               </IconButton>
             </Box>
 
-            <Typography variant="h5" className={styles.username}>
-              {username || "User"}
-            </Typography>
+            {/* USERNAME - From Login */}
+            <Box className={styles.usernameContainer}>
+              <Typography className={styles.username}>
+                {username || "User"}
+              </Typography>
+            </Box>
 
-            {/* Bio */}
+            {/* BIO SECTION */}
             <Box className={styles.bioSection}>
+              <Typography className={styles.inputLabel}>Bio</Typography>
               <TextField
+                multiline
+                rows={5}
+                fullWidth
                 placeholder="Tell us about yourself..."
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
-                multiline
-                rows={3}
-                fullWidth
-                variant="outlined"
-                className={styles.bioTextField}
-                inputProps={{ maxLength: 500 }}
+                inputProps={{
+                  maxLength: 500,
+                }}
+                className={styles.bioInput}
               />
-              <Box className={styles.bioCounter}>
-                <Typography variant="caption">
-                  {bio.length}/500
-                </Typography>
-              </Box>
+              <Typography className={styles.bioCounter}>
+                {bio.length}/500
+              </Typography>
             </Box>
 
-            {/* Button */}
+            {/* CREATE PROFILE BUTTON */}
             <Button
-              variant="contained"
               fullWidth
-              size="large"
-              className={styles.saveButton}
+              variant="contained"
               onClick={saveProfile}
               disabled={isPending}
-              endIcon={!isPending && <ArrowForwardIcon />}
+              className={styles.createButton}
+              endIcon={!isPending && <ArrowForward />}
             >
               {isPending ? (
                 <Box className={styles.loadingWrapper}>
-                  <LinearProgress className={styles.loadingProgress} />
+                  <LinearProgress className={styles.loadingBar} />
                   Creating...
                 </Box>
               ) : (
                 "Create Profile"
               )}
             </Button>
+
+            {/* FOOTER NOTE */}
+            <Box className={styles.footerInfo}>
+              <ShieldOutlined className={styles.footerIcon} />
+              <Typography className={styles.footerText}>
+                You can always update your profile later
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
 
-      {/* Dialog */}
+      {/* =========================== IMAGE PREVIEW DIALOG =========================== */}
       <Dialog
         open={showPopup}
         onClose={handleCancel}
         maxWidth="xs"
         fullWidth
         TransitionComponent={Fade}
-        transitionDuration={400}
+        transitionDuration={350}
         className={styles.previewDialog}
       >
         <DialogTitle className={styles.dialogTitle}>
-          <Box className={styles.dialogTitleContent}>
-            <Box className={styles.dialogIconWrapper}>
-              <PersonIcon className={styles.dialogIcon} />
-            </Box>
-            <Box>
-              <Typography variant="h6" className={styles.dialogTitleText}>
-                Profile Picture
-              </Typography>
-              <Typography variant="body2" className={styles.dialogSubtitle}>
-                Is this how you want to appear?
-              </Typography>
-            </Box>
-          </Box>
+          Profile Picture
         </DialogTitle>
+
         <DialogContent className={styles.dialogContent}>
-          <Avatar
-            src={previewImage}
-            className={styles.previewAvatar}
-            sx={{ width: 180, height: 180, bgcolor: "#f68b1f" }}
-          >
-            {!previewImage && <PersonIcon sx={{ fontSize: 80 }} />}
+          <Avatar src={previewImage} className={styles.previewAvatar}>
+            {!previewImage && <Person sx={{ fontSize: 90 }} />}
           </Avatar>
+          <Typography className={styles.dialogText}>
+            Is this the profile picture you want to use?
+          </Typography>
         </DialogContent>
+
         <DialogActions className={styles.dialogActions}>
           <Button
             variant="contained"
-            className={styles.uploadButton}
+            startIcon={<CheckCircle />}
+            className={styles.usePhotoButton}
             onClick={handleUpload}
-            startIcon={<CheckCircleIcon />}
           >
             Use Photo
           </Button>
           <Button
             variant="outlined"
-            className={styles.cancelButton}
+            startIcon={<Close />}
+            className={styles.cancelPhotoButton}
             onClick={handleCancel}
-            startIcon={<CloseIcon />}
           >
             Cancel
           </Button>
