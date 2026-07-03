@@ -1,555 +1,780 @@
-/* Root */
+/* ====== ROOT ========= */
 .root {
+  width: 100%;
   height: 100vh;
-  width: 100vw;
-  background: linear-gradient(135deg, #fef9f4, #ffffff, #fef3e8);
+  background: linear-gradient(135deg, #fffaf5 0%, #ffffff 55%, #fff7ef 100%);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
 }
 
-/* Container */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============= MAIN CONTAINER =============== */
 .container {
-  width: 92%;
-  max-width: 1150px;
-  height: 86vh;
-  max-height: 720px;
-  display: flex;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(20px);
-  border-radius: 40px;
+  width: 1100px;
+  height: 650px;
+  background: #fff;
+  border-radius: 30px;
   overflow: hidden;
-  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  position: relative;
+  flex-shrink: 0;
 }
 
-/* Left Panel */
+/* =========  LEFT PANEL ======== */
 .leftPanel {
-  width: 38%;
-  background: linear-gradient(145deg, #f68b1f, #f7a81b, #f7c948);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 30px;
+  width: 42%;
+  background: linear-gradient(160deg, #fde8d0 0%, #fce4c8 30%, #f8d5b5 100%);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 30px 25px;
+  flex-shrink: 0;
 }
 
-/* Soft Corner Bubbles */
-.cornerBubble1 {
+/* ======== FLOATING CIRCLES ================= */
+.circleOne {
   position: absolute;
-  width: 350px;
-  height: 350px;
-  top: -100px;
-  right: -100px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.25);
+  left: -180px;
+  top: -140px;
 }
 
-.cornerBubble2 {
+.circleTwo {
   position: absolute;
-  width: 250px;
-  height: 250px;
-  bottom: -80px;
-  left: -80px;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  right: -120px;
+  bottom: -120px;
 }
 
-.cornerBubble3 {
+.circleThree {
   position: absolute;
   width: 120px;
   height: 120px;
-  top: 20%;
-  left: 5%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  right: 30px;
+  top: 80px;
 }
 
-.cornerBubble4 {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  bottom: 30%;
-  right: 10%;
+/* ================================ WAVE ICON ================================ */
+.waveBox {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
-}
-
-.brandingContent {
-  text-align: center;
-  z-index: 2;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+  z-index: 5;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
 }
 
-.logoWrapper {
+/* ================================ TITLE ================================ */
+.welcomeTitle {
+  color: #8b6b4a !important;
+  font-size: 32px !important;
+  font-weight: 800 !important;
+  letter-spacing: -1px;
+  margin-bottom: 4px !important;
+  z-index: 5;
+  text-align: center;
+}
+
+/* ================================ SUBTITLE ================================ */
+.welcomeSubTitle {
+  color: #a88362 !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  text-align: center;
+  max-width: 280px;
+  z-index: 5;
+  margin-bottom: 8px !important;
+}
+
+/* ================================ PANDA SECTION ================================ */
+.pandaSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 8px;
   position: relative;
-  animation: float 3.5s ease-in-out infinite;
+  z-index: 4;
 }
 
-.pandaLogo {
+.orangeGlow {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 150, 0.4), rgba(255, 200, 130, 0.2), rgba(255, 180, 100, 0.1));
+  position: absolute;
+  box-shadow: 0 30px 70px rgba(255, 180, 100, 0.15);
+}
+
+.pandaImage {
   width: 160px;
   height: 160px;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.12));
-}
-
-.welcomeTitle {
-  color: white !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.5px !important;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-  margin-top: 4px !important;
-}
-
-.welcomeSubtitle {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-weight: 300 !important;
-  font-size: 1rem !important;
-}
-
-/* Right Panel */
-.rightPanel {
-  width: 62%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 35px;
-}
-
-.profileCard {
-  width: 100%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Avatar */
-.avatarWrapper {
+  border-radius: 50%;
   position: relative;
+  z-index: 5;
+  object-fit: cover;
+  animation: float 5s ease-in-out infinite;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.profileAvatar {
-  border: 4px solid white !important;
-  box-shadow: 0 12px 40px rgba(246, 139, 31, 0.15) !important;
-  background: linear-gradient(135deg, #f68b1f, #ff8a00) !important;
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
 }
 
-.editButton {
-  position: absolute !important;
-  bottom: 2px !important;
-  right: 2px !important;
-  background: linear-gradient(135deg, #f68b1f, #ff8a00) !important;
-  color: white !important;
-  width: 34px !important;
-  height: 34px !important;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-  box-shadow: 0 4px 16px rgba(246, 139, 31, 0.3) !important;
-  border: 2px solid white !important;
-}
-
-.editButtonVisible {
-  opacity: 1 !important;
-  transform: scale(1) !important;
-}
-
-.editButton:hover {
-  background: linear-gradient(135deg, #e65f00, #f68b1f) !important;
-  transform: scale(1.1) !important;
-}
-
-.editButton .MuiSvgIcon-root {
-  font-size: 16px !important;
-}
-
-.username {
-  font-weight: 700 !important;
-  color: #1f2937 !important;
-}
-
-/* Bio */
-.bioSection {
+/* ================================ FEATURE CARD ================================ */
+.featureCard {
   width: 100%;
+  max-width: 280px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin-top: 18px;
+  padding: 16px 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+  z-index: 20;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.bioTextField .MuiOutlinedInput-root {
-  border-radius: 18px !important;
-  background: #f8f9fa !important;
-  transition: all 0.3s ease !important;
-}
-
-.bioTextField .MuiOutlinedInput-root:hover {
-  background: #ffffff !important;
-}
-
-.bioTextField .MuiOutlinedInput-root.Mui-focused {
-  background: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(246, 139, 31, 0.08) !important;
-}
-
-.bioTextField .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-  border-color: #e5e7eb !important;
-  border-width: 2px !important;
-}
-
-.bioTextField .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: #f68b1f !important;
-}
-
-.bioTextField textarea {
-  font-size: 0.9rem !important;
-  line-height: 1.6 !important;
-  padding: 12px 16px !important;
-}
-
-.bioCounter {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 4px;
-}
-
-.bioCounter span {
-  color: #9ca3af !important;
-  font-size: 0.65rem !important;
-}
-
-/* Button */
-.saveButton {
-  padding: 14px !important;
-  border-radius: 18px !important;
-  background: linear-gradient(135deg, #f68b1f, #ff8a00) !important;
-  font-weight: 700 !important;
-  font-size: 1rem !important;
-  text-transform: none !important;
-  box-shadow: 0 8px 32px rgba(246, 139, 31, 0.25) !important;
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-}
-
-.saveButton:hover:not(:disabled) {
-  background: linear-gradient(135deg, #e65f00, #f68b1f) !important;
-  transform: translateY(-3px);
-  box-shadow: 0 12px 48px rgba(246, 139, 31, 0.35) !important;
-}
-
-.saveButton:disabled {
-  opacity: 0.6 !important;
-}
-
-.loadingWrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-}
-
-.loadingProgress {
-  width: 20px !important;
-  height: 20px !important;
-  color: white !important;
-}
-
-/* Dialog */
-.previewDialog .MuiPaper-root {
-  border-radius: 32px !important;
-  overflow: hidden;
-  max-width: 420px !important;
-}
-
-.dialogTitle {
-  padding: 24px 24px 4px 24px !important;
-}
-
-.dialogTitleContent {
+.featureItem {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.dialogIconWrapper {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
-  border-radius: 50%;
+.featureItem:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.iconCircle {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.orange {
+  background: linear-gradient(135deg, #ffb347, #ff9a3c);
+}
+
+.pink {
+  background: linear-gradient(135deg, #ff7eb3, #ff5c8a);
+}
+
+.yellow {
+  background: linear-gradient(135deg, #ffd93d, #ffc107);
+}
+
+.featureTitle {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #6b4f3a !important;
+  line-height: 1.2 !important;
+}
+
+.featureText {
+  font-size: 12px !important;
+  color: #a08068 !important;
+  margin-top: 1px !important;
+  line-height: 1.3 !important;
+}
+
+/* ================================ RIGHT PANEL ================================ */
+.rightPanel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 30px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.profileCard {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+/* ================================ HEADER ================================ */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2px;
+}
+
+.heading {
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #222 !important;
+  letter-spacing: -0.5px;
+}
+
+.dotGrid {
+  width: 55px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.dotGrid span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffb347;
+  opacity: 0.6;
+}
+
+.headingLine {
+  width: 60px;
+  height: 3px;
+  border-radius: 20px;
+  background: #ff961d;
+  margin-top: 8px;
+  margin-bottom: 18px;
+}
+
+/* ================================ AVATAR ================================ */
+.avatarWrapper {
+  width: 110px;
+  margin: 0 auto 12px;
+  position: relative;
+}
+
+.avatar {
+  width: 110px !important;
+  height: 110px !important;
+  margin: auto;
+  border: 5px solid #fff;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #ff9c1a, #ff7d00) !important;
+  box-shadow: 0 20px 45px rgba(255, 145, 0, 0.25);
+}
+
+.cameraButton {
+  position: absolute !important;
+  right: 2px;
+  bottom: 2px;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  background: #ff9417 !important;
+  color: #fff !important;
+  border: 3px solid #fff !important;
+  transition: 0.3s;
+  padding: 0 !important;
+}
+
+.cameraButton:hover {
+  transform: scale(1.1);
+  background: #ff8200 !important;
+}
+
+.cameraButton svg {
+  font-size: 16px;
+}
+
+/* ================================ USERNAME ================================ */
+.usernameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.username {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #222 !important;
+}
+
+/* ================================ BIO - Bigger ================================ */
+.bioSection {
+  position: relative;
+  margin-bottom: 16px;
   flex-shrink: 0;
 }
 
-.dialogIcon {
-  color: #f68b1f;
-  font-size: 28px !important;
+.inputLabel {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #444 !important;
+  margin-bottom: 4px !important;
+  display: block;
 }
 
-.dialogTitleText {
+.bioInput {
+  border-radius: 16px !important;
+}
+
+.bioInput .MuiOutlinedInput-root {
+  border-radius: 16px !important;
+  background: #fafafa;
+  transition: 0.3s;
+}
+
+.bioInput .MuiOutlinedInput-root:hover {
+  background: #fff;
+}
+
+.bioInput .MuiOutlinedInput-root.Mui-focused {
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 153, 30, 0.1);
+}
+
+.bioInput textarea {
+  padding: 12px 14px !important;
+  font-size: 13px !important;
+  line-height: 22px !important;
+  min-height: 90px !important;
+  max-height: 90px !important;
+}
+
+.bioInput fieldset {
+  border: 2px solid #ececec !important;
+}
+
+.bioInput .Mui-focused fieldset {
+  border-color: #ff9417 !important;
+}
+
+.bioCounter {
+  position: absolute;
+  bottom: -16px;
+  right: 8px;
+  color: #999;
+  font-size: 11px !important;
+}
+
+/* ================================ CREATE BUTTON ================================ */
+.createButton {
+  height: 46px !important;
+  border-radius: 14px !important;
+  text-transform: none !important;
+  font-size: 15px !important;
   font-weight: 700 !important;
-  color: #1f2937 !important;
+  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
+  box-shadow: 0 18px 40px rgba(255, 145, 0, 0.28);
+  transition: 0.35s !important;
+  flex-shrink: 0;
 }
 
-.dialogSubtitle {
-  color: #6b7280 !important;
-  font-size: 0.85rem !important;
+.createButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 55px rgba(255, 145, 0, 0.35);
+}
+
+.createButton:disabled {
+  opacity: 0.7;
+}
+
+.loadingWrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.loadingBar {
+  position: absolute !important;
+  width: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0.3;
+}
+
+/* ================================ FOOTER ================================ */
+.footerInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  flex-shrink: 0;
+}
+
+.footerIcon {
+  color: #ff9417 !important;
+  font-size: 16px !important;
+}
+
+.footerText {
+  color: #777 !important;
+  font-size: 12px !important;
+}
+
+/* ================================ DIALOG ================================ */
+.previewDialog .MuiPaper-root {
+  border-radius: 28px !important;
+  overflow: hidden;
+}
+
+.dialogTitle {
+  text-align: center;
+  padding: 24px 24px 8px !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #222;
 }
 
 .dialogContent {
   display: flex !important;
-  justify-content: center !important;
-  padding: 16px 24px 20px 24px !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 30px 22px !important;
 }
 
 .previewAvatar {
-  border: 6px solid white !important;
-  box-shadow: 0 12px 48px rgba(246, 139, 31, 0.12) !important;
+  width: 160px !important;
+  height: 160px !important;
+  border-radius: 50% !important;
+  border: 8px solid #fff;
+  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
+  box-shadow: 0 20px 55px rgba(255, 145, 0, 0.28);
+}
+
+.dialogText {
+  margin-top: 14px !important;
+  font-size: 14px !important;
+  color: #555 !important;
+  text-align: center !important;
 }
 
 .dialogActions {
-  padding: 0 24px 24px 24px !important;
-  gap: 12px !important;
+  padding: 0 30px 24px !important;
+  display: flex !important;
+  gap: 12px;
 }
 
-.uploadButton {
+.usePhotoButton {
   flex: 1;
-  padding: 12px !important;
-  border-radius: 16px !important;
-  background: linear-gradient(135deg, #f68b1f, #ff8a00) !important;
+  height: 44px;
+  border-radius: 12px !important;
   text-transform: none !important;
-  font-weight: 600 !important;
-  box-shadow: 0 4px 20px rgba(246, 139, 31, 0.2) !important;
-  transition: all 0.3s ease !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, #ff9d1b, #ff7b00) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 30px rgba(255, 145, 0, 0.22);
 }
 
-.uploadButton:hover {
-  background: linear-gradient(135deg, #e65f00, #f68b1f) !important;
+.usePhotoButton:hover {
   transform: translateY(-2px);
 }
 
-.cancelButton {
+.cancelPhotoButton {
   flex: 1;
-  padding: 12px !important;
-  border-radius: 16px !important;
+  height: 44px;
+  border-radius: 12px !important;
   text-transform: none !important;
-  font-weight: 600 !important;
-  border-color: #e5e7eb !important;
-  color: #6b7280 !important;
-  transition: all 0.3s ease !important;
+  font-weight: 700 !important;
+  border: 2px solid #e6e6e6 !important;
+  color: #666 !important;
 }
 
-.cancelButton:hover {
-  border-color: #d1d5db !important;
-  background: #f9fafb !important;
-  transform: translateY(-2px);
+.cancelPhotoButton:hover {
+  background: #fafafa !important;
 }
 
-/* Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-14px); }
-}
-
-/* Responsive */
-@media (max-width: 900px) {
+/* ================================ RESPONSIVE ================================ */
+@media (max-width: 1024px) {
   .container {
-    flex-direction: column;
-    height: 94vh;
-    max-height: none;
     width: 95%;
-    border-radius: 32px;
+    height: auto;
+    flex-direction: column;
+    border-radius: 30px;
+    max-height: 95vh;
   }
 
   .leftPanel {
     width: 100%;
-    height: 30%;
-    padding: 20px 16px;
-    min-height: 160px;
-  }
-
-  .pandaLogo {
-    width: 80px;
-    height: 80px;
-  }
-
-  .welcomeTitle {
-    font-size: 1.6rem !important;
-  }
-
-  .welcomeSubtitle {
-    font-size: 0.85rem !important;
+    padding: 25px 25px 20px;
   }
 
   .rightPanel {
     width: 100%;
-    height: 70%;
-    padding: 20px;
+    padding: 25px;
+  }
+
+  .featureCard {
+    margin-top: 15px;
+    max-width: 100%;
+  }
+
+  .heading {
+    font-size: 26px !important;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .headingLine {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .dotGrid {
+    margin-top: 10px;
   }
 
   .profileCard {
     max-width: 100%;
-    gap: 10px;
   }
 
-  .profileAvatar {
-    width: 90px !important;
-    height: 90px !important;
-  }
-
-  .editButton {
-    width: 30px !important;
-    height: 30px !important;
-  }
-
-  .editButton .MuiSvgIcon-root {
-    font-size: 14px !important;
-  }
-
-  .username {
-    font-size: 1.3rem !important;
-  }
-
-  .cornerBubble1 {
-    width: 200px;
-    height: 200px;
-    top: -60px;
-    right: -60px;
-  }
-
-  .cornerBubble2 {
+  .pandaImage {
     width: 150px;
     height: 150px;
-    bottom: -50px;
-    left: -50px;
   }
 
-  .cornerBubble3,
-  .cornerBubble4 {
-    display: none;
+  .orangeGlow {
+    width: 170px;
+    height: 170px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  .root {
+    padding: 10px;
+  }
+
   .container {
-    height: 96vh;
-    border-radius: 24px;
-    width: 98%;
+    border-radius: 18px;
+    max-height: 98vh;
   }
 
   .leftPanel {
-    height: 26%;
-    padding: 16px 12px;
-    min-height: 120px;
+    padding: 18px 15px 15px;
   }
 
-  .pandaLogo {
-    width: 60px;
-    height: 60px;
+  .waveBox {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 50%;
+    margin-bottom: 8px;
   }
 
   .welcomeTitle {
-    font-size: 1.2rem !important;
-    margin-top: 2px !important;
+    font-size: 22px !important;
   }
 
-  .welcomeSubtitle {
-    font-size: 0.75rem !important;
+  .welcomeSubTitle {
+    font-size: 12px !important;
+    line-height: 18px !important;
+    max-width: 100%;
+    margin-bottom: 4px !important;
+  }
+
+  .orangeGlow {
+    width: 130px;
+    height: 130px;
+  }
+
+  .pandaImage {
+    width: 120px;
+    height: 120px;
+  }
+
+  .pandaSection {
+    margin-bottom: 4px;
+  }
+
+  .featureCard {
+    padding: 12px 16px;
+    border-radius: 16px;
+    margin-top: 14px;
+  }
+
+  .iconCircle {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  .featureItem {
+    gap: 10px;
+  }
+
+  .featureItem:not(:last-child) {
+    margin-bottom: 8px;
+  }
+
+  .featureTitle {
+    font-size: 13px !important;
+  }
+
+  .featureText {
+    font-size: 11px !important;
   }
 
   .rightPanel {
-    padding: 14px;
+    padding: 18px 15px;
   }
 
-  .profileCard {
-    gap: 8px;
+  .heading {
+    font-size: 20px !important;
   }
 
-  .profileAvatar {
-    width: 75px !important;
-    height: 75px !important;
+  .dotGrid {
+    width: 44px;
+    gap: 4px;
   }
 
-  .editButton {
-    width: 26px !important;
-    height: 26px !important;
+  .dotGrid span {
+    width: 4px;
+    height: 4px;
   }
 
-  .editButton .MuiSvgIcon-root {
-    font-size: 12px !important;
+  .headingLine {
+    width: 45px;
+    height: 3px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+  }
+
+  .avatarWrapper {
+    width: 85px;
+    margin: 0 auto 10px;
+  }
+
+  .avatar {
+    width: 85px !important;
+    height: 85px !important;
+  }
+
+  .cameraButton {
+    width: 28px !important;
+    height: 28px !important;
+    right: 1px;
+    bottom: 1px;
+  }
+
+  .cameraButton svg {
+    font-size: 12px;
   }
 
   .username {
-    font-size: 1.1rem !important;
+    font-size: 18px !important;
   }
 
-  .bioTextField .MuiOutlinedInput-root {
-    border-radius: 14px !important;
+  .usernameContainer {
+    margin-bottom: 10px;
   }
 
-  .bioTextField textarea {
-    font-size: 0.8rem !important;
-    padding: 10px 14px !important;
+  .bioSection {
+    margin-bottom: 14px;
   }
 
-  .saveButton {
-    padding: 12px !important;
-    font-size: 0.85rem !important;
-    border-radius: 14px !important;
+  .inputLabel {
+    font-size: 12px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .bioInput textarea {
+    font-size: 12px !important;
+    padding: 10px 12px !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
+    line-height: 18px !important;
+  }
+
+  .bioCounter {
+    font-size: 10px !important;
+    bottom: -14px;
+  }
+
+  .createButton {
+    height: 40px !important;
+    font-size: 13px !important;
+    border-radius: 12px !important;
+  }
+
+  .footerInfo {
+    margin-top: 12px;
+    gap: 5px;
+  }
+
+  .footerText {
+    font-size: 11px !important;
+  }
+
+  .footerIcon {
+    font-size: 14px !important;
   }
 
   .previewAvatar {
-    width: 150px !important;
-    height: 150px !important;
+    width: 110px !important;
+    height: 110px !important;
   }
 
   .dialogActions {
     flex-direction: column;
-    gap: 8px !important;
-    padding: 0 16px 16px 16px !important;
+    gap: 8px;
   }
 
-  .uploadButton,
-  .cancelButton {
+  .usePhotoButton,
+  .cancelPhotoButton {
     width: 100%;
+    height: 40px;
   }
 
   .dialogTitle {
-    padding: 16px 16px 4px 16px !important;
-  }
-
-  .dialogTitleContent {
-    gap: 10px;
-  }
-
-  .dialogIconWrapper {
-    width: 36px;
-    height: 36px;
-  }
-
-  .dialogIcon {
-    font-size: 20px !important;
-  }
-
-  .dialogTitleText {
-    font-size: 0.95rem !important;
-  }
-
-  .dialogSubtitle {
-    font-size: 0.7rem !important;
+    font-size: 18px !important;
+    padding: 18px 20px 5px !important;
   }
 
   .dialogContent {
-    padding: 12px 16px 16px 16px !important;
+    padding: 10px 16px 14px !important;
   }
-} 
+
+  .dialogText {
+    font-size: 12px !important;
+    margin-top: 10px !important;
+  }
+}

@@ -11,12 +11,12 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ForgotPassword from "../pages/ForgotPassword"
 import Home from "../pages/Home"
 
-import MyPosts from "../pages/MyPosts";
-import NewPost from "../pages/NewPost";
-import Feed from "../pages/Feed";
+import MyPosts from "../pages/MyPosts/MyPosts";
+import NewPost from "../pages/NewPost/NewPost";
+import Feed from "../pages/Feed/Feed";
 import Groups from "../pages/Groups";
 import Messages from "../pages/Messages";
-import Settings from "../pages/Settings";
+import Settings from "../pages/Settings/Settings";
 import GroupRequests from "../pages/GroupRequests";
 import Friends from "../pages/Friends";
 

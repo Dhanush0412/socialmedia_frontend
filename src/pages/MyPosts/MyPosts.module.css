@@ -1,0 +1,196 @@
+.mypostsContainer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 0 8px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  background: linear-gradient(135deg, #f68b1f, #f9a84c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.postCount {
+  font-size: 14px;
+  color: #666;
+  background: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 0;
+}
+
+.loadingText {
+  text-align: center;
+  color: #666;
+  margin-top: 60px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.emptyIcon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.emptyState h3 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.emptyState p {
+  color: #888;
+  font-size: 16px;
+  margin: 0;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 4px 0;
+}
+
+@media (max-width: 1024px) {
+  .mypostsContainer {
+    padding: 20px 24px;
+  }
+  
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .pageTitle {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mypostsContainer {
+    padding: 16px;
+  }
+  
+  .headerSection {
+    margin-bottom: 24px;
+  }
+  
+  .pageTitle {
+    font-size: 24px;
+  }
+  
+  .postCount {
+    font-size: 12px;
+    padding: 4px 14px;
+  }
+  
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mypostsContainer {
+    padding: 12px;
+    background: #f5f6fa;
+  }
+  
+  .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .pageTitle {
+    font-size: 22px;
+  }
+  
+  .postCount {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+  
+  .postsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0;
+  }
+  
+  .emptyState {
+    padding: 60px 16px;
+  }
+  
+  .emptyIcon {
+    font-size: 48px;
+  }
+  
+  .emptyState h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .mypostsContainer {
+    padding: 8px;
+  }
+  
+  .postsGrid {
+    gap: 12px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .mypostsContainer {
+    background: #121212;
+  }
+  
+  .postCount {
+    background: #2a2a2a;
+    color: #aaa;
+  }
+  
+  .emptyState {
+    background: #1a1a1a;
+  }
+  
+  .emptyState h3 {
+    color: #e0e0e0;
+  }
+  
+  .emptyState p {
+    color: #888;
+  }
+  
+  .loadingText {
+    color: #aaa;
+  }
+}
