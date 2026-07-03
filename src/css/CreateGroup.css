@@ -1,0 +1,164 @@
+.create-group{
+  width:100%;
+  max-width:650px;
+  margin:30px auto;
+  padding:25px;
+  background:white;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(15,23,42,0.1);
+}
+
+.create-group h2{
+  margin:0 0 25px;
+  font-size:26px;
+  font-weight:700;
+  color:#111827;
+  text-align:center;
+  border: none ;
+  background-color: #f68b1f;
+  border-radius: 50px;
+}
+
+.create-group input{
+  width:100%;
+  padding:14px 18px;
+  margin-bottom:15px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+  outline:none;
+  font-size:15px;
+  transition:.3s;
+  box-sizing:border-box;
+}
+
+.create-group input:focus{
+  border-color:#6366f1;
+  box-shadow:0 0 0 3px rgba(99,102,241,.15);
+}
+
+.selected-users{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin:15px 0;
+  padding:10px;
+  min-height:45px;
+  background:#f8fafc;
+  border-radius:14px;
+}
+
+.selected-user{
+  padding:8px 15px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#6366f1,#8b5cf6);
+  color:white;
+  font-size:14px;
+  font-weight:600;
+}
+
+.user-list{
+  max-height:350px;
+  overflow-y:auto;
+  margin-top:15px;
+  padding-right:5px;
+}
+
+.user-list::-webkit-scrollbar{
+  width:6px;
+}
+
+.user-list::-webkit-scrollbar-thumb{
+  background:#c7d2fe;
+  border-radius:10px;
+}
+
+.user{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:12px;
+  margin-bottom:10px;
+  border-radius:15px;
+  border:1px solid #e5e7eb;
+  cursor:pointer;
+  transition:.3s;
+  background:white;
+}
+
+.user:hover{
+  background:#f8fafc;
+  transform:translateY(-2px);
+}
+
+.user.active{
+  background:#eef2ff;
+  border:1px solid #6366f1;
+}
+
+.user img{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #e5e7eb;
+}
+
+.user span{
+  flex:1;
+  font-size:16px;
+  font-weight:600;
+  color:#1f2937;
+}
+
+.user b{
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#22c55e;
+  color:white;
+  font-size:16px;
+}
+
+.create-group button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#f68b1f,#f68b1f);
+  color:white;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.create-group button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(99,102,241,.35);
+}
+
+.create-group button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+@media(max-width:700px){
+
+.create-group{
+  margin:15px;
+  padding:20px;
+}
+
+.create-group h2{
+  font-size:22px;
+}
+
+.user-list{
+  max-height:300px;
+}
+
+}

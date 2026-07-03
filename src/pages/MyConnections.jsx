@@ -17,11 +17,17 @@ function MyConnections() {
     );
   }
 
-  const filteredFriends = data?.filter((friend) =>
-    friend?.user?.username
-      ?.toLowerCase()
-      .includes(search.toLowerCase())
-  );
+  const uniqueFriends = [
+  ...(new Map(
+    (data || []).map(friend => [friend._id, friend])
+  ).values())
+];
+
+const filteredFriends = uniqueFriends.filter(friend =>
+  friend?.user?.username
+    ?.toLowerCase()
+    .includes(search.toLowerCase())
+);
 
   return (
     

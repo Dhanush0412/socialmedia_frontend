@@ -1,30 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import { URL } from "../../../config";
-
-
-const getInvites=async()=>{
-
- const response=await axios.get(
-  `${URL}/group/invites`,
-  {
-   withCredentials:true
-  }
- );
-
- return response.data;
-
-};
-
+import {URL} from "../../../config";
 
 export const useGroupInvites=()=>{
 
- return useQuery({
+return useQuery({
 
-  queryKey:["groupInvites"],
+queryKey:["group-invites"],
 
-  queryFn:getInvites
+queryFn:async()=>{
 
- });
+const {data}=await axios.get(
+`${URL}/group/invites`,
+{
+headers:{
+Authorization:
+`Bearer ${localStorage.getItem("token")}`
+}
+}
+);
+
+return data;
+
+}
+
+});
 
 };

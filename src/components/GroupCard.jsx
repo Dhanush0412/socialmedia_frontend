@@ -1,23 +1,82 @@
+import {
+Card,
+Avatar,
+Typography,
+Button,
+Box
+} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+
 
 function GroupCard({group}){
 
 const navigate=useNavigate();
 
+
 return(
-<div className="group-card">
 
-<h3>{group.name}</h3>
+<Card
+sx={{
+display:"flex",
+alignItems:"center",
+padding:2
+}}
+>
 
-<p>
-Members: {group.members?.length || 0}
-</p>
 
-<button onClick={()=>navigate(`/dashboard/chat/${group.id}`)}>
-Open Chat
-</button>
+<Avatar>
 
-</div>
+{
+group.name
+.charAt(0)
+}
+
+</Avatar>
+
+
+<Box
+sx={{
+flex:1,
+ml:2
+}}
+>
+
+<Typography
+fontWeight={700}
+>
+
+{
+group.name
+}
+
+</Typography>
+
+
+<Typography>
+Group Chat
+</Typography>
+
+
+</Box>
+
+
+<Button
+
+variant="contained"
+
+onClick={()=>navigate(
+`/groupchat/${group._id}`
+)}
+
+>
+
+Open
+
+</Button>
+
+
+</Card>
+
 );
 
 }

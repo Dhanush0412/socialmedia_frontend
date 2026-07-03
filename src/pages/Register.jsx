@@ -173,10 +173,10 @@ const verifyOTP = async () => {
           <div className="orb orb-two"></div>
 
           <div className="left-content">
-            <div className="brand">
-              <div className="brand-icon">💬</div>
+            <div className="brand-top">
+              <div className="brand-image">💬</div>
 
-              <h3>
+              <h3 >
                 Panda<span>Chat</span>
               </h3>
             </div>
