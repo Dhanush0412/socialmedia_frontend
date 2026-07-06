@@ -9,7 +9,7 @@ from "../../../config";
 import {toast}
 from "react-toastify";
 const acceptRequest=async(id)=>{
-const queryClient=useQueryClient();
+
 const response=await axios.put(
 `${URL}/connection/accept/${id}`,
 {},
@@ -23,6 +23,7 @@ Authorization:
 return response.data;
 };
 export const useAcceptRequest=()=>{
+  const queryClient=useQueryClient();
 return useMutation({
 mutationFn:acceptRequest,
 onSuccess:(data)=>{

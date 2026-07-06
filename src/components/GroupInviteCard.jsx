@@ -1,10 +1,10 @@
 import {useAcceptInvite} from "../hooks/group/useAcceptGroupInvite";
-import {useRejectInvite} from "../hooks/group/useRejectGroupInvite";
+import {useRejectGroupInvite} from "../hooks/group/useRejectGroupInvite";
 
 function GroupInviteCard({invite}){
 
 const accept=useAcceptInvite();
-const reject=useRejectInvite();
+const reject=useRejectGroupInvite();
 
 
 return(

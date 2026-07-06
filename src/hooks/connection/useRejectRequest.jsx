@@ -8,7 +8,7 @@ from "../../../config";
 import {toast} from "react-toastify"
 
 const rejectRequest=async(id)=>{
-    const queryClient=useQueryClient();
+    
 
 const response=await axios.put(
 
@@ -29,7 +29,7 @@ return response.data;
 
 };
 export const useRejectRequest=()=>{
-
+const queryClient=useQueryClient();
 
 return useMutation({
 

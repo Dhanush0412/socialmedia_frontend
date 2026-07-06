@@ -1,38 +1,57 @@
-import {usePendingInvites} from "../hooks/group/usePendingInvites";
-import GroupInviteCard from "../components/GroupInviteCard";
+import {useGroupInvites} from "../hooks/group/useGroupInvite";
+import {useAcceptInvite} from "../hooks/group/useAcceptGroupInvite";
+import {useRejectGroupInvite} from "../hooks/group/useRejectGroupInvite";
+import GroupRequestCard from "../components/GroupRequestCard";
 import Layout from "../components/Layout/Layout";
-import styles from "./Dashboard/Dashboard.module.css";
 
 function GroupRequests(){
 
 const {
-data,
-isLoading
-}=usePendingInvites();
+data=[]
+}=useGroupInvites();
 
 
-if(isLoading)
-return <h2>Loading...</h2>;
+const accept=
+useAcceptInvite();
+
+
+const reject=
+useRejectGroupInvite();
+
 
 
 return(
-    <Layout>
+<Layout>
 <div>
 
-<h1>
-Group Requests
-</h1>
+<h2>
+Pending Group Requests
+</h2>
 
 
 {
-data?.map((invite)=>(
+data.map(invite=>(
 
-<GroupInviteCard
-key={invite._id}
+<GroupRequestCard
+
+key={
+invite._id
+}
+
 invite={invite}
+
+onAccept={()=>accept.mutate(
+invite._id
+)}
+
+onReject={()=>reject.mutate(
+invite._id
+)}
+
 />
 
 ))
+
 }
 
 
@@ -41,5 +60,6 @@ invite={invite}
 );
 
 }
+
 
 export default GroupRequests;

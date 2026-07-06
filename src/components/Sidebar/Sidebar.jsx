@@ -23,7 +23,7 @@ const menuItems = [
   { path: "/group-requests", icon: FiUser, label: "Group Requests" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
-  { path: "/groups", icon: FaUsers, label: "Groups" },
+  { path: "/create-group", icon: FaUsers, label: "Create Group" },
   { path: "/messages", icon: FaComments, label: "Messages" },
 ];
 

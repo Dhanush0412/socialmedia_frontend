@@ -1,5 +1,4 @@
-import "../css/Home.css";
-
+import "../Css/Home.css"
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -51,7 +50,25 @@ function Home() {
             <div className="message received">
               Let's start chatting 🚀
             </div>
+            <div className="message received">
+              Welcome to Chat Connect.
+            </div>
 
+            <div className="message sent">
+              Fast, secure and private.
+            </div>
+
+            <div className="message received">
+              Start chatting with your friends.
+            </div>
+
+            <div className="message sent">
+              Anytime. Anywhere.
+            </div>
+
+            <div className="message received">
+              💬 Stay Connected.
+            </div>
           </div>
         </div>
 
