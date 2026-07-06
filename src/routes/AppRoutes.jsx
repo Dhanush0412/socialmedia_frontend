@@ -20,8 +20,10 @@ import Settings from "../pages/Settings/Settings";
 import GroupRequests from "../pages/GroupRequests";
 import Friends from "../pages/Friends";
 
+
 import GroupChat from "../pages/GroupChat";
 import Group from "../pages/Group";
+import CreateGroup from "../pages/CreateGroup"
 
 
 import SearchUsers from "../pages/SearchUsers";
@@ -59,6 +61,7 @@ function AppRoutes() {
       {/*Group chat */}
       <Route path="/group" element={<Group />} />
       <Route path="/chat/:id" element={<Chat />} />
+      <Route path="/create-group" element={<CreateGroup />} />
 
       {/*Connection*/}
       <Route path="/search-users" element={<SearchUsers />} />
