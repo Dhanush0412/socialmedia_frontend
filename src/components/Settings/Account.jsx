@@ -19,6 +19,7 @@ import {
   Divider,
   Paper,
   Fade,
+  Snackbar,
 } from "@mui/material";
 import {
   Edit,
@@ -61,7 +62,6 @@ function Account({ showSnackbar }) {
   // Profile data state
   const [profileData, setProfileData] = useState({
     username: "",
-    phone: "",
     bio: "",
     profileid: "",
     avatar: "",
@@ -74,16 +74,16 @@ function Account({ showSnackbar }) {
 
   // Password data state
   const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    currentpassword: "",
+    newpassword: "",
+    confirmpassword: "",
   });
 
   // Password errors
   const [passwordErrors, setPasswordErrors] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
+    currentpassword: "",
+    newpassword: "",
+    confirmpassword: "",
   });
 
   // Fetch profile data
@@ -96,16 +96,15 @@ function Account({ showSnackbar }) {
   useEffect(() => {
     if (profileDataFromApi) {
       // Get username from localStorage as fallback
-      const storedUsername = localStorage.getItem("username") || 
-                            localStorage.getItem("userName") || 
-                            localStorage.getItem("name");
-      
+      const storedUsername = localStorage.getItem("username") ||
+        localStorage.getItem("userName") ||
+        localStorage.getItem("name");
+
       // Get bio from profile data or localStorage
       const storedBio = localStorage.getItem("bio") || "";
-      
+
       setProfileData({
         username: profileDataFromApi.username || profileDataFromApi.name || storedUsername || "",
-        phone: profileDataFromApi.phone || "",
         bio: profileDataFromApi.bio || storedBio || "",
         profileid: profileDataFromApi.profileid || localStorage.getItem("profileid") || "",
         avatar: profileDataFromApi.avatar || profileDataFromApi.profilepic || "",
@@ -117,12 +116,12 @@ function Account({ showSnackbar }) {
       });
     } else {
       // If no API data, try to get from localStorage
-      const storedUsername = localStorage.getItem("username") || 
-                            localStorage.getItem("userName") || 
-                            localStorage.getItem("name");
+      const storedUsername = localStorage.getItem("username") ||
+        localStorage.getItem("userName") ||
+        localStorage.getItem("name");
       const storedProfileId = localStorage.getItem("profileid");
       const storedBio = localStorage.getItem("bio") || "";
-      
+
       if (storedUsername) {
         setProfileData(prev => ({
           ...prev,
@@ -144,13 +143,36 @@ function Account({ showSnackbar }) {
   const handlePasswordChange = (e) => {
     const { name, value } = e.target;
     setPasswordData((prev) => ({ ...prev, [name]: value }));
+    // Clear specific field error when user starts typing
     setPasswordErrors((prev) => ({ ...prev, [name]: "" }));
+    
+    // If confirm password field is being typed in, check if it matches
+    if (name === "confirmpassword" && value !== passwordData.newpassword) {
+      setPasswordErrors((prev) => ({ 
+        ...prev, 
+        confirmpassword: "Passwords do not match" 
+      }));
+    } else if (name === "confirmpassword" && value === passwordData.newpassword) {
+      setPasswordErrors((prev) => ({ ...prev, confirmpassword: "" }));
+    }
   };
 
   // Handle image selection
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image size should be less than 5MB");
+      return;
+    }
+
+    // Validate file type
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file");
+      return;
+    }
 
     setSelectedImage(file);
     setPreviewImage(URL.createObjectURL(file));
@@ -164,16 +186,17 @@ function Account({ showSnackbar }) {
     try {
       const formData = new FormData();
       formData.append("profilepic", selectedImage);
-      
+
       await updateProfilePictureMutation.mutateAsync(formData);
-      
+
       setOpenImageDialog(false);
       setSelectedImage(null);
       setPreviewImage(null);
       toast.success("Profile picture updated successfully!");
       refetch();
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update profile picture");
+      const errorMessage = error.response?.data?.message || "Failed to update profile picture";
+      toast.error(errorMessage);
     }
   };
 
@@ -182,31 +205,41 @@ function Account({ showSnackbar }) {
     setOpenImageDialog(false);
     setSelectedImage(null);
     setPreviewImage(null);
+    // Revoke object URL to prevent memory leaks
+    if (previewImage) {
+      URL.revokeObjectURL(previewImage);
+    }
   };
 
   // Validate password
   const validatePassword = () => {
     let isValid = true;
-    const errors = { currentPassword: "", newPassword: "", confirmPassword: "" };
+    const errors = { currentpassword: "", newpassword: "", confirmpassword: "" };
 
-    if (!passwordData.currentPassword) {
-      errors.currentPassword = "Current password is required";
+    // Current password validation
+    if (!passwordData.currentpassword || passwordData.currentpassword.trim() === "") {
+      errors.currentpassword = "Current password is required";
       isValid = false;
     }
 
-    if (!passwordData.newPassword) {
-      errors.newPassword = "New password is required";
+    // New password validation
+    if (!passwordData.newpassword || passwordData.newpassword.trim() === "") {
+      errors.newpassword = "New password is required";
       isValid = false;
-    } else if (passwordData.newPassword.length < 6) {
-      errors.newPassword = "Password must be at least 6 characters";
+    } else if (passwordData.newpassword.length < 6) {
+      errors.newpassword = "Password must be at least 6 characters";
+      isValid = false;
+    } else if (passwordData.newpassword === passwordData.currentpassword) {
+      errors.newpassword = "New password must be different from current password";
       isValid = false;
     }
 
-    if (!passwordData.confirmPassword) {
-      errors.confirmPassword = "Please confirm your password";
+    // Confirm password validation
+    if (!passwordData.confirmpassword || passwordData.confirmpassword.trim() === "") {
+      errors.confirmpassword = "Please confirm your password";
       isValid = false;
-    } else if (passwordData.newPassword !== passwordData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
+    } else if (passwordData.newpassword !== passwordData.confirmpassword) {
+      errors.confirmpassword = "Passwords do not match";
       isValid = false;
     }
 
@@ -219,44 +252,87 @@ function Account({ showSnackbar }) {
     try {
       const updateData = {
         username: profileData.username,
-        phone: profileData.phone,
         bio: profileData.bio,
       };
-      
+
       await editProfileMutation.mutateAsync(updateData);
-      
+
       // Save bio to localStorage
       localStorage.setItem("bio", profileData.bio);
-      
+
       setEditProfile(false);
       toast.success("Profile updated successfully!");
       refetch();
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update profile");
+      const errorMessage = error.response?.data?.message || "Failed to update profile";
+      toast.error(errorMessage);
     }
   };
 
   // Change password
   const handleChangePassword = async () => {
+    // Validate password first
     if (!validatePassword()) {
       return;
     }
 
     try {
-      await changePasswordMutation.mutateAsync({
-        currentPassword: passwordData.currentPassword,
-        newPassword: passwordData.newPassword,
+      // Prepare the payload
+      const payload = {
+        currentpassword: passwordData.currentpassword,
+        newpassword: passwordData.newpassword,
+        confirmpassword: passwordData.confirmpassword
+      };
+
+      console.log("Password data being sent:", {
+        ...payload,
+        currentpassword: "***",
+        newpassword: "***",
+        confirmpassword: "***"
       });
 
+      await changePasswordMutation.mutateAsync(payload);
+
+      // Success - close dialog and clear form
       setOpenPasswordDialog(false);
       setPasswordData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
+        currentpassword: "",
+        newpassword: "",
+        confirmpassword: "",
+      });
+      setPasswordErrors({
+        currentpassword: "",
+        newpassword: "",
+        confirmpassword: "",
       });
       toast.success("Password changed successfully!");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to change password");
+      console.error("Password change error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      });
+
+      // Handle specific error messages from the server
+      let errorMessage = "Failed to change password";
+      
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+        
+        // Map server error to specific field
+        if (errorMessage.toLowerCase().includes("current password")) {
+          setPasswordErrors(prev => ({
+            ...prev,
+            currentpassword: errorMessage
+          }));
+          // Focus on current password field
+          document.querySelector('input[name="currentpassword"]')?.focus();
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error(errorMessage);
+      }
     }
   };
 
@@ -326,8 +402,8 @@ function Account({ showSnackbar }) {
             >
               {profileData.username ? profileData.username.charAt(0).toUpperCase() : "U"}
             </Avatar>
-            <IconButton 
-              component="label" 
+            <IconButton
+              component="label"
               className={styles.cameraButton}
               size="small"
             >
@@ -347,14 +423,14 @@ function Account({ showSnackbar }) {
               />
             )}
           </Box>
-          
+
           {/* Bio next to avatar */}
           <Box className={styles.avatarBioContainer}>
             <Typography variant="body2" className={styles.avatarBioText}>
               {profileData.bio || "No bio added yet"}
             </Typography>
           </Box>
-          
+
           <Box className={styles.profileActions}>
             <Button
               variant="outlined"
@@ -377,23 +453,17 @@ function Account({ showSnackbar }) {
                 label="Username"
                 name="username"
                 value={profileData.username}
+                disabled={true}
                 onChange={handleProfileChange}
                 margin="normal"
                 size="medium"
                 InputProps={{
                   startAdornment: <Person className={styles.inputIcon} />,
                 }}
-              />
-              <TextField
-                fullWidth
-                label="Phone"
-                name="phone"
-                value={profileData.phone}
-                onChange={handleProfileChange}
-                margin="normal"
-                size="medium"
-                InputProps={{
-                  startAdornment: <Phone className={styles.inputIcon} />,
+                sx={{
+                  '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                    borderColor: '#ff9417',
+                  },
                 }}
               />
               <TextField
@@ -409,6 +479,11 @@ function Account({ showSnackbar }) {
                 placeholder="Tell us about yourself..."
                 inputProps={{ maxLength: 500 }}
                 helperText={`${profileData.bio?.length || 0}/500`}
+                sx={{
+                  '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                    borderColor: '#ff9417',
+                  },
+                }}
               />
               <Box className={styles.editProfileActions}>
                 <Button
@@ -426,14 +501,13 @@ function Account({ showSnackbar }) {
                   onClick={() => {
                     setEditProfile(false);
                     if (profileDataFromApi) {
-                      const storedUsername = localStorage.getItem("username") || 
-                                            localStorage.getItem("userName") || 
-                                            localStorage.getItem("name");
+                      const storedUsername = localStorage.getItem("username") ||
+                        localStorage.getItem("userName") ||
+                        localStorage.getItem("name");
                       const storedBio = localStorage.getItem("bio") || "";
-                      
+
                       setProfileData({
                         username: profileDataFromApi.username || profileDataFromApi.name || storedUsername || "",
-                        phone: profileDataFromApi.phone || "",
                         bio: profileDataFromApi.bio || storedBio || "",
                         profileid: profileDataFromApi.profileid || localStorage.getItem("profileid") || "",
                         avatar: profileDataFromApi.avatar || profileDataFromApi.profilepic || "",
@@ -456,43 +530,42 @@ function Account({ showSnackbar }) {
           <Box>
             {/* Profile Info Grid */}
             <Box className={styles.profileInfo}>
-              <Box className={styles.infoItem}>
-                <Person className={styles.infoIcon} />
-                <Box>
-                  <Typography variant="caption" color="textSecondary">
-                    Username
-                  </Typography>
-                  <Typography variant="body1">{profileData.username || "Not set"}</Typography>
-                </Box>
-              </Box>
-              <Box className={styles.infoItem}>
-                <Phone className={styles.infoIcon} />
-                <Box>
-                  <Typography variant="caption" color="textSecondary">
-                    Phone
-                  </Typography>
-                  <Typography variant="body1">{profileData.phone || "Not set"}</Typography>
-                </Box>
-              </Box>
-              <Box className={styles.infoItem}>
-                <AssignmentInd className={styles.infoIcon} />
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+              {/* Username with Change Password Button */}
+              <Box className={styles.usernameContainer}>
+                <Box className={styles.infoItem}>
+                  <Person className={styles.infoIcon} />
                   <Box>
                     <Typography variant="caption" color="textSecondary">
+                      Username
+                    </Typography>
+                    <Typography variant="body1">{profileData.username || "Not set"}</Typography>
+                  </Box>
+                </Box>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  startIcon={<VpnKey />}
+                  onClick={() => setOpenPasswordDialog(true)}
+                  className={styles.changePasswordBtn}
+                >
+                  Change Password
+                </Button>
+              </Box>
+
+              {/* Profile ID Box */}
+              <Box className={styles.profileIdBox}>
+                <Box className={styles.profileIdContent}>
+                  <Box className={styles.profileIdIconWrapper}>
+                    <AssignmentInd className={styles.profileIdIcon} />
+                  </Box>
+                  <Box className={styles.profileIdInfo}>
+                    <Typography variant="caption" color="textSecondary" className={styles.profileIdLabel}>
                       Profile ID
                     </Typography>
-                    <Typography variant="body1">{profileData.profileid || "Not set"}</Typography>
+                    <Typography variant="body1" className={styles.profileIdValue}>
+                      {profileData.profileid || "Not set"}
+                    </Typography>
                   </Box>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<VpnKey />}
-                    onClick={() => setOpenPasswordDialog(true)}
-                    className={styles.changePasswordInlineBtn}
-                    color="primary"
-                  >
-                    Change Password
-                  </Button>
                 </Box>
               </Box>
             </Box>
@@ -506,14 +579,14 @@ function Account({ showSnackbar }) {
         onClose={() => {
           setOpenPasswordDialog(false);
           setPasswordData({
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: "",
+            currentpassword: "",
+            newpassword: "",
+            confirmpassword: "",
           });
           setPasswordErrors({
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: "",
+            currentpassword: "",
+            newpassword: "",
+            confirmpassword: "",
           });
         }}
         maxWidth="sm"
@@ -531,20 +604,20 @@ function Account({ showSnackbar }) {
         <DialogContent className={styles.dialogContent}>
           <DialogContentText className={styles.dialogText}>
             Enter your current password and choose a new password for your account.
-            For security, your new password must be at least 6 characters long.
+            For security, your new password must be at least 6 characters long and different from your current password.
           </DialogContentText>
 
           <TextField
             fullWidth
             label="Current Password"
-            name="currentPassword"
+            name="currentpassword"
             type={showCurrentPassword ? "text" : "password"}
-            value={passwordData.currentPassword}
+            value={passwordData.currentpassword}
             onChange={handlePasswordChange}
             margin="normal"
             size="medium"
-            error={!!passwordErrors.currentPassword}
-            helperText={passwordErrors.currentPassword}
+            error={!!passwordErrors.currentpassword}
+            helperText={passwordErrors.currentpassword}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -562,19 +635,24 @@ function Account({ showSnackbar }) {
                 </InputAdornment>
               ),
             }}
+            sx={{
+              '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                borderColor: '#ff9417',
+              },
+            }}
           />
 
           <TextField
             fullWidth
             label="New Password"
-            name="newPassword"
+            name="newpassword"
             type={showNewPassword ? "text" : "password"}
-            value={passwordData.newPassword}
+            value={passwordData.newpassword}
             onChange={handlePasswordChange}
             margin="normal"
             size="medium"
-            error={!!passwordErrors.newPassword}
-            helperText={passwordErrors.newPassword || "Password must be at least 6 characters"}
+            error={!!passwordErrors.newpassword}
+            helperText={passwordErrors.newpassword || "Password must be at least 6 characters"}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -592,19 +670,24 @@ function Account({ showSnackbar }) {
                 </InputAdornment>
               ),
             }}
+            sx={{
+              '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                borderColor: '#ff9417',
+              },
+            }}
           />
 
           <TextField
             fullWidth
             label="Confirm New Password"
-            name="confirmPassword"
+            name="confirmpassword"
             type={showConfirmPassword ? "text" : "password"}
-            value={passwordData.confirmPassword}
+            value={passwordData.confirmpassword}
             onChange={handlePasswordChange}
             margin="normal"
             size="medium"
-            error={!!passwordErrors.confirmPassword}
-            helperText={passwordErrors.confirmPassword}
+            error={!!passwordErrors.confirmpassword}
+            helperText={passwordErrors.confirmpassword || "Passwords do not match"}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -622,12 +705,17 @@ function Account({ showSnackbar }) {
                 </InputAdornment>
               ),
             }}
+            sx={{
+              '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+                borderColor: '#ff9417',
+              },
+            }}
           />
 
           {changePasswordMutation.isError && (
             <Alert severity="error" className={styles.passwordAlert}>
               {changePasswordMutation.error?.response?.data?.message ||
-                "Failed to change password"}
+                "Failed to change password. Please check your current password and try again."}
             </Alert>
           )}
         </DialogContent>
@@ -636,14 +724,14 @@ function Account({ showSnackbar }) {
             onClick={() => {
               setOpenPasswordDialog(false);
               setPasswordData({
-                currentPassword: "",
-                newPassword: "",
-                confirmPassword: "",
+                currentpassword: "",
+                newpassword: "",
+                confirmpassword: "",
               });
               setPasswordErrors({
-                currentPassword: "",
-                newPassword: "",
-                confirmPassword: "",
+                currentpassword: "",
+                newpassword: "",
+                confirmpassword: "",
               });
             }}
             color="primary"
@@ -657,6 +745,7 @@ function Account({ showSnackbar }) {
             color="primary"
             disabled={changePasswordMutation.isLoading}
             startIcon={<Save />}
+            className={styles.saveBtn}
           >
             {changePasswordMutation.isLoading ? "Changing..." : "Change Password"}
           </Button>
@@ -680,7 +769,13 @@ function Account({ showSnackbar }) {
         </DialogTitle>
         <DialogContent className={styles.dialogContent}>
           <Box className={styles.previewContainer}>
-            <Avatar src={previewImage} className={styles.previewAvatar}>
+            <Avatar
+              src={previewImage}
+              className={styles.previewAvatar}
+              sx={{
+                background: 'linear-gradient(135deg, #ff9f1a, #ff7900) !important',
+              }}
+            >
               {!previewImage && <Person sx={{ fontSize: 90 }} />}
             </Avatar>
             <Typography className={styles.dialogText}>
@@ -694,6 +789,7 @@ function Account({ showSnackbar }) {
             startIcon={<CheckCircle />}
             onClick={handleImageUpload}
             disabled={updateProfilePictureMutation.isLoading}
+            className={styles.usePhotoBtn}
           >
             {updateProfilePictureMutation.isLoading ? "Uploading..." : "Use Photo"}
           </Button>
