@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardMedia,
@@ -8,7 +8,14 @@ import {
   IconButton,
   TextField,
   Box,
-  Collapse,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Avatar,
+  Divider,
+  Slide,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import {
   Favorite,
@@ -16,6 +23,7 @@ import {
   ChatBubbleOutlineOutlined,
   DeleteOutlined,
   Send,
+  Close,
 } from "@mui/icons-material";
 import { useDashboard } from "../../hooks/useDashboard";
 import { useLikePost } from "../../hooks/useLikePost";
@@ -27,58 +35,101 @@ import {
 } from "../../hooks/useComments";
 import styles from "./PostCard.module.css";
 
+// Transition for dialog
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 function PostCard({ post }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { data: dashboard } = useDashboard();
   const profileid = dashboard?.profileid;
 
   const { mutate: likePost } = useLikePost(profileid);
   const { mutate: unlikePost } = useUnlikePost(profileid);
 
-  const { data: comments = [] } = useComments(post._id);
+  const { data: comments = [], refetch: refetchComments } = useComments(post._id);
   const { mutate: addComment } = useAddComment();
   const { mutate: deleteComment } = useDeleteComment();
 
-  const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [expanded, setExpanded] = useState(false);
-
-  const isLiked = post.likes?.some(
-    (like) => like.toString() === profileid
+  const [likeCount, setLikeCount] = useState(post.likes?.length || 0);
+  const [isLiked, setIsLiked] = useState(
+    post.likes?.some((like) => like.toString() === profileid)
   );
+  const [openModal, setOpenModal] = useState(false);
+  const [modalCommentText, setModalCommentText] = useState("");
 
-  const isLong = post.caption?.length > 100;
+  // Update like state when post changes
+  useEffect(() => {
+    setIsLiked(post.likes?.some((like) => like.toString() === profileid));
+    setLikeCount(post.likes?.length || 0);
+  }, [post.likes, profileid]);
 
-  const displayedCaption =
-    expanded || !isLong
-      ? post.caption
-      : post.caption?.slice(0, 100);
+  // Check if caption is longer than 50 characters
+  const isLong = post.caption?.length > 50;
 
-  const handleAddComment = () => {
-    if (!commentText.trim()) return;
+  // Display caption (first 50 chars)
+  const displayedCaption = isLong
+    ? post.caption?.slice(0, 50)
+    : post.caption;
+
+  const handleLikeToggle = () => {
+    if (isLiked) {
+      unlikePost(post._id);
+      setIsLiked(false);
+      setLikeCount(prev => prev - 1);
+    } else {
+      likePost(post._id);
+      setIsLiked(true);
+      setLikeCount(prev => prev + 1);
+    }
+  };
+
+  const handleDeleteComment = (commentId) => {
+    deleteComment({
+      commentid: commentId,
+      postid: post._id,
+    });
+    setTimeout(() => refetchComments(), 500);
+  };
+
+  const handleModalAddComment = () => {
+    if (!modalCommentText.trim()) return;
 
     addComment({
       postid: post._id,
-      text: commentText,
+      text: modalCommentText,
     });
 
-    setCommentText("");
+    setModalCommentText("");
+    setTimeout(() => refetchComments(), 500);
   };
 
-  // CORRECT DATE FORMATTING
+  const handleOpenModal = (e) => {
+    if (e) e.stopPropagation();
+    setOpenModal(true);
+    refetchComments();
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setModalCommentText("");
+  };
+
+  // Format date
   const formatDate = (date) => {
     const now = new Date();
     const postDate = new Date(date);
     
-    // Reset time part for accurate day comparison
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     const postDay = new Date(postDate.getFullYear(), postDate.getMonth(), postDate.getDate());
     
     const diffTime = today - postDay;
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     
-    // Check if it's today
     if (diffDays === 0) {
-      // Show time for today's posts
       const hours = postDate.getHours().toString().padStart(2, '0');
       const minutes = postDate.getMinutes().toString().padStart(2, '0');
       return `Today at ${hours}:${minutes}`;
@@ -87,7 +138,6 @@ function PostCard({ post }) {
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     
-    // For older posts, show date
     return postDate.toLocaleDateString('en-US', { 
       month: 'short', 
       day: 'numeric',
@@ -96,119 +146,230 @@ function PostCard({ post }) {
   };
 
   return (
-    <Card className={styles.postCard} elevation={0}>
-      {/* MEDIA */}
-      {post.media?.includes("/video/upload/") ? (
-        <Box className={styles.mediaContainer}>
-          <video controls className={styles.media}>
-            <source src={post.media} />
-          </video>
-        </Box>
-      ) : (
-        <Box className={styles.mediaContainer}>
-          <CardMedia
-            component="img"
-            image={post.media}
-            alt="post"
-            className={styles.media}
-          />
-        </Box>
-      )}
-
-      {/* CAPTION WITH TIME */}
-      <CardContent className={styles.captionContainer}>
-        <Typography className={styles.captionText}>
-          {displayedCaption}
-          {isLong && (
-            <span
-              onClick={() => setExpanded((prev) => !prev)}
-              className={styles.readMore}
-            >
-              {expanded ? " Read Less" : " ...Read More"}
-            </span>
+    <>
+      <Card className={styles.postCard} elevation={0}>
+        {/* MEDIA - Clickable to open modal */}
+        <Box className={styles.mediaWrapper} onClick={handleOpenModal}>
+          {post.media?.includes("/video/upload/") ? (
+            <Box className={styles.mediaContainer}>
+              <video controls className={styles.media} onClick={(e) => e.stopPropagation()}>
+                <source src={post.media} />
+              </video>
+            </Box>
+          ) : (
+            <Box className={styles.mediaContainer}>
+              <CardMedia
+                component="img"
+                image={post.media}
+                alt="post"
+                className={styles.media}
+              />
+            </Box>
           )}
-        </Typography>
-        <Typography className={styles.postTime}>
-          {formatDate(post.createdAt)}
-        </Typography>
-      </CardContent>
-
-      {/* ACTIONS - Only Like and Comment */}
-      <CardActions className={styles.actions}>
-        <Box className={styles.actionGroup}>
-          <IconButton
-            className={styles.actionButton}
-            onClick={() =>
-              isLiked ? unlikePost(post._id) : likePost(post._id)
-            }
-            size="small"
-          >
-            {isLiked ? (
-              <Favorite className={styles.likedIcon} />
-            ) : (
-              <FavoriteBorder className={styles.actionIcon} />
-            )}
-            <Typography className={styles.actionCount}>
-              {post.likes?.length || 0}
-            </Typography>
-          </IconButton>
-
-          <IconButton
-            className={styles.actionButton}
-            onClick={() => setShowComments((prev) => !prev)}
-            size="small"
-          >
-            <ChatBubbleOutlineOutlined className={styles.actionIcon} />
-            <Typography className={styles.actionCount}>
-              {comments.length}
-            </Typography>
-          </IconButton>
         </Box>
-      </CardActions>
 
-      {/* COMMENT SECTION */}
-      <Collapse in={showComments}>
-        <Box className={styles.commentSection}>
-          <Box className={styles.commentBox}>
-            <TextField
-              type="text"
-              placeholder="Write a comment..."
-              value={commentText}
-              onChange={(e) => setCommentText(e.target.value)}
-              variant="outlined"
+        {/* CAPTION SECTION */}
+        <CardContent className={styles.captionContainer}>
+          <Box className={styles.captionWrapper}>
+            <Typography className={styles.captionText}>
+              {displayedCaption}
+              {isLong && (
+                <span 
+                  className={styles.readMoreInline}
+                  onClick={handleOpenModal}
+                >
+                  ... <span className={styles.readMoreLink}>Read More</span>
+                </span>
+              )}
+            </Typography>
+          </Box>
+          
+          {/* Post Time */}
+          <Typography className={styles.postTime}>
+            {formatDate(post.createdAt)}
+          </Typography>
+        </CardContent>
+
+        {/* ACTIONS - Only Like and Comment */}
+        <CardActions className={styles.actions}>
+          <Box className={styles.actionGroup}>
+            <IconButton
+              className={styles.actionButton}
+              onClick={handleLikeToggle}
               size="small"
-              className={styles.commentInput}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") handleAddComment();
-              }}
-            />
-            <button 
-              className={styles.commentButton}
-              onClick={handleAddComment}
             >
-              <Send style={{ fontSize: '16px' }} />
-            </button>
+              {isLiked ? (
+                <Favorite className={styles.likedIcon} />
+              ) : (
+                <FavoriteBorder className={styles.actionIcon} />
+              )}
+              <Typography className={styles.actionCount}>
+                {likeCount}
+              </Typography>
+            </IconButton>
+
+            <IconButton
+              className={styles.actionButton}
+              onClick={handleOpenModal}
+              size="small"
+            >
+              <ChatBubbleOutlineOutlined className={styles.actionIcon} />
+              <Typography className={styles.actionCount}>
+                {comments.length}
+              </Typography>
+            </IconButton>
+          </Box>
+        </CardActions>
+      </Card>
+
+      {/* FULL POST DETAILS MODAL */}
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        TransitionComponent={Transition}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          className: styles.modalPaper,
+        }}
+      >
+        <DialogTitle className={styles.modalTitle}>
+          <Box className={styles.modalHeader}>
+            <Box className={styles.modalUserInfo}>
+              <Avatar 
+                className={styles.modalAvatar}
+                src={post.profile?.avatar}
+              >
+                {post.profile?.user?.username?.charAt(0).toUpperCase() || "U"}
+              </Avatar>
+              <Box>
+                <Typography className={styles.modalUserName}>
+                  {post.profile?.user?.username || "User"}
+                </Typography>
+                <Typography className={styles.modalPostTime}>
+                  {formatDate(post.createdAt)}
+                </Typography>
+              </Box>
+            </Box>
+            <IconButton 
+              className={styles.modalCloseButton}
+              onClick={handleCloseModal}
+            >
+              <Close />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+
+        <DialogContent className={styles.modalContent}>
+          {/* Full Caption */}
+          <Box className={styles.modalCaptionSection}>
+            <Typography className={styles.modalCaptionText}>
+              {post.caption || "No caption"}
+            </Typography>
           </Box>
 
-          <Box className={styles.commentList}>
-            {comments?.map((c) => (
-              <Box key={c._id} className={styles.commentItem}>
-                <span>{c.text}</span>
-                <DeleteOutlined
-                  className={styles.deleteIcon}
-                  onClick={() =>
-                    deleteComment({
-                      commentid: c._id,
-                      postid: post._id,
-                    })
-                  }
+          {/* Media in Modal */}
+          {post.media && (
+            <Box className={styles.modalMediaContainer}>
+              {post.media?.includes("/video/upload/") ? (
+                <video controls className={styles.modalMedia}>
+                  <source src={post.media} />
+                </video>
+              ) : (
+                <img 
+                  src={post.media} 
+                  alt="Post" 
+                  className={styles.modalMedia} 
                 />
-              </Box>
-            ))}
+              )}
+            </Box>
+          )}
+
+          <Divider className={styles.modalDivider} />
+
+          {/* Like Section */}
+          <Box className={styles.modalLikeSection}>
+            <IconButton
+              className={styles.modalLikeButton}
+              onClick={handleLikeToggle}
+            >
+              {isLiked ? (
+                <Favorite className={styles.modalLikedIcon} />
+              ) : (
+                <FavoriteBorder className={styles.modalActionIcon} />
+              )}
+              <Typography className={styles.modalLikeCount}>
+                {likeCount} likes
+              </Typography>
+            </IconButton>
           </Box>
-        </Box>
-      </Collapse>
-    </Card>
+
+          {/* All Comments with Profile Username */}
+          <Box className={styles.modalCommentsSection}>
+            <Typography className={styles.modalCommentsTitle}>
+              Comments ({comments.length})
+            </Typography>
+            
+            <Box className={styles.modalCommentsList}>
+              {comments?.map((c) => (
+                <Box key={c._id} className={styles.modalCommentItem}>
+                  <Box className={styles.modalCommentContent}>
+                    <Avatar 
+                      className={styles.modalCommentAvatar}
+                      src={c.user?.avatar}
+                    >
+                      {c.user?.username?.charAt(0).toUpperCase() || "U"}
+                    </Avatar>
+                    <Box className={styles.modalCommentTextWrapper}>
+                      <Typography className={styles.modalCommentUserName}>
+                        {c.user?.username || "User"}
+                      </Typography>
+                      <Typography className={styles.modalCommentText}>
+                        {c.text}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <DeleteOutlined
+                    className={styles.modalDeleteIcon}
+                    onClick={() => handleDeleteComment(c._id)}
+                  />
+                </Box>
+              ))}
+              {comments?.length === 0 && (
+                <Typography className={styles.modalNoComments}>
+                  No comments yet. Be the first to comment!
+                </Typography>
+              )}
+            </Box>
+          </Box>
+
+          {/* Add Comment in Modal */}
+          <Box className={styles.modalCommentInputSection}>
+            <Box className={styles.modalCommentBox}>
+              <TextField
+                fullWidth
+                type="text"
+                placeholder="Write a comment..."
+                value={modalCommentText}
+                onChange={(e) => setModalCommentText(e.target.value)}
+                variant="outlined"
+                size="small"
+                className={styles.modalCommentInput}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") handleModalAddComment();
+                }}
+              />
+              <button 
+                className={styles.modalCommentButton}
+                onClick={handleModalAddComment}
+              >
+                <Send style={{ fontSize: '20px' }} />
+              </button>
+            </Box>
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

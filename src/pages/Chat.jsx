@@ -1,211 +1,439 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDirectMessages } from "../hooks/chat/useDirectMessages";
 import { useSendMessage } from "../hooks/chat/useSendMessage";
+import { useMarkRead } from "../hooks/chat/useMarkRead";
 import { socket } from "../socket";
+import {
+  FaArrowLeft,
+  FaPaperPlane
+} from "react-icons/fa";
 import "../Css/Chat.css";
 
-function Chat(){
+function Avatar({ src, name, className }) {
+
+  const [imgError, setImgError] = useState(false);
+
+  return (
+
+    <div className={`avatar-wrap ${className}`}>
+
+      {
+
+        src && !imgError ? (
+
+          <img
+            src={src}
+            alt={name}
+            onError={() => setImgError(true)}
+          />
+
+        ) : (
+
+          <span>
+            {(name || "U").charAt(0).toUpperCase()}
+          </span>
+
+        )
+
+      }
+
+    </div>
+
+  );
+
+}
+
+function Chat() {
 
   const { id } = useParams();
-  const userId = localStorage.getItem("userid");
 
-  const [message,setMessage] = useState("");
-  const [messages,setMessages] = useState([]);
+  const navigate = useNavigate();
+
+  const profileId = localStorage.getItem("profileid");
+
+  const [message, setMessage] = useState("");
+
+  const [messages, setMessages] = useState([]);
+
+  const [chatUser, setChatUser] = useState(null);
 
   const messageEndRef = useRef(null);
 
   const { data, isLoading } = useDirectMessages(id);
+
   const sendMutation = useSendMessage();
-useEffect(()=>{
-  if(data){
-    setMessages([...data].reverse());
-  }
-},[data]);
 
-useEffect(()=>{
-  socket.emit("joinprofile",userId);
+  const markReadMutation = useMarkRead();
 
-  const receiveMessage=(newMessage)=>{
-    const senderId=newMessage.sender?._id || newMessage.sender;
-    const receiverId=newMessage.receiver?._id || newMessage.receiver;
+  useEffect(() => {
 
-    const isCurrentChat=
-      (senderId===id && receiverId===userId) ||
-      (senderId===userId && receiverId===id);
+    if (!data) return;
 
-    if(isCurrentChat){
-      setMessages(prev=>{
-        const exists=prev.some(
-          msg=>msg._id===newMessage._id
+    setChatUser(data.chatUser);
+
+    setMessages(data.messages);
+
+  }, [data]);
+
+  useEffect(() => {
+
+    if (!id) return;
+
+    markReadMutation.mutate(id);
+
+  }, [id]);
+
+  useEffect(() => {
+
+    if (!socket.connected) {
+
+      socket.connect();
+
+    }
+
+    socket.emit("register", profileId);
+
+    const receiveMessage = (newMessage) => {
+
+      const senderId =
+        String(newMessage.sender?._id || newMessage.sender);
+
+      const receiverId =
+        String(newMessage.receiver?._id || newMessage.receiver);
+
+      const isCurrentChat =
+
+        (
+
+          senderId === String(id) &&
+          receiverId === String(profileId)
+
+        )
+
+        ||
+
+        (
+
+          senderId === String(profileId) &&
+          receiverId === String(id)
+
         );
 
-        if(exists) return prev;
+      if (isCurrentChat) {
 
-        return [...prev,newMessage];
-      });
-    }
-  };
+        if (senderId === String(id)) {
 
-  socket.on("receiveDirectMessage",receiveMessage);
+          markReadMutation.mutate(id);
 
-  return()=>{
-    socket.off("receiveDirectMessage",receiveMessage);
-  };
-},[id,userId]);
+        }
 
+        setMessages(prev => {
 
-  useEffect(()=>{
+          const exists = prev.some(
 
-    messageEndRef.current?.scrollIntoView({
-      behavior:"smooth"
-    });
+            msg => msg._id === newMessage._id
 
-  },[messages]);
+          );
 
-const sendMessage=()=>{
+          if (exists) {
 
-  if(!message.trim()){
-    return;
-  }
+            return prev;
 
+          }
 
-  sendMutation.mutate(
-    {
-      receiverid:id,
-      text:message.trim()
-    },
-    {
-      onSuccess:()=>{
+          return [...prev, newMessage];
 
-        setMessage("");
+        });
 
       }
+
+    };
+
+    socket.on(
+      "receiveDirectMessage",
+      receiveMessage
+    );
+
+    return () => {
+
+      socket.off(
+        "receiveDirectMessage",
+        receiveMessage
+      );
+
+    };
+
+  }, [id, profileId]);
+
+  useEffect(() => {
+
+    messageEndRef.current?.scrollIntoView({
+
+      behavior: "smooth"
+
+    });
+
+  }, [messages]);
+
+  const sendMessage = () => {
+
+    if (!message.trim()) {
+
+      return;
+
     }
-  );
 
-};
+    sendMutation.mutate(
 
-    
-  if(isLoading){
+      {
 
-    return(
+        receiverid: id,
+
+        text: message.trim()
+
+      },
+
+      {
+
+        onSuccess: (savedMessage) => {
+
+          setMessages(prev => {
+
+            const exists = prev.some(
+
+              msg => msg._id === savedMessage._id
+
+            );
+
+            if (exists) {
+
+              return prev;
+
+            }
+
+            return [
+
+              ...prev,
+
+              savedMessage
+
+            ];
+
+          });
+
+          markReadMutation.mutate(id);
+
+          setMessage("");
+
+        }
+
+      }
+
+    );
+
+  };
+
+  if (isLoading) {
+
+    return (
+
       <div className="chat-loading">
-        Loading chat...
+
+        <div className="loader"></div>
+
+        <p>
+
+          Loading Conversation...
+
+        </p>
+
       </div>
+
     );
 
   }
 
+  const otherPersonName =
+    chatUser?.user?.username || "User";
 
+  const otherPersonPic =
+    chatUser?.profilepic;
+      return (
 
-  return(
+    <div className="chat-container">
 
-    <div className="chat-box">
+      {/* Header */}
 
-      <div className="chat-top">
+      <div className="chat-header">
 
-  <div className="chat-top-left">
+        <div className="header-left">
 
-    <div className="chat-avatar">
-      <span>{id ? id.charAt(0).toUpperCase() : "U"}</span>
-    </div>
+          <button
+            className="icon-btn"
+            onClick={() => navigate("/friends")}
+          >
 
-    <div className="chat-top-info">
-      <h2>Chat</h2>
-      <span className="chat-top-status">Online</span>
-    </div>
+            <FaArrowLeft />
 
-  </div>
+          </button>
 
-</div>
+          <Avatar
+            src={otherPersonPic}
+            name={otherPersonName}
+            className="profile-image"
+          />
 
+          <div className="header-info">
 
-      <div className="chat-body">
+            <h3>
+              {otherPersonName}
+            </h3>
 
+          </div>
 
-        {
-          messages.map((msg,index)=>(
-
-            <div
-
-              key={msg._id || index}
-
-              className={
-                msg.sender?._id === userId
-                ?
-                "message-wrapper sent"
-                :
-                "message-wrapper received"
-              }
-
-            >
-
-              <div className="message-content">
-
-                <p>
-                  {msg.text}
-                </p>
-
-                <span>
-                  {
-                    msg.createdAt &&
-                    new Date(
-                      msg.createdAt
-                    ).toLocaleTimeString(
-                      [],
-                      {
-                        hour:"2-digit",
-                        minute:"2-digit"
-                      }
-                    )
-                  }
-                </span>
-
-              </div>
-
-
-            </div>
-
-          ))
-        }
-
-
-        <div ref={messageEndRef}/>
-
+        </div>
 
       </div>
 
+      {/* Messages */}
 
+      <div className="chat-messages">
 
-      <div className="chat-footer">
+        {
 
+          messages.map((msg, index) => {
+
+            const isMine =
+
+              String(msg.sender?._id || msg.sender) ===
+              String(profileId);
+
+            const senderName =
+
+              msg.sender?.user?.username || "User";
+
+            const senderPic =
+
+              msg.sender?.profilepic;
+
+            return (
+
+              <div
+
+                key={msg._id || index}
+
+                className={`message-row ${
+                  isMine
+                    ? "mine"
+                    : "other"
+                }`}
+
+              >
+
+                {
+
+                  !isMine && (
+
+                    <Avatar
+
+                      src={senderPic}
+
+                      name={senderName}
+
+                      className="message-avatar"
+
+                    />
+
+                  )
+
+                }
+
+                <div
+
+                  className={`message-bubble ${
+                    isMine
+                      ? "sent-message"
+                      : "received-message"
+                  }`}
+
+                >
+
+                  <p>
+
+                    {msg.text}
+
+                  </p>
+
+                  <span className="message-time">
+
+                    {
+
+                      msg.createdAt &&
+
+                      new Date(
+                        msg.createdAt
+                      ).toLocaleTimeString(
+                        [],
+                        {
+
+                          hour: "2-digit",
+
+                          minute: "2-digit"
+
+                        }
+
+                      )
+
+                    }
+
+                  </span>
+
+                </div>
+
+              </div>
+
+            );
+
+          })
+
+        }
+
+        <div ref={messageEndRef}></div>
+
+      </div>
+
+      {/* Footer */}
+
+      <div className="chat-input-area">
 
         <input
 
+          type="text"
+
+          placeholder="Type your message..."
+
           value={message}
 
-          placeholder="Type a message..."
-
-          onChange={
-            e=>setMessage(e.target.value)
+          onChange={(e) =>
+            setMessage(e.target.value)
           }
 
+          onKeyDown={(e) => {
 
-          onKeyDown={
-            e=>{
+            if (e.key === "Enter") {
 
-              if(e.key==="Enter"){
-                sendMessage();
-              }
+              sendMessage();
 
             }
-          }
+
+          }}
 
         />
 
-
         <button
+
+          className="send-btn"
 
           onClick={sendMessage}
 
@@ -217,18 +445,16 @@ const sendMessage=()=>{
         >
 
           {
+
             sendMutation.isPending
-            ?
-            "..."
-            :
-            "Send"
+              ? "..."
+              : <FaPaperPlane />
+
           }
 
         </button>
 
-
       </div>
-
 
     </div>
 
