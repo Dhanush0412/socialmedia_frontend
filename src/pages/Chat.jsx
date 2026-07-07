@@ -1,166 +1,237 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDirectMessages } from "../hooks/chat/useDirectMessages";
 import { useSendMessage } from "../hooks/chat/useSendMessage";
+import { useMarkRead } from "../hooks/chat/useMarkRead";
 import { socket } from "../socket";
 import {
   FaArrowLeft,
-  FaPaperPlane,
-  FaEllipsisV
+  FaPaperPlane
 } from "react-icons/fa";
 import "../Css/Chat.css";
-import Friends from "./Friends";
 
-// Renders a profile picture if one exists, otherwise falls back to
-// a colored circle with the person's initial. Wrapping the <img> in a
-// fixed-size div keeps it from ever being affected by global img resets
-// (e.g. a global "img { width: 100%; }" rule elsewhere in the app).
 function Avatar({ src, name, className }) {
+
   const [imgError, setImgError] = useState(false);
 
   return (
+
     <div className={`avatar-wrap ${className}`}>
-      {src && !imgError ? (
-        <img
-          src={src}
-          alt={name || "User"}
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <span>{(name || "U").charAt(0).toUpperCase()}</span>
-      )}
+
+      {
+
+        src && !imgError ? (
+
+          <img
+            src={src}
+            alt={name}
+            onError={() => setImgError(true)}
+          />
+
+        ) : (
+
+          <span>
+            {(name || "U").charAt(0).toUpperCase()}
+          </span>
+
+        )
+
+      }
+
     </div>
+
   );
+
 }
 
 function Chat() {
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const profileId = localStorage.getItem("profileid");
-const navigate=useNavigate();
+
   const [message, setMessage] = useState("");
+
   const [messages, setMessages] = useState([]);
+
+  const [chatUser, setChatUser] = useState(null);
 
   const messageEndRef = useRef(null);
 
   const { data, isLoading } = useDirectMessages(id);
+
   const sendMutation = useSendMessage();
-const [chatUser, setChatUser] = useState(null);
 
-useEffect(() => {
+  const markReadMutation = useMarkRead();
 
-  if (data) {
+  useEffect(() => {
+
+    if (!data) return;
 
     setChatUser(data.chatUser);
 
-    setMessages([...data.messages].reverse());
+    setMessages(data.messages);
 
-  }
-
-}, [data]);
+  }, [data]);
 
   useEffect(() => {
- 
+
+    if (!id) return;
+
+    markReadMutation.mutate(id);
+
+  }, [id]);
+
+  useEffect(() => {
+
     if (!socket.connected) {
- 
-        socket.connect();
- 
+
+      socket.connect();
+
     }
- 
-    
- 
-        socket.emit("register", profileId);
-        console.log(profileId);
- 
-   
+
+    socket.emit("register", profileId);
+
     const receiveMessage = (newMessage) => {
- 
-        const senderId = String(newMessage.sender?._id || newMessage.sender);
- 
-        const receiverId = String(newMessage.receiver?._id || newMessage.receiver);
- 
-        const isCurrentChat =
- 
-            (senderId === String(id) &&
-             receiverId === String(profileId))
- 
-            ||
- 
-            (senderId === String(profileId) &&
-             receiverId === String(id));
- 
-        if (isCurrentChat) {
- 
-            setMessages(prev => {
- 
-                const exists = prev.some(
-                    msg => msg._id === newMessage._id
-                );
- 
-                if (exists) return prev;
- 
-                return [...prev, newMessage];
- 
-            });
- 
+
+      const senderId =
+        String(newMessage.sender?._id || newMessage.sender);
+
+      const receiverId =
+        String(newMessage.receiver?._id || newMessage.receiver);
+
+      const isCurrentChat =
+
+        (
+
+          senderId === String(id) &&
+          receiverId === String(profileId)
+
+        )
+
+        ||
+
+        (
+
+          senderId === String(profileId) &&
+          receiverId === String(id)
+
+        );
+
+      if (isCurrentChat) {
+
+        if (senderId === String(id)) {
+
+          markReadMutation.mutate(id);
+
         }
- 
+
+        setMessages(prev => {
+
+          const exists = prev.some(
+
+            msg => msg._id === newMessage._id
+
+          );
+
+          if (exists) {
+
+            return prev;
+
+          }
+
+          return [...prev, newMessage];
+
+        });
+
+      }
+
     };
- 
-    socket.on("receiveDirectMessage", receiveMessage);
- 
+
+    socket.on(
+      "receiveDirectMessage",
+      receiveMessage
+    );
+
     return () => {
- 
-      
- 
-        socket.off("receiveDirectMessage", receiveMessage);
- 
+
+      socket.off(
+        "receiveDirectMessage",
+        receiveMessage
+      );
+
     };
- 
-}, [id, profileId]);
- 
- 
+
+  }, [id, profileId]);
 
   useEffect(() => {
 
     messageEndRef.current?.scrollIntoView({
+
       behavior: "smooth"
+
     });
 
   }, [messages]);
 
   const sendMessage = () => {
 
-    if (!message.trim()) return;
+    if (!message.trim()) {
 
-     sendMutation.mutate(
-{
-    receiverid:id,
-    text:message.trim()
-},
-{
-    onSuccess:(savedMessage)=>{
- 
-        setMessages(prev=>{
- 
-            const exists=prev.some(
-                msg=>msg._id===savedMessage._id
-            );
- 
-            if(exists){
-                return prev;
-            }
- 
-            return [...prev,savedMessage];
- 
-        });
- 
-        setMessage("");
- 
+      return;
+
     }
-}
-);
- 
+
+    sendMutation.mutate(
+
+      {
+
+        receiverid: id,
+
+        text: message.trim()
+
+      },
+
+      {
+
+        onSuccess: (savedMessage) => {
+
+          setMessages(prev => {
+
+            const exists = prev.some(
+
+              msg => msg._id === savedMessage._id
+
+            );
+
+            if (exists) {
+
+              return prev;
+
+            }
+
+            return [
+
+              ...prev,
+
+              savedMessage
+
+            ];
+
+          });
+
+          markReadMutation.mutate(id);
+
+          setMessage("");
+
+        }
+
+      }
+
+    );
+
   };
 
   if (isLoading) {
@@ -171,7 +242,11 @@ useEffect(() => {
 
         <div className="loader"></div>
 
-        <p>Loading Conversation...</p>
+        <p>
+
+          Loading Conversation...
+
+        </p>
 
       </div>
 
@@ -179,25 +254,12 @@ useEffect(() => {
 
   }
 
-  
-  const otherPersonMsg = messages.find(
-    (m) => (m.sender?._id || m.sender) === id || (m.receiver?._id || m.receiver) === id
-  );
-
-  const otherPerson =
-    otherPersonMsg?.sender?._id === id
-      ? otherPersonMsg.sender
-      : otherPersonMsg?.receiver?._id === id
-      ? otherPersonMsg.receiver
-      : null;
-
   const otherPersonName =
-  chatUser?.user?.username || "User";
+    chatUser?.user?.username || "User";
 
-const otherPersonPic =
-  chatUser?.profilepic;
-
-  return (
+  const otherPersonPic =
+    chatUser?.profilepic;
+      return (
 
     <div className="chat-container">
 
@@ -207,7 +269,10 @@ const otherPersonPic =
 
         <div className="header-left">
 
-          <button className="icon-btn" onClick={()=>navigate("/friends")}>
+          <button
+            className="icon-btn"
+            onClick={() => navigate("/friends")}
+          >
 
             <FaArrowLeft />
 
@@ -221,80 +286,118 @@ const otherPersonPic =
 
           <div className="header-info">
 
-            <h3>{otherPersonName}</h3>
-
-            
+            <h3>
+              {otherPersonName}
+            </h3>
 
           </div>
 
         </div>
 
-       
       </div>
 
       {/* Messages */}
 
       <div className="chat-messages">
 
-        {messages.map((msg, index) => {
+        {
 
-          const isMine =
-            (msg.sender?._id || msg.sender) === String(profileId);
+          messages.map((msg, index) => {
 
-          const senderName =
-  msg.sender?.user?.username || "User";
+            const isMine =
 
-const senderPic =
-  msg.sender?.profilepic;
+              String(msg.sender?._id || msg.sender) ===
+              String(profileId);
 
-          return (
+            const senderName =
 
-            <div
-              key={msg._id || index}
-              className={`message-row ${
-                isMine ? "mine" : "other"
-              }`}
-            >
+              msg.sender?.user?.username || "User";
 
-              {!isMine && (
+            const senderPic =
 
-                <Avatar
-                  src={senderPic}
-                  name={senderName}
-                  className="message-avatar"
-                />
+              msg.sender?.profilepic;
 
-              )}
+            return (
 
               <div
-                className={`message-bubble ${
+
+                key={msg._id || index}
+
+                className={`message-row ${
                   isMine
-                    ? "sent-message"
-                    : "received-message"
+                    ? "mine"
+                    : "other"
                 }`}
+
               >
 
-                <p>{msg.text}</p>
+                {
 
-                <span className="message-time">
+                  !isMine && (
 
-                  {msg.createdAt &&
-                    new Date(
-                      msg.createdAt
-                    ).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit"
-                    })}
+                    <Avatar
 
-                </span>
+                      src={senderPic}
+
+                      name={senderName}
+
+                      className="message-avatar"
+
+                    />
+
+                  )
+
+                }
+
+                <div
+
+                  className={`message-bubble ${
+                    isMine
+                      ? "sent-message"
+                      : "received-message"
+                  }`}
+
+                >
+
+                  <p>
+
+                    {msg.text}
+
+                  </p>
+
+                  <span className="message-time">
+
+                    {
+
+                      msg.createdAt &&
+
+                      new Date(
+                        msg.createdAt
+                      ).toLocaleTimeString(
+                        [],
+                        {
+
+                          hour: "2-digit",
+
+                          minute: "2-digit"
+
+                        }
+
+                      )
+
+                    }
+
+                  </span>
+
+                </div>
 
               </div>
 
-            </div>
+            );
 
-          );
+          })
 
-        })}
+        }
 
         <div ref={messageEndRef}></div>
 
@@ -341,11 +444,13 @@ const senderPic =
 
         >
 
-          {sendMutation.isPending ? (
-            "..."
-          ) : (
-            <FaPaperPlane />
-          )}
+          {
+
+            sendMutation.isPending
+              ? "..."
+              : <FaPaperPlane />
+
+          }
 
         </button>
 

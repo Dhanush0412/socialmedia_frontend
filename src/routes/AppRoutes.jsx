@@ -1,36 +1,32 @@
 import {
-
   Routes,
   Route,
 } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Profile from "../pages/Profile/Profile";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import ForgotPassword from "../pages/ForgotPassword"
-import Home from "../pages/Home"
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const Profile = lazy(() => import("../pages/Profile/Profile"));
+const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
+const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
+const Home = lazy(() => import("../pages/Home"));
 
-import MyPosts from "../pages/MyPosts/MyPosts";
-import NewPost from "../pages/NewPost/NewPost";
-import Feed from "../pages/Feed/Feed";
-import Groups from "../pages/Groups";
-import Messages from "../pages/Messages";
-import Settings from "../pages/Settings/Settings";
-import GroupRequests from "../pages/GroupRequests";
-import Friends from "../pages/Friends";
+const MyPosts = lazy(() => import("../pages/MyPosts/MyPosts"));
+const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
+const Feed = lazy(() => import("../pages/Feed/Feed"));
+const Groups = lazy(() => import("../pages/Groups"));
+const Messages = lazy(() => import("../pages/Messages"));
+const Settings = lazy(() => import("../pages/Settings/Settings"));
+const GroupRequests = lazy(() => import("../pages/GroupRequests"));
+const Friends = lazy(() => import("../pages/Friends"));
 
+const GroupChat = lazy(() => import("../pages/GroupChat"));
+const Group = lazy(() => import("../pages/Group"));
 
-import GroupChat from "../pages/GroupChat";
-import Group from "../pages/Group";
-import CreateGroup from "../pages/CreateGroup"
-
-
-import SearchUsers from "../pages/SearchUsers";
-import PendingRequests from "../pages/PendingRequests";
-import MyConnections from "../pages/MyConnections";
-import Chat from "../pages/Chat";
-
+const SearchUsers = lazy(() => import("../pages/SearchUsers"));
+const PendingRequests = lazy(() => import("../pages/PendingRequests"));
+const MyConnections = lazy(() => import("../pages/MyConnections"));
+const Chat = lazy(() => import("../pages/Chat"));
 function AppRoutes() {
   return (
 
@@ -61,7 +57,6 @@ function AppRoutes() {
       {/*Group chat */}
       <Route path="/group" element={<Group />} />
       <Route path="/chat/:id" element={<Chat />} />
-      <Route path="/create-group" element={<CreateGroup />} />
 
       {/*Connection*/}
       <Route path="/search-users" element={<SearchUsers />} />
