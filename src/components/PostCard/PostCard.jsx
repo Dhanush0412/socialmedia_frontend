@@ -316,13 +316,13 @@ function PostCard({ post }) {
                   <Box className={styles.modalCommentContent}>
                     <Avatar 
                       className={styles.modalCommentAvatar}
-                      src={c.user?.avatar}
+                      src={c.profile?.profilepic}
                     >
-                      {c.user?.username?.charAt(0).toUpperCase() || "U"}
+                      {c.profile?.user?.username?.charAt(0).toUpperCase() || "U"}
                     </Avatar>
                     <Box className={styles.modalCommentTextWrapper}>
                       <Typography className={styles.modalCommentUserName}>
-                        {c.user?.username || "User"}
+                        {c.profile?.user?.username || "User"}
                       </Typography>
                       <Typography className={styles.modalCommentText}>
                         {c.text}
