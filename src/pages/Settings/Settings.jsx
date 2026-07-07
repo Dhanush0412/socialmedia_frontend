@@ -29,7 +29,7 @@ import {
   Logout,
 } from '@mui/icons-material';
 
-// Import child components from components/Settings
+// Import child components 
 import Account from '../../components/Settings/Account';
 import Notifications from '../../components/Settings/Notifications';
 import Blocked from '../../components/Settings/Blocked';
@@ -134,36 +134,128 @@ function Settings() {
         </Box>
 
         {/* Dialogs */}
-        <Dialog open={openLogoutDialog} onClose={() => setOpenLogoutDialog(false)}>
-          <DialogTitle>Confirm Logout</DialogTitle>
+        <Dialog 
+          open={openLogoutDialog} 
+          onClose={() => setOpenLogoutDialog(false)}
+          PaperProps={{
+            sx: {
+              borderRadius: '20px',
+              padding: '8px',
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            fontWeight: 700, 
+            color: '#1a1a2e',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+          }}>
+            <Logout sx={{ color: '#ff9417', fontSize: '28px' }} />
+            Confirm Logout
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText sx={{ color: '#666', fontSize: '15px' }}>
               Are you sure you want to logout? You will need to sign in again to access your account.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpenLogoutDialog(false)} color="primary">
+          <DialogActions sx={{ padding: '16px 24px 24px', gap: '12px' }}>
+            <Button 
+              onClick={() => setOpenLogoutDialog(false)} 
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                padding: '8px 24px',
+                fontWeight: 600,
+                color: '#666',
+                border: '2px solid #e6e6e6',
+                '&:hover': {
+                  background: '#fafafa',
+                }
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleConfirmLogout} color="error" variant="contained">
+            <Button 
+              onClick={handleConfirmLogout} 
+              variant="contained"
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                padding: '8px 24px',
+                fontWeight: 600,
+                background: 'linear-gradient(135deg, #ff9f1a, #ff7900)',
+                boxShadow: '0 18px 40px rgba(255, 145, 0, 0.28)',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 24px 55px rgba(255, 145, 0, 0.35)',
+                }
+              }}
+            >
               Logout
             </Button>
           </DialogActions>
         </Dialog>
 
-        <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
-          <DialogTitle>Delete Account</DialogTitle>
+        <Dialog 
+          open={openDeleteDialog} 
+          onClose={() => setOpenDeleteDialog(false)}
+          PaperProps={{
+            sx: {
+              borderRadius: '20px',
+              padding: '8px',
+            }
+          }}
+        >
+          <DialogTitle sx={{ 
+            fontWeight: 700, 
+            color: '#1a1a2e',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+          }}>
+            <span style={{ fontSize: '28px' }}>⚠️</span>
+            Delete Account
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText sx={{ color: '#666', fontSize: '15px' }}>
               Are you sure you want to delete your account? This action is permanent and cannot be undone.
               All your data will be permanently removed.
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpenDeleteDialog(false)} color="primary">
+          <DialogActions sx={{ padding: '16px 24px 24px', gap: '12px' }}>
+            <Button 
+              onClick={() => setOpenDeleteDialog(false)} 
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                padding: '8px 24px',
+                fontWeight: 600,
+                color: '#666',
+                border: '2px solid #e6e6e6',
+                '&:hover': {
+                  background: '#fafafa',
+                }
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleConfirmDelete} color="error" variant="contained">
+            <Button 
+              onClick={handleConfirmDelete} 
+              variant="contained"
+              color="error"
+              sx={{
+                textTransform: 'none',
+                borderRadius: '12px',
+                padding: '8px 24px',
+                fontWeight: 600,
+                boxShadow: '0 18px 40px rgba(211, 47, 47, 0.25)',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 24px 55px rgba(211, 47, 47, 0.3)',
+                }
+              }}
+            >
               Delete Account
             </Button>
           </DialogActions>
@@ -180,7 +272,13 @@ function Settings() {
             onClose={handleCloseSnackbar}
             severity={snackbar.severity}
             variant="filled"
-            sx={{ width: '100%' }}
+            sx={{ 
+              width: '100%',
+              borderRadius: '12px',
+              '& .MuiAlert-icon': {
+                fontSize: '24px',
+              }
+            }}
           >
             {snackbar.message}
           </Alert>

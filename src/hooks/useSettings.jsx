@@ -2,18 +2,22 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { URL } from "../../config";
 
-const token = () => localStorage.getItem("token");
+// ================= FIXED: Get token with each request ================= //
+const getAuthConfig = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
 
-// ======================
-// GET PROFILE
-// GET /profile/get
-// ======================
+// ================= PROFILE ================= //
+
+// Dashboard / Account Info
 const getProfile = async () => {
-  const { data } = await axios.get(`${URL}/profile/get`, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${URL}/profile/dashboard`,
+    getAuthConfig()
+  );
+  console.log("Profile API Response:", data);
   return data;
 };
 
@@ -21,129 +25,146 @@ export const useProfile = () => {
   return useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
-    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
 
-// ======================
-// EDIT PROFILE
-// PUT /profile/edit
-// ======================
-const editProfile = async (profileData) => {
-  const { data } = await axios.put(`${URL}/profile/edit`, profileData, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+// Edit Profile (Bio + Profile Picture)
+const editProfile = async (formData) => {
+  const { data } = await axios.put(
+    `${URL}/profile/edit`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
   return data;
 };
 
 export const useEditProfile = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: editProfile,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
-    onError: (error) => {
-      console.error("Edit profile error:", error);
+      queryClient.invalidateQueries({
+        queryKey: ["profile"],
+      });
     },
   });
 };
 
-// ======================
-// UPDATE PROFILE PICTURE
-// PUT /profile/update-picture
-// ======================
+// ================= PROFILE PICTURE ================= //
+
 const updateProfilePicture = async (formData) => {
-  const { data } = await axios.put(`${URL}/profile/update-picture`, formData, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const { data } = await axios.put(
+    `${URL}/profile/edit`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
   return data;
 };
 
 export const useUpdateProfilePicture = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateProfilePicture,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-    },
-    onError: (error) => {
-      console.error("Update profile picture error:", error);
+      queryClient.invalidateQueries({
+        queryKey: ["profile"],
+      });
     },
   });
 };
 
-// ======================
-// CHANGE PASSWORD
-// PUT /profile/change-password
-// ======================
+// ================= CHANGE PASSWORD - FIXED ================= //
+
 const changePassword = async (passwordData) => {
-  const { data } = await axios.put(`${URL}/profile/change-password`, passwordData, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
-  return data;
+  console.log("Sending password change request:", passwordData);
+  
+  try {
+    const { data } = await axios.put(
+      `${URL}/profile/changepassword`,
+      passwordData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    
+    console.log("Password change response:", data);
+    return data;
+  } catch (error) {
+    console.error("Password change error details:", {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      config: error.config,
+    });
+    throw error;
+  }
 };
 
 export const useChangePassword = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: changePassword,
     onSuccess: () => {
-      // Optionally invalidate any relevant queries
-      // queryClient.invalidateQueries({ queryKey: ["profile"] });
+      queryClient.invalidateQueries({
+        queryKey: ["profile"],
+      });
     },
     onError: (error) => {
-      console.error("Change password error:", error);
+      console.error("Mutation error:", error);
     },
   });
 };
 
-// ======================
-// UPDATE THEME
-// PUT /profile/themesetup
-// ======================
+// ================= THEME ================= //
+
 const updateTheme = async (theme) => {
   const { data } = await axios.put(
     `${URL}/profile/themesetup`,
     { theme },
-    {
-      headers: {
-        Authorization: `Bearer ${token()}`,
-      },
-    }
+    getAuthConfig()
   );
+
   return data;
 };
 
 export const useUpdateTheme = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateTheme,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["theme"] });
+      queryClient.invalidateQueries({
+        queryKey: ["theme"],
+      });
     },
   });
 };
 
-// ======================
-// GET CURRENT THEME
-// GET /profile/gettheme
-// ======================
+// Get Theme
 const getTheme = async () => {
-  const { data } = await axios.get(`${URL}/profile/gettheme`, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${URL}/profile/gettheme`,
+    getAuthConfig()
+  );
+
   return data;
 };
 
@@ -154,16 +175,14 @@ export const useTheme = () => {
   });
 };
 
-// ======================
-// GET NOTIFICATIONS
-// GET /notification/get
-// ======================
+// ================= NOTIFICATIONS ================= //
+
 const getNotifications = async () => {
-  const { data } = await axios.get(`${URL}/notification/get`, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${URL}/notification/get`,
+    getAuthConfig()
+  );
+
   return data;
 };
 
@@ -174,27 +193,22 @@ export const useNotifications = () => {
   });
 };
 
-// ======================
-// MARK NOTIFICATION AS READ
-// PUT /notification/read/:notificationid
-// ======================
-const markNotificationRead = async (notificationid) => {
+// Read Notification
+const readNotification = async (notificationid) => {
   const { data } = await axios.put(
     `${URL}/notification/read/${notificationid}`,
     {},
-    {
-      headers: {
-        Authorization: `Bearer ${token()}`,
-      },
-    }
+    getAuthConfig()
   );
+
   return data;
 };
 
 export const useReadNotification = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: markNotificationRead,
+    mutationFn: readNotification,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["notifications"],
@@ -203,16 +217,14 @@ export const useReadNotification = () => {
   });
 };
 
-// ======================
-// GET ACTIVITY
-// GET /activity/get
-// ======================
+// ================= ACTIVITY ================= //
+
 const getActivity = async () => {
-  const { data } = await axios.get(`${URL}/activity/get`, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${URL}/activity/get`,
+    getAuthConfig()
+  );
+
   return data;
 };
 
@@ -223,21 +235,19 @@ export const useActivity = () => {
   });
 };
 
-// ======================
-// UPDATE ACTIVITY
-// POST /activity/update
-// ======================
 const updateActivity = async (activityData) => {
-  const { data } = await axios.post(`${URL}/activity/update`, activityData, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.post(
+    `${URL}/activity/update`,
+    activityData,
+    getAuthConfig()
+  );
+
   return data;
 };
 
 export const useUpdateActivity = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateActivity,
     onSuccess: () => {
@@ -248,16 +258,14 @@ export const useUpdateActivity = () => {
   });
 };
 
-// ======================
-// GET BLOCKED USERS
-// GET /connection/blocked
-// ======================
+// ================= BLOCKED USERS ================= //
+
 const getBlockedUsers = async () => {
-  const { data } = await axios.get(`${URL}/connection/blocked`, {
-    headers: {
-      Authorization: `Bearer ${token()}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${URL}/connection/blocked`,
+    getAuthConfig()
+  );
+
   return data;
 };
 
