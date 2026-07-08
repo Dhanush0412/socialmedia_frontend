@@ -30,12 +30,12 @@ import {
 } from '@mui/icons-material';
 
 // Import child components 
-import Account from '../../components/Settings/Account';
-import Notifications from '../../components/Settings/Notifications';
-import Blocked from '../../components/Settings/Blocked';
-import Themes from '../../components/Settings/Themes';
-import Activity from '../../components/Settings/Activity';
-import LogoutComponent from '../../components/Settings/Logout';
+import Account from '../../components/Settings/Account/Account';
+import Notifications from '../../components/Settings/Notifications/Notifications';
+import Blocked from '../../components/Settings/Blocked/Blocked';
+import Themes from '../../components/Settings/Themes/Themes';
+import Activity from '../../components/Settings/Activity/Activity';
+import LogoutComponent from '../../components/Settings/Logout/Logout';
 
 function Settings() {
   const [activeTab, setActiveTab] = useState('account');
@@ -134,8 +134,8 @@ function Settings() {
         </Box>
 
         {/* Dialogs */}
-        <Dialog 
-          open={openLogoutDialog} 
+        <Dialog
+          open={openLogoutDialog}
           onClose={() => setOpenLogoutDialog(false)}
           PaperProps={{
             sx: {
@@ -144,8 +144,8 @@ function Settings() {
             }
           }}
         >
-          <DialogTitle sx={{ 
-            fontWeight: 700, 
+          <DialogTitle sx={{
+            fontWeight: 700,
             color: '#1a1a2e',
             display: 'flex',
             alignItems: 'center',
@@ -160,8 +160,8 @@ function Settings() {
             </DialogContentText>
           </DialogContent>
           <DialogActions sx={{ padding: '16px 24px 24px', gap: '12px' }}>
-            <Button 
-              onClick={() => setOpenLogoutDialog(false)} 
+            <Button
+              onClick={() => setOpenLogoutDialog(false)}
               sx={{
                 textTransform: 'none',
                 borderRadius: '12px',
@@ -176,8 +176,8 @@ function Settings() {
             >
               Cancel
             </Button>
-            <Button 
-              onClick={handleConfirmLogout} 
+            <Button
+              onClick={handleConfirmLogout}
               variant="contained"
               sx={{
                 textTransform: 'none',
@@ -197,8 +197,8 @@ function Settings() {
           </DialogActions>
         </Dialog>
 
-        <Dialog 
-          open={openDeleteDialog} 
+        <Dialog
+          open={openDeleteDialog}
           onClose={() => setOpenDeleteDialog(false)}
           PaperProps={{
             sx: {
@@ -207,8 +207,8 @@ function Settings() {
             }
           }}
         >
-          <DialogTitle sx={{ 
-            fontWeight: 700, 
+          <DialogTitle sx={{
+            fontWeight: 700,
             color: '#1a1a2e',
             display: 'flex',
             alignItems: 'center',
@@ -224,8 +224,8 @@ function Settings() {
             </DialogContentText>
           </DialogContent>
           <DialogActions sx={{ padding: '16px 24px 24px', gap: '12px' }}>
-            <Button 
-              onClick={() => setOpenDeleteDialog(false)} 
+            <Button
+              onClick={() => setOpenDeleteDialog(false)}
               sx={{
                 textTransform: 'none',
                 borderRadius: '12px',
@@ -240,8 +240,8 @@ function Settings() {
             >
               Cancel
             </Button>
-            <Button 
-              onClick={handleConfirmDelete} 
+            <Button
+              onClick={handleConfirmDelete}
               variant="contained"
               color="error"
               sx={{
@@ -272,7 +272,7 @@ function Settings() {
             onClose={handleCloseSnackbar}
             severity={snackbar.severity}
             variant="filled"
-            sx={{ 
+            sx={{
               width: '100%',
               borderRadius: '12px',
               '& .MuiAlert-icon': {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Account.module.css";
 import {
   Box,
   Typography,
@@ -46,8 +46,58 @@ import {
   useEditProfile,
   useChangePassword,
   useUpdateProfilePicture,
-} from "../../hooks/useSettings";
+} from "../../../hooks/useSettings";
 import { toast } from "react-toastify";
+
+// Custom styled button component
+const CancelButton = ({ children, ...props }) => (
+  <Button
+    {...props}
+    variant="outlined"
+    sx={{
+      color: '#ff9417',
+      borderColor: '#ff9417',
+      '&:hover': {
+        backgroundColor: 'rgba(255, 148, 23, 0.08)',
+        borderColor: '#e68300',
+        color: '#e68300',
+        transform: 'scale(1.02)',
+      },
+      '&:active': {
+        backgroundColor: 'rgba(255, 148, 23, 0.15)',
+        transform: 'scale(0.98)',
+      },
+      '&:focus': {
+        outline: `2px solid rgba(255, 148, 23, 0.3)`,
+        outlineOffset: '2px',
+      },
+      transition: 'all 0.2s ease',
+    }}
+  >
+    {children}
+  </Button>
+);
+
+// Custom Save button component
+const SaveButton = ({ children, ...props }) => (
+  <Button
+    {...props}
+    variant="contained"
+    sx={{
+      backgroundColor: '#ff9417',
+      '&:hover': {
+        backgroundColor: '#e68300',
+        transform: 'scale(1.02)',
+      },
+      '&:active': {
+        transform: 'scale(0.98)',
+      },
+      transition: 'all 0.2s ease',
+    }}
+  >
+    {children}
+  </Button>
+);
 
 function Account({ showSnackbar }) {
   const [editProfile, setEditProfile] = useState(false);
@@ -372,6 +422,29 @@ function Account({ showSnackbar }) {
     return null;
   };
 
+  // Cancel edit profile
+  const handleCancelEditProfile = () => {
+    setEditProfile(false);
+    if (profileDataFromApi) {
+      const storedUsername = localStorage.getItem("username") ||
+        localStorage.getItem("userName") ||
+        localStorage.getItem("name");
+      const storedBio = localStorage.getItem("bio") || "";
+
+      setProfileData({
+        username: profileDataFromApi.username || profileDataFromApi.name || storedUsername || "",
+        bio: profileDataFromApi.bio || storedBio || "",
+        profileid: profileDataFromApi.profileid || localStorage.getItem("profileid") || "",
+        avatar: profileDataFromApi.avatar || profileDataFromApi.profilepic || "",
+        profilepic: profileDataFromApi.profilepic || profileDataFromApi.avatar || "",
+        createdAt: profileDataFromApi.createdAt || profileDataFromApi.created_at || "",
+        lastLogin: profileDataFromApi.lastLogin || profileDataFromApi.last_login || "",
+        isVerified: profileDataFromApi.isVerified || false,
+        status: profileDataFromApi.status || "active",
+      });
+    }
+  };
+
   if (profileLoading) {
     return (
       <Box className={styles.loadingContainer}>
@@ -486,43 +559,20 @@ function Account({ showSnackbar }) {
                 }}
               />
               <Box className={styles.editProfileActions}>
-                <Button
-                  variant="contained"
-                  startIcon={<Save />}
+                <SaveButton
                   onClick={handleSaveProfile}
                   disabled={editProfileMutation.isLoading}
-                  className={styles.saveBtn}
+                  startIcon={<Save />}
                 >
                   {editProfileMutation.isLoading ? "Saving..." : "Save Changes"}
-                </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<Cancel />}
-                  onClick={() => {
-                    setEditProfile(false);
-                    if (profileDataFromApi) {
-                      const storedUsername = localStorage.getItem("username") ||
-                        localStorage.getItem("userName") ||
-                        localStorage.getItem("name");
-                      const storedBio = localStorage.getItem("bio") || "";
-
-                      setProfileData({
-                        username: profileDataFromApi.username || profileDataFromApi.name || storedUsername || "",
-                        bio: profileDataFromApi.bio || storedBio || "",
-                        profileid: profileDataFromApi.profileid || localStorage.getItem("profileid") || "",
-                        avatar: profileDataFromApi.avatar || profileDataFromApi.profilepic || "",
-                        profilepic: profileDataFromApi.profilepic || profileDataFromApi.avatar || "",
-                        createdAt: profileDataFromApi.createdAt || profileDataFromApi.created_at || "",
-                        lastLogin: profileDataFromApi.lastLogin || profileDataFromApi.last_login || "",
-                        isVerified: profileDataFromApi.isVerified || false,
-                        status: profileDataFromApi.status || "active",
-                      });
-                    }
-                  }}
+                </SaveButton>
+                <CancelButton
+                  onClick={handleCancelEditProfile}
                   disabled={editProfileMutation.isLoading}
+                  startIcon={<Cancel />}
                 >
                   Cancel
-                </Button>
+                </CancelButton>
               </Box>
             </Box>
           </Paper>
@@ -720,7 +770,7 @@ function Account({ showSnackbar }) {
           )}
         </DialogContent>
         <DialogActions className={styles.dialogActions}>
-          <Button
+          <CancelButton
             onClick={() => {
               setOpenPasswordDialog(false);
               setPasswordData({
@@ -734,21 +784,17 @@ function Account({ showSnackbar }) {
                 confirmpassword: "",
               });
             }}
-            color="primary"
-            variant="outlined"
+            disabled={changePasswordMutation.isLoading}
           >
             Cancel
-          </Button>
-          <Button
+          </CancelButton>
+          <SaveButton
             onClick={handleChangePassword}
-            variant="contained"
-            color="primary"
             disabled={changePasswordMutation.isLoading}
             startIcon={<Save />}
-            className={styles.saveBtn}
           >
             {changePasswordMutation.isLoading ? "Changing..." : "Change Password"}
-          </Button>
+          </SaveButton>
         </DialogActions>
       </Dialog>
 
@@ -784,22 +830,16 @@ function Account({ showSnackbar }) {
           </Box>
         </DialogContent>
         <DialogActions className={styles.dialogActions}>
-          <Button
-            variant="contained"
-            startIcon={<CheckCircle />}
+          <CancelButton onClick={handleCancelImage}>
+            Cancel
+          </CancelButton>
+          <SaveButton
             onClick={handleImageUpload}
             disabled={updateProfilePictureMutation.isLoading}
-            className={styles.usePhotoBtn}
+            startIcon={<CheckCircle />}
           >
             {updateProfilePictureMutation.isLoading ? "Uploading..." : "Use Photo"}
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<Close />}
-            onClick={handleCancelImage}
-          >
-            Cancel
-          </Button>
+          </SaveButton>
         </DialogActions>
       </Dialog>
     </Box>

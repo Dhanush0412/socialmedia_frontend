@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Notifications.module.css";
 import {
   Box,
   Typography,
@@ -14,7 +14,7 @@ import {
   Notifications as NotificationsIcon,
   CheckCircle,
 } from '@mui/icons-material';
-import { useNotifications, useReadNotification } from '../../hooks/useSettings';
+import { useNotifications, useReadNotification } from '../../../hooks/useSettings';
 
 function Notifications() {
   const { data: notificationsData, isLoading } = useNotifications();

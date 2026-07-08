@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Logout.module.css";
 import {
   Box,
   Typography,
