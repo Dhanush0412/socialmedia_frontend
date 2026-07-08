@@ -1,0 +1,89 @@
+.contentWrapper {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contentTitle {
+  font-weight: 600 !important;
+  color: #1a1a2e;
+  margin-bottom: 4px !important;
+}
+
+.contentSubtitle {
+  margin-bottom: 24px !important;
+  opacity: 0.7;
+}
+
+.notificationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.notificationBadgeIcon {
+  font-size: 32px;
+  color: #ff9417;
+}
+
+.notificationList {
+  padding: 0 !important;
+}
+
+.notificationItem {
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  margin-bottom: 8px !important;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.notificationItem:hover {
+  background: #fff3e0;
+}
+
+.unread {
+  background: #fff8f0 !important;
+  border-color: #ff9417 !important;
+}
+
+.unread:hover {
+  background: #fff3e0 !important;
+}
+
+.notificationIcon {
+  color: #ff9417;
+}
+
+.notificationMessage {
+  margin-bottom: 4px !important;
+}
+
+.notificationTime {
+  color: #999;
+  font-size: 12px !important;
+}
+
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  gap: 16px;
+  color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Activity.module.css";
 import {
   Box,
   Typography,
   Chip,
   CircularProgress,
 } from '@mui/material';
-import { useActivity } from '../../hooks/useSettings';
+import { useActivity } from '../../../hooks/useSettings';
 
 function Activity() {
   const { data: activityData, isLoading } = useActivity();

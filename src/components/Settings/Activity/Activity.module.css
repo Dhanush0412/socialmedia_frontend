@@ -1,0 +1,99 @@
+.contentWrapper {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contentTitle {
+  font-weight: 600 !important;
+  color: #1a1a2e;
+  margin-bottom: 4px !important;
+}
+
+.contentSubtitle {
+  margin-bottom: 24px !important;
+  opacity: 0.7;
+}
+
+.activityContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.activityItem:hover {
+  background: #fff3e0;
+  transform: translateX(4px);
+}
+
+.activityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.activityAction {
+  font-weight: 500 !important;
+}
+
+.activityDetails {
+  opacity: 0.7;
+}
+
+.activityTime {
+  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.activityIcon {
+  color: #ff9417;
+}
+
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  gap: 16px;
+  color: #666;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 40px 0;
+  color: #999;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .activityItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

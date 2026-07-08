@@ -1,0 +1,118 @@
+.contentWrapper {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contentTitle {
+  font-weight: 600 !important;
+  color: #1a1a2e;
+  margin-bottom: 4px !important;
+}
+
+.contentSubtitle {
+  margin-bottom: 24px !important;
+  opacity: 0.7;
+}
+
+.accountActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.actionCard {
+  padding: 32px 24px;
+  border-radius: 16px !important;
+  text-align: center;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.actionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dangerCard:hover {
+  border: 1px solid rgba(244, 67, 54, 0.2) !important;
+}
+
+.cardIconWrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 148, 23, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.dangerCard .cardIconWrapper {
+  background: rgba(244, 67, 54, 0.1);
+}
+
+.cardIcon {
+  font-size: 32px !important;
+}
+
+.cardTitle {
+  margin-bottom: 8px !important;
+  color: #1a1a2e;
+}
+
+.cardDescription {
+  margin-bottom: 20px !important;
+  min-height: 40px;
+}
+
+.logoutBtn {
+  text-transform: none !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  background: linear-gradient(135deg, #ff9417, #e68300) !important;
+  color: white !important;
+  box-shadow: 0 8px 24px rgba(255, 148, 23, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.logoutBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 32px rgba(255, 148, 23, 0.4) !important;
+}
+
+.deleteBtn {
+  text-transform: none !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  border-color: #f44336 !important;
+  color: #f44336 !important;
+  transition: all 0.3s ease !important;
+}
+
+.deleteBtn:hover {
+  background: rgba(244, 67, 54, 0.08) !important;
+  border-color: #d32f2f !important;
+  color: #d32f2f !important;
+  transform: scale(1.02);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .accountActions {
+    grid-template-columns: 1fr;
+  }
+}

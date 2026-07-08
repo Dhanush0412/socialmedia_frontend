@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Blocked.module.css";
 import {
   Box,
   Typography,
@@ -11,7 +11,7 @@ import {
   Button,
   CircularProgress,
 } from '@mui/material';
-import { useBlockedUsers } from '../../hooks/useSettings';
+import { useBlockedUsers } from '../../../hooks/useSettings';
 
 function Blocked({ showSnackbar }) {
   const { data: blockedUsersData, isLoading, refetch } = useBlockedUsers();
