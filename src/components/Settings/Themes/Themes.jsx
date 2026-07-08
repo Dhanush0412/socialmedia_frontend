@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from "../../pages/Settings/Settings.module.css";
+import styles from "./Themes.module.css";
 import {
   Box,
   Typography,
   Button,
   CircularProgress,
 } from '@mui/material';
-import { useTheme, useUpdateTheme } from '../../hooks/useSettings';
+import { useTheme, useUpdateTheme } from '../../../hooks/useSettings';
 
 function Themes({ showSnackbar }) {
   const { data: themeData, isLoading } = useTheme();
@@ -50,8 +50,8 @@ function Themes({ showSnackbar }) {
               <Typography variant="body2">Light Mode</Typography>
               <Box className={styles.themeColors}>
                 <Box className={styles.colorDot} style={{ backgroundColor: '#1976d2' }} />
-                <Box className={styles.colorDot} style={{ backgroundColor: '#ffffff', border: '1px solid #ddd' }} />
-                <Box className={styles.colorDot} style={{ backgroundColor: '#f5f5f5' }} />
+                {/* <Box className={styles.colorDot} style={{ backgroundColor: '#ffffff', border: '1px solid #ddd' }} /> */}
+                {/* <Box className={styles.colorDot} style={{ backgroundColor: '#f5f5f5' }} /> */}
               </Box>
             </Box>
             <Button
@@ -72,8 +72,8 @@ function Themes({ showSnackbar }) {
               <Typography variant="body2">Dark Mode</Typography>
               <Box className={styles.themeColors}>
                 <Box className={styles.colorDot} style={{ backgroundColor: '#90caf9' }} />
-                <Box className={styles.colorDot} style={{ backgroundColor: '#1e1e1e' }} />
-                <Box className={styles.colorDot} style={{ backgroundColor: '#2d2d2d' }} />
+                {/* <Box className={styles.colorDot} style={{ backgroundColor: '#1e1e1e' }} /> */}
+                {/* <Box className={styles.colorDot} style={{ backgroundColor: '#2d2d2d' }} /> */}
               </Box>
             </Box>
             <Button

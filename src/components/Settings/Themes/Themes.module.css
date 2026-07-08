@@ -1,0 +1,120 @@
+/* Themes.module.css - Themes Component Styles */
+
+.contentWrapper {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.contentTitle {
+  font-weight: 600 !important;
+  color: #1a1a2e;
+  margin-bottom: 4px !important;
+}
+
+.contentSubtitle {
+  margin-bottom: 24px !important;
+  opacity: 0.7;
+}
+
+/* Themes Container */
+.themesContainer {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.themeOption {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.themePreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.themeCard {
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  transition: all 0.3s ease;
+  text-align: center;
+  background: #ffffff;
+}
+
+.themeCard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.activeTheme {
+  border-color: #ff9417 !important;
+  box-shadow: 0 0 0 3px rgba(255, 148, 23, 0.2);
+}
+
+.themeColors {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.colorDot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.themeSelectBtn {
+  min-width: 100px !important;
+  text-transform: none !important;
+  border-radius: 20px !important;
+}
+
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  gap: 16px;
+  color: #666;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .themesContainer {
+    flex-direction: column;
+  }
+  
+  .themeOption {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .themeCard {
+    padding: 16px;
+  }
+  
+  .themeSelectBtn {
+    min-width: 80px !important;
+  }
+}
