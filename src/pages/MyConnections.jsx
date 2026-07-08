@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useConnections } from "../hooks/connection/useConnections";
 import { useUnreadCount } from "../hooks/chat/useUnreadCount";
 import ConnectionCard from "../components/ConnectionCard";
@@ -13,30 +13,12 @@ function MyConnections() {
 
   const [search, setSearch] = useState("");
 
-  const [unreadMap, setUnreadMap] = useState({});
-
   useEffect(() => {
 
     socket.emit(
       "register",
       localStorage.getItem("profileid")
     );
-
-  }, []);
-
-  useEffect(() => {
-
-    socket.on("unreadUpdated", (data) => {
-
-      setUnreadMap((prev) => ({
-
-        ...prev,
-
-        [data.sender]: data.unreadCount
-
-      }));
-
-    });
 
     return () => {
 
@@ -46,19 +28,85 @@ function MyConnections() {
 
   }, []);
 
-  useEffect(() => {
+  const friends = useMemo(() => {
 
-    const obj = {};
+    if (Array.isArray(data)) return data;
 
-    unreadData.forEach((item) => {
+    if (Array.isArray(data?.connections)) return data.connections;
 
-      obj[item._id] = item.unreadCount;
+    if (Array.isArray(data?.data)) return data.data;
+
+    return [];
+
+  }, [data]);
+
+  const unreadMap = useMemo(() => {
+
+    const map = {};
+
+    if (Array.isArray(unreadData)) {
+
+      unreadData.forEach((item) => {
+
+        map[item._id] = item.unreadCount;
+
+      });
+
+    }
+
+    return map;
+
+  }, [unreadData]);
+
+  const uniqueFriends = useMemo(() => {
+
+    return [
+
+      ...new Map(
+
+        friends.map((friend) => [
+
+          friend._id,
+
+          friend
+
+        ])
+
+      ).values()
+
+    ];
+
+  }, [friends]);
+
+  const filteredFriends = useMemo(() => {
+
+    return uniqueFriends.filter((friend) =>
+
+      friend?.user?.username
+        ?.toLowerCase()
+        .includes(search.toLowerCase())
+
+    );
+
+  }, [uniqueFriends, search]);
+
+  const sortedFriends = useMemo(() => {
+
+    return [...filteredFriends].sort((a, b) => {
+
+      const unreadA = unreadMap[a._id] || 0;
+
+      const unreadB = unreadMap[b._id] || 0;
+
+      if (unreadA > 0 && unreadB === 0) return -1;
+
+      if (unreadA === 0 && unreadB > 0) return 1;
+
+      return 0;
 
     });
 
-    setUnreadMap(obj);
-
-  }, [unreadData]);
+  }, [filteredFriends, unreadMap]);
 
   if (isLoading) {
 
@@ -71,52 +119,6 @@ function MyConnections() {
     );
 
   }
-
-  const uniqueFriends = [
-
-    ...new Map(
-
-      (data || []).map((friend) => [
-
-        friend._id,
-
-        friend
-
-      ])
-
-    ).values()
-
-  ];
-
-  const filteredFriends = uniqueFriends.filter((friend) =>
-
-    friend?.user?.username
-      ?.toLowerCase()
-      .includes(search.toLowerCase())
-
-  );
-
-  const sortedFriends = [...filteredFriends].sort((a, b) => {
-
-    const unreadA = unreadMap[a._id] || 0;
-
-    const unreadB = unreadMap[b._id] || 0;
-
-    if (unreadA > 0 && unreadB === 0) {
-
-      return -1;
-
-    }
-
-    if (unreadA === 0 && unreadB > 0) {
-
-      return 1;
-
-    }
-
-    return 0;
-
-  });
 
   return (
 
@@ -152,9 +154,7 @@ function MyConnections() {
           type="text"
           placeholder="Search friends..."
           value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
+          onChange={(e) => setSearch(e.target.value)}
         />
 
       </div>
@@ -172,9 +172,7 @@ function MyConnections() {
                 <ConnectionCard
                   key={friend._id}
                   friend={friend}
-                  unreadCount={
-                    unreadMap[friend._id] || 0
-                  }
+                  unreadCount={unreadMap[friend._id] || 0}
                 />
 
               ))

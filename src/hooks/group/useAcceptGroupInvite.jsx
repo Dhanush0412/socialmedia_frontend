@@ -16,7 +16,7 @@ Authorization:`Bearer ${localStorage.getItem("token")}`
   return response.data;
 };
 
-export const useAcceptInvite=()=>{
+export const useAcceptGroupInvite=()=>{
   return useMutation({
     mutationFn:acceptInvite,
     onSuccess:(data)=>{

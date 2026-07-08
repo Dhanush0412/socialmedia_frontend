@@ -20,7 +20,7 @@ const menuItems = [
   { path: "/dashboard", icon: FaUser, label: "Profile" },
   { path: "/search-users", icon: FaSearch, label: "Find Friends" },
   { path: "/friends", icon: FaUserFriends, label: "My Friends" },
-  { path: "/group-requests", icon: FiUser, label: "Group Requests" },
+  { path: "/Group", icon: FiUser, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
   { path: "/create-group", icon: FaUsers, label: "Create Group" },

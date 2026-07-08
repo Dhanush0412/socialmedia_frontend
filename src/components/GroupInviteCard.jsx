@@ -1,9 +1,9 @@
-import {useAcceptInvite} from "../hooks/group/useAcceptGroupInvite";
+import {useAcceptGroupInvite} from "../hooks/group/useAcceptGroupInvite";
 import {useRejectGroupInvite} from "../hooks/group/useRejectGroupInvite";
 
 function GroupInviteCard({invite}){
 
-const accept=useAcceptInvite();
+const accept=useAcceptGroupInvite();
 const reject=useRejectGroupInvite();
 
 
@@ -11,7 +11,7 @@ return(
 <div className="group-invite-card">
 
 <h3>
-{invite.group?.name}
+{invite.group.name}
 </h3>
 
 <p>
