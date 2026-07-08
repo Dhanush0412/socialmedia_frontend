@@ -1,4 +1,4 @@
-import "../css/register.css";
+import "../Css/register.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -52,85 +52,85 @@ function Register() {
     }
   };
 
-  
-const verifyOTP = async () => {
-  try {
-    if (!otp) {
-      return toast.error("Enter OTP");
-    }
 
-    const response = await axios.post(
-      `${URL}/user/verifyotp`,
-      {
-        email,
-        otp
+  const verifyOTP = async () => {
+    try {
+      if (!otp) {
+        return toast.error("Enter OTP");
       }
-    );
 
-    // if (
-    //   response.data.success === true ||
-    //   response.data.message?.toLowerCase().includes("success")
-    // )
-    if ( 
-  response.data.toLowerCase().includes("verified")
-) {
-      toast.success("Email Verified Successfully");
-      setEmailVerified(true);
-    } else {
+      const response = await axios.post(
+        `${URL}/user/verifyotp`,
+        {
+          email,
+          otp
+        }
+      );
+
+      // if (
+      //   response.data.success === true ||
+      //   response.data.message?.toLowerCase().includes("success")
+      // )
+      if (
+        response.data.toLowerCase().includes("verified")
+      ) {
+        toast.success("Email Verified Successfully");
+        setEmailVerified(true);
+      } else {
+        setEmailVerified(false);
+        toast.error("Invalid OTP");
+      }
+
+    } catch (error) {
       setEmailVerified(false);
-      toast.error("Invalid OTP");
+
+      toast.error(
+        error?.response?.data?.message ||
+        error?.response?.data ||
+        "Invalid OTP"
+      );
     }
+  };
+  // const verifyOTP = async () => {
+  //   try {
 
-  } catch (error) {
-    setEmailVerified(false);
+  //     if (!otp) {
+  //       return toast.error("Enter OTP");
+  //     }
 
-    toast.error(
-      error?.response?.data?.message ||
-      error?.response?.data ||
-      "Invalid OTP"
-    );
-  }
-};
-// const verifyOTP = async () => {
-//   try {
+  //     const response = await axios.post(
+  //       `${URL}/user/verifyotp`,
+  //       {
+  //         email,
+  //         otp
+  //       }
+  //     );
 
-//     if (!otp) {
-//       return toast.error("Enter OTP");
-//     }
+  //     if (
+  //       response.data.toLowerCase().includes("verified")
+  //     ) {
 
-//     const response = await axios.post(
-//       `${URL}/user/verifyotp`,
-//       {
-//         email,
-//         otp
-//       }
-//     );
+  //       toast.success("Email Verified Successfully");
+  //       setEmailVerified(true);
 
-//     if (
-//       response.data.toLowerCase().includes("verified")
-//     ) {
+  //     } else {
 
-//       toast.success("Email Verified Successfully");
-//       setEmailVerified(true);
+  //       setEmailVerified(false);
+  //       toast.error(response.data);
 
-//     } else {
+  //     }
 
-//       setEmailVerified(false);
-//       toast.error(response.data);
+  //   } catch(error) {
 
-//     }
+  //     setEmailVerified(false);
 
-//   } catch(error) {
+  //     toast.error(
+  //       error?.response?.data ||
+  //       "Invalid OTP"
+  //     );
 
-//     setEmailVerified(false);
-
-//     toast.error(
-//       error?.response?.data ||
-//       "Invalid OTP"
-//     );
-
-//   }
-// };
+  //   }
+  // };
 
   const onSubmit = (data) => {
     if (!emailVerified) {
@@ -250,17 +250,15 @@ const verifyOTP = async () => {
               {errors.username?.message}
             </p>
 
-            <input
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
 
-            <p className="error">
-              {errors.email?.message}
-            </p>
+            <div className="email-row">
 
-            <div className="otp-section">
+              <input
+                type="email"
+                placeholder="Email"
+                {...register("email")}
+              />
+
               {!emailVerified && (
                 <button
                   type="button"
@@ -268,39 +266,47 @@ const verifyOTP = async () => {
                   onClick={sendOTP}
                   disabled={otpSent}
                 >
-                  {otpSent
-                    ? "OTP Sent"
-                    : "Send OTP"}
+                  {otpSent ? "OTP Sent" : "Send OTP"}
                 </button>
               )}
 
-              {otpSent && !emailVerified && (
-                <div className="verify-section">
-                  <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e) =>
-                      setOtp(e.target.value)
-                    }
-                  />
-
-                  <button
-                    type="button"
-                    className="verify-button"
-                    onClick={verifyOTP}
-                  >
-                    Verify OTP
-                  </button>
-                </div>
-              )}
-
-              {emailVerified && (
-                <p className="verified-message">
-                  ✅ Email Verified Successfully
-                </p>
-              )}
             </div>
+
+            <p className="error">
+              {errors.email?.message}
+            </p>
+
+            {otpSent && !emailVerified && (
+
+              <div className="verify-section">
+
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+
+                <button
+                  type="button"
+                  className="verify-button"
+                  onClick={verifyOTP}
+                >
+                  Verify
+                </button>
+
+              </div>
+
+            )}
+
+            {emailVerified && (
+
+              <p className="verified-message">
+                ✅ Email Verified Successfully
+              </p>
+
+            )}
+
 
             <input
               type="number"

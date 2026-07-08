@@ -1,0 +1,176 @@
+.group-request-page{
+max-width:1000px;
+margin:30px auto;
+padding:20px;
+}
+
+.group-request-header{
+margin-bottom:25px;
+}
+
+.group-request-header h1{
+font-size:32px;
+font-weight:700;
+color:#1f2937;
+margin-bottom:8px;
+}
+
+.group-request-header p{
+font-size:15px;
+color:#6b7280;
+}
+
+.group-request-loading{
+height:60vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:20px;
+font-weight:600;
+color:#4b5563;
+}
+
+.invite-list{
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.invite-card{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+background:#ffffff;
+border-radius:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.invite-card:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 24px rgba(0,0,0,.12);
+}
+
+.invite-left{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.invite-left img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #4f46e5;
+}
+
+.invite-left h3{
+margin:0;
+font-size:20px;
+color:#111827;
+}
+
+.invite-left p{
+margin-top:6px;
+font-size:14px;
+color:#6b7280;
+}
+
+.invite-actions{
+display:flex;
+gap:12px;
+}
+
+.accept-btn{
+padding:10px 22px;
+border:none;
+border-radius:10px;
+background:#10b981;
+color:#ffffff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.accept-btn:hover{
+background:#059669;
+}
+
+.reject-btn{
+padding:10px 22px;
+border:none;
+border-radius:10px;
+background:#ef4444;
+color:#ffffff;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.reject-btn:hover{
+background:#dc2626;
+}
+
+.accept-btn:disabled,
+.reject-btn:disabled{
+background:#9ca3af;
+cursor:not-allowed;
+}
+
+.empty-request{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:60px 20px;
+background:#ffffff;
+border-radius:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.empty-request img{
+width:180px;
+margin-bottom:20px;
+}
+
+.empty-request h2{
+margin-bottom:10px;
+color:#1f2937;
+}
+
+.empty-request p{
+color:#6b7280;
+text-align:center;
+}
+
+@media(max-width:768px){
+
+.invite-card{
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+}
+
+.invite-left{
+width:100%;
+}
+
+.invite-actions{
+width:100%;
+display:flex;
+}
+
+.accept-btn,
+.reject-btn{
+flex:1;
+}
+
+.group-request-header h1{
+font-size:26px;
+}
+
+}

@@ -3,7 +3,15 @@ import RequestCard from "../components/RequestCard";
 import "../Css/PendingRequests.css";
 
 function PendingRequests() {
-  const { data = [], isLoading } = usePendingRequests();
+  const { data, isLoading } = usePendingRequests();
+
+const requests = Array.isArray(data)
+  ? data
+  : Array.isArray(data?.requests)
+  ? data.requests
+  : Array.isArray(data?.data)
+  ? data.data
+  : [];
 
   console.log(data);
 
@@ -21,23 +29,25 @@ function PendingRequests() {
         <p>Accept invitations and grow your network</p>
       </div>
 
-      {data.length > 0 ? (
-        <div className="requests-container">
-          <div className="request-count">
-            {data.length} New Invitation{data.length > 1 ? "s" : ""}
-          </div>
+     {requests.length > 0 ? (
+  <div className="requests-container">
 
-          <div className="requests-list">
-            {data.map((request) => (
-              <RequestCard
-                key={request._id}
-                request={request}
-              />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="empty-request">
+    <div className="request-count">
+      {requests.length} New Invitation{requests.length > 1 ? "s" : ""}
+    </div>
+
+    <div className="requests-list">
+      {requests.map((request) => (
+        <RequestCard
+          key={request._id}
+          request={request}
+        />
+      ))}
+    </div>
+
+  </div>
+) : (
+   <div className="empty-request">
           <div className="empty-icon">📭</div>
 
           <h2>No Connection Requests</h2>

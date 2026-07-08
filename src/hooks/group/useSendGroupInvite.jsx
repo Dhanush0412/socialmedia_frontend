@@ -10,10 +10,10 @@ const sendInvite=async({
 
  const response=await axios.post(
    `${URL}/group/sendinvite/${groupid}/${receiverid}`,
-   {},
-   {
-    withCredentials:true
-   }
+   {},{
+   headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}}
  );
 
  return response.data;
