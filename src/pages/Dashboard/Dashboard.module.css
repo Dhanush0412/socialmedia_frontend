@@ -178,3 +178,53 @@
     height: 60px;
   }
 }
+
+.profileSection{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.dashboardHeader{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.notificationWrapper{
+
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    background:#fff7ef;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:2px solid #ffd6a8;
+
+    transition:.3s;
+
+}
+
+.notificationWrapper:hover{
+
+    background:#ffe5c5;
+
+    transform:scale(1.05);
+
+}
+
+.notificationPopup{
+
+    width:420px;
+
+    max-height:500px;
+
+    overflow-y:auto;
+
+}

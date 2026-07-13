@@ -1,14 +1,46 @@
+import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useDashboard } from "../../hooks/useDashboard";
+import { useNotifications } from "../../hooks/useSettings";
 import { useNavigate } from "react-router-dom";
+
 import Layout from "../../components/Layout/Layout.jsx";
+import Notifications from "../../components/Settings/Notifications/Notifications";
+
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import Popover from "@mui/material/Popover";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import styles from "./Dashboard.module.css";
 
 function Dashboard() {
   const navigate = useNavigate();
+
   const { data, isLoading, error } = useDashboard();
+  const { data: notificationsData } = useNotifications();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const notifications = Array.isArray(notificationsData)
+    ? notificationsData
+    : [];
+
+  const unreadCount = notifications.filter(
+    (notification) => !notification.read
+  ).length;
+
+  const handleOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   if (isLoading) {
     return (
@@ -36,38 +68,73 @@ function Dashboard() {
   return (
     <Layout>
       <div className={styles.dashboardContainer}>
-        {/* Header Card */}
+
+        {/* ================= Header Card ================= */}
+
         <div className={styles.dashboardHeader}>
-          <div className={styles.avatarContainer}>
-            {profile?.profilepic ? (
-              <img
-                src={profile.profilepic}
-                alt="Profile"
-                className={styles.profileImage}
-                onError={(e) => {
-                  e.target.src =
-                    "https://res.cloudinary.com/dubjosis9/image/upload/v1782300064/demoimage_b0q161.jpg";
-                }}
-              />
-            ) : (
-              <FaUserCircle className={styles.defaultAvatar} />
-            )}
+
+          <div className={styles.profileSection}>
+
+            <div className={styles.avatarContainer}>
+              {profile?.profilepic ? (
+                <img
+                  src={profile.profilepic}
+                  alt="Profile"
+                  className={styles.profileImage}
+                  onError={(e) => {
+                    e.target.src =
+                      "https://res.cloudinary.com/dubjosis9/image/upload/v1782300064/demoimage_b0q161.jpg";
+                  }}
+                />
+              ) : (
+                <FaUserCircle className={styles.defaultAvatar} />
+              )}
+            </div>
+
+            <div className={styles.userInfo}>
+              <h1 className={styles.username}>
+                {profile?.username || "User"}
+              </h1>
+
+              <p className={styles.profileId}>
+                Profile ID: {profile?.profileid || "N/A"}
+              </p>
+            </div>
+
           </div>
 
-          <div className={styles.userInfo}>
-            <h1 className={styles.username}>
-              {profile?.username || "User"}
-            </h1>
-            <p className={styles.profileId}>
-              Profile ID: {profile?.profileid || "N/A"}
-            </p>
+          {/* Notification Bell */}
+
+          <div className={styles.notificationWrapper}>
+            <IconButton onClick={handleOpen}>
+
+              <Badge
+                badgeContent={unreadCount}
+                color="error"
+              >
+                <NotificationsIcon
+                  sx={{
+                    color: "#F68B1F",
+                    fontSize: 34,
+                  }}
+                />
+              </Badge>
+
+            </IconButton>
           </div>
+
         </div>
 
-        {/* Bio Card */}
+        {/* ================= Bio Card ================= */}
+
         <div className={styles.bioCard}>
+
           <div className={styles.bioHeader}>
-            <h2 className={styles.bioTitle}>Bio</h2>
+
+            <h2 className={styles.bioTitle}>
+              Bio
+            </h2>
+
             <Button
               variant="contained"
               className={styles.viewPostBtn}
@@ -84,16 +151,22 @@ function Dashboard() {
             >
               View Posts
             </Button>
+
           </div>
+
           <p className={styles.bioText}>
             {profile?.bio || "No bio available"}
           </p>
+
         </div>
 
-        {/* Stats Section */}
+        {/* ================= Stats ================= */}
+
         <div className={styles.statsSection}>
+
           <div className={styles.statCard}>
             <h3 className={styles.statTitle}>Groups</h3>
+
             <div className={styles.countCircle}>
               {profile?.groups || 0}
             </div>
@@ -101,6 +174,7 @@ function Dashboard() {
 
           <div className={styles.statCard}>
             <h3 className={styles.statTitle}>Connections</h3>
+
             <div className={styles.countCircle}>
               {profile?.connections || 0}
             </div>
@@ -108,12 +182,42 @@ function Dashboard() {
 
           <div className={styles.statCard}>
             <h3 className={styles.statTitle}>Posts</h3>
+
             <div className={styles.countCircle}>
               {profile?.posts || 0}
             </div>
           </div>
+
         </div>
+
       </div>
+
+      {/* ================= Notification Popup ================= */}
+
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        PaperProps={{
+          sx: {
+            borderRadius: "15px",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <div className={styles.notificationPopup}>
+          <Notifications />
+        </div>
+      </Popover>
+
     </Layout>
   );
 }
