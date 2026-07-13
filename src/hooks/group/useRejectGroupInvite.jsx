@@ -9,8 +9,11 @@ const rejectInvite=async(inviteid)=>{
   `${URL}/group/reject/${inviteid}`,
   {},
   {
-   withCredentials:true
-  }
+headers:{
+Authorization:`Bearer ${localStorage.getItem("token")}`
+}
+}
+
  );
 
  return response.data;
