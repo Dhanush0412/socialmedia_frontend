@@ -17,7 +17,6 @@ const getProfile = async () => {
     `${URL}/profile/dashboard`,
     getAuthConfig()
   );
-  console.log("Profile API Response:", data);
   return data;
 };
 
@@ -34,8 +33,9 @@ const editProfile = async (formData) => {
     `${URL}/profile/edit`,
     formData,
     {
+      ...getAuthConfig(),
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        ...getAuthConfig().headers,
         "Content-Type": "multipart/form-data",
       },
     }
@@ -64,8 +64,9 @@ const updateProfilePicture = async (formData) => {
     `${URL}/profile/edit`,
     formData,
     {
+      ...getAuthConfig(),
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        ...getAuthConfig().headers,
         "Content-Type": "multipart/form-data",
       },
     }
@@ -87,34 +88,15 @@ export const useUpdateProfilePicture = () => {
   });
 };
 
-// ================= CHANGE PASSWORD - FIXED ================= //
-
+// ================= CHANGE PASSWORD ================= //
 const changePassword = async (passwordData) => {
-  console.log("Sending password change request:", passwordData);
-  
-  try {
-    const { data } = await axios.put(
-      `${URL}/profile/changepassword`,
-      passwordData,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    
-    console.log("Password change response:", data);
-    return data;
-  } catch (error) {
-    console.error("Password change error details:", {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-      config: error.config,
-    });
-    throw error;
-  }
+  const { data } = await axios.put(
+    `${URL}/profile/changepassword`,
+    passwordData,
+    getAuthConfig()
+  );
+
+  return data;
 };
 
 export const useChangePassword = () => {
@@ -127,51 +109,6 @@ export const useChangePassword = () => {
         queryKey: ["profile"],
       });
     },
-    onError: (error) => {
-      console.error("Mutation error:", error);
-    },
-  });
-};
-
-// ================= THEME ================= //
-
-const updateTheme = async (theme) => {
-  const { data } = await axios.put(
-    `${URL}/profile/themesetup`,
-    { theme },
-    getAuthConfig()
-  );
-
-  return data;
-};
-
-export const useUpdateTheme = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: updateTheme,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["theme"],
-      });
-    },
-  });
-};
-
-// Get Theme
-const getTheme = async () => {
-  const { data } = await axios.get(
-    `${URL}/profile/gettheme`,
-    getAuthConfig()
-  );
-
-  return data;
-};
-
-export const useTheme = () => {
-  return useQuery({
-    queryKey: ["theme"],
-    queryFn: getTheme,
   });
 };
 
@@ -273,5 +210,58 @@ export const useBlockedUsers = () => {
   return useQuery({
     queryKey: ["blockedUsers"],
     queryFn: getBlockedUsers,
+  });
+};
+
+const clearAuthData = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+};
+
+// ================= DELETE ACCOUNT ================= //
+const deleteAccount = async () => {
+  const { data } = await axios.delete(
+    `${URL}/profile/deleteacc`,
+    getAuthConfig()
+  );
+
+  return data;
+};
+
+export const useDeleteAccount = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteAccount,
+
+    onSuccess: () => {
+      clearAuthData();
+      queryClient.clear();
+    },
+  });
+};
+
+// ================= LOGOUT ================= //
+
+const logout = async () => {
+  const { data } = await axios.post(
+    `${URL}/exit/logout`,
+    {},
+    getAuthConfig()
+  );
+
+  return data;
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: logout,
+
+    onSuccess: () => {
+      clearAuthData();
+      queryClient.clear();
+    },
   });
 };

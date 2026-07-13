@@ -33,7 +33,6 @@ import {
 import Account from '../../components/Settings/Account/Account';
 import Notifications from '../../components/Settings/Notifications/Notifications';
 import Blocked from '../../components/Settings/Blocked/Blocked';
-import Themes from '../../components/Settings/Themes/Themes';
 import Activity from '../../components/Settings/Activity/Activity';
 import LogoutComponent from '../../components/Settings/Logout/Logout';
 
@@ -47,7 +46,6 @@ function Settings() {
     { id: 'account', label: 'Account Information', icon: <AccountCircle /> },
     { id: 'notifications', label: 'Notifications', icon: <NotificationsIcon /> },
     { id: 'blocked', label: 'Blocked Contacts', icon: <Block /> },
-    { id: 'themes', label: 'Themes', icon: <Palette /> },
     { id: 'activity', label: 'Activity', icon: <Assessment /> },
     { id: 'logout', label: 'Logout', icon: <Logout /> },
   ];
@@ -85,8 +83,6 @@ function Settings() {
         return <Notifications {...props} />;
       case 'blocked':
         return <Blocked {...props} />;
-      case 'themes':
-        return <Themes {...props} />;
       case 'activity':
         return <Activity {...props} />;
       case 'logout':

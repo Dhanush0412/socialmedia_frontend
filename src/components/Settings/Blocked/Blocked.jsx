@@ -8,25 +8,66 @@ import {
   ListItemIcon,
   ListItemText,
   Avatar,
-  Button,
   CircularProgress,
 } from '@mui/material';
 import { useBlockedUsers } from '../../../hooks/useSettings';
 
 function Blocked({ showSnackbar }) {
-  const { data: blockedUsersData, isLoading, refetch } = useBlockedUsers();
-  const blockedUsers = blockedUsersData || [];
-
-  const handleUnblockUser = async (userId) => {
-    try {
-      // Add your unblock API call here
-      // await unblockUser.mutateAsync(userId);
-      showSnackbar('User unblocked successfully', 'success');
-      refetch();
-    } catch (error) {
-      showSnackbar(error.message || 'Failed to unblock user', 'error');
+  const { data: blockedUsersData, isLoading } = useBlockedUsers();
+  
+  // Extract user data from the profile documents
+  const blockedUsers = React.useMemo(() => {
+    if (!blockedUsersData) return [];
+    
+    // If data is an array of profile documents
+    if (Array.isArray(blockedUsersData)) {
+      return blockedUsersData.map(profile => {
+        // The user info is nested in the 'user' field
+        if (profile.user) {
+          return {
+            id: profile.user._id || profile._id,
+            name: profile.user.username || profile.user.name || 'Unknown User',
+            email: profile.user.email || 'No email',
+            profilepic: profile.profilepic || null,
+            bio: profile.bio || '',
+            // Keep the original profile data if needed
+            ...profile
+          };
+        }
+        // Fallback: use the profile data directly
+        return {
+          id: profile._id,
+          name: profile.username || 'Unknown User',
+          email: profile.email || 'No email',
+          ...profile
+        };
+      });
     }
-  };
+    
+    // If data is an object with a data property
+    if (blockedUsersData.data && Array.isArray(blockedUsersData.data)) {
+      return blockedUsersData.data.map(profile => {
+        if (profile.user) {
+          return {
+            id: profile.user._id || profile._id,
+            name: profile.user.username || profile.user.name || 'Unknown User',
+            email: profile.user.email || 'No email',
+            profilepic: profile.profilepic || null,
+            ...profile
+          };
+        }
+        return {
+          id: profile._id,
+          name: profile.username || 'Unknown User',
+          email: profile.email || 'No email',
+          ...profile
+        };
+      });
+    }
+    
+    console.warn("Unexpected blocked users data structure:", blockedUsersData);
+    return [];
+  }, [blockedUsersData]);
 
   if (isLoading) {
     return (
@@ -55,23 +96,17 @@ function Blocked({ showSnackbar }) {
           {blockedUsers.map((user) => (
             <ListItem key={user.id} className={styles.blockedItem}>
               <ListItemIcon>
-                <Avatar className={styles.blockedAvatar}>
-                  {user.name ? user.name.charAt(0) : 'U'}
+                <Avatar 
+                  className={styles.blockedAvatar}
+                  src={user.profilepic}
+                >
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </Avatar>
               </ListItemIcon>
               <ListItemText
-                primary={user.name || 'Unknown User'}
-                secondary={user.email || 'No email'}
+                primary={user.name}
+                secondary={user.email}
               />
-              <Button
-                variant="outlined"
-                color="error"
-                size="small"
-                onClick={() => handleUnblockUser(user.id)}
-                className={styles.unblockBtn}
-              >
-                Unblock
-              </Button>
             </ListItem>
           ))}
         </List>
