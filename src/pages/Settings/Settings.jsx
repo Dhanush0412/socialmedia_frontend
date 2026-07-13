@@ -31,7 +31,7 @@ import {
 
 // Import child components 
 import Account from '../../components/Settings/Account/Account';
-import Notifications from '../../components/Settings/Notifications/Notifications';
+// import Notifications from '../../components/Settings/Notifications/Notifications';
 import Blocked from '../../components/Settings/Blocked/Blocked';
 import Activity from '../../components/Settings/Activity/Activity';
 import LogoutComponent from '../../components/Settings/Logout/Logout';
@@ -44,7 +44,7 @@ function Settings() {
 
   const menuItems = [
     { id: 'account', label: 'Account Information', icon: <AccountCircle /> },
-    { id: 'notifications', label: 'Notifications', icon: <NotificationsIcon /> },
+    // { id: 'notifications', label: 'Notifications', icon: <NotificationsIcon /> },
     { id: 'blocked', label: 'Blocked Contacts', icon: <Block /> },
     { id: 'activity', label: 'Activity', icon: <Assessment /> },
     { id: 'logout', label: 'Logout', icon: <Logout /> },
@@ -79,8 +79,8 @@ function Settings() {
     switch (activeTab) {
       case 'account':
         return <Account {...props} />;
-      case 'notifications':
-        return <Notifications {...props} />;
+      // case 'notifications':
+      //   return <Notifications {...props} />;
       case 'blocked':
         return <Blocked {...props} />;
       case 'activity':

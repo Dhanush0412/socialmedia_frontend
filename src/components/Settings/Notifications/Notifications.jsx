@@ -12,7 +12,10 @@ import {
 } from '@mui/material';
 import {
   Notifications as NotificationsIcon,
-  CheckCircle,
+  Favorite,
+  Comment,
+  PersonAdd,
+  PersonAddAlt1,
 } from '@mui/icons-material';
 import { useNotifications, useReadNotification } from '../../../hooks/useSettings';
 
@@ -20,14 +23,32 @@ function Notifications() {
   const { data: notificationsData, isLoading } = useNotifications();
   const readNotificationMutation = useReadNotification();
 
-  const notifications = notificationsData || [];
+  // ✅ FIX: Ensure notifications is always an array
+  const notifications = Array.isArray(notificationsData) ? notificationsData : [];
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const handleNotificationRead = async (notificationId) => {
-    try {
-      await readNotificationMutation.mutateAsync(notificationId);
-    } catch (error) {
-      console.error('Failed to mark notification as read:', error);
+  const handleNotificationClick = async (notification) => {
+    if (!notification.read) {
+      try {
+        await readNotificationMutation.mutateAsync(notification._id);
+      } catch (error) {
+        console.error('Failed to mark notification as read:', error);
+      }
+    }
+  };
+
+  const getNotificationIcon = (type) => {
+    switch(type) {
+      case 'like':
+        return <Favorite className={styles.likeIcon} />;
+      case 'comment':
+        return <Comment className={styles.commentIcon} />;
+      case 'connection_request':
+        return <PersonAdd className={styles.connectionIcon} />;
+      case 'connection_accepted':
+        return <PersonAddAlt1 className={styles.acceptedIcon} />;
+      default:
+        return <NotificationsIcon className={styles.notificationIcon} />;
     }
   };
 
@@ -44,6 +65,7 @@ function Notifications() {
 
   return (
     <Box className={styles.contentWrapper}>
+      {/* Header */}
       <Box className={styles.notificationHeader}>
         <Box>
           <Typography variant="h6" className={styles.contentTitle}>
@@ -55,38 +77,41 @@ function Notifications() {
               : 'All caught up! No unread notifications'}
           </Typography>
         </Box>
-        {unreadCount > 0 && (
-          <Badge badgeContent={unreadCount} color="primary">
-            <NotificationsIcon className={styles.notificationBadgeIcon} />
-          </Badge>
-        )}
+        <Badge badgeContent={unreadCount} color="primary">
+          <NotificationsIcon className={styles.notificationBadgeIcon} />
+        </Badge>
       </Box>
 
+      {/* Notification List */}
       {notifications.length > 0 ? (
         <List className={styles.notificationList}>
           {notifications.map((notification) => (
             <ListItem
-              key={notification.id}
+              key={notification._id}
               className={`${styles.notificationItem} ${!notification.read ? styles.unread : ''}`}
-              onClick={() => !notification.read && handleNotificationRead(notification.id)}
+              onClick={() => handleNotificationClick(notification)}
             >
               <ListItemIcon>
                 {!notification.read ? (
                   <Badge variant="dot" color="primary">
-                    <NotificationsIcon className={styles.notificationIcon} />
+                    {getNotificationIcon(notification.type)}
                   </Badge>
                 ) : (
-                  <CheckCircle className={styles.notificationIcon} color="disabled" />
+                  getNotificationIcon(notification.type)
                 )}
               </ListItemIcon>
               <ListItemText
-                primary={notification.title}
+                primary={
+                  <Typography variant="body1" className={styles.notificationTitle}>
+                    {notification.title}
+                  </Typography>
+                }
                 secondary={
                   <Box>
                     <Typography variant="body2" className={styles.notificationMessage}>
                       {notification.message}
                     </Typography>
-                    <Typography variant="caption" color="textSecondary">
+                    <Typography variant="caption" color="textSecondary" className={styles.notificationTime}>
                       {new Date(notification.createdAt).toLocaleString()}
                     </Typography>
                   </Box>
@@ -96,9 +121,12 @@ function Notifications() {
           ))}
         </List>
       ) : (
-        <Typography variant="body2" color="textSecondary" className={styles.emptyState}>
-          No notifications
-        </Typography>
+        <Box className={styles.emptyState}>
+          <NotificationsIcon className={styles.emptyIcon} />
+          <Typography variant="body2" color="textSecondary">
+            No notifications
+          </Typography>
+        </Box>
       )}
     </Box>
   );
