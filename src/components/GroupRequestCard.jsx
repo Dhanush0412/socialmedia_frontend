@@ -1,109 +1,146 @@
-import {
-Card,
-CardContent,
-Avatar,
-Typography,
-Button,
-Box
-} from "@mui/material";
+import {toast} from "react-toastify";
+import {useAcceptGroupInvite} from "../hooks/group/useAcceptGroupInvite";
+import {useRejectGroupInvite} from "../hooks/group/useRejectGroupInvite";
+import "../css/GroupRequests.css";
 
-function GroupRequestCard({
-invite,
-onAccept,
-onReject
-}){
+export default function GroupRequestCard({invite}){
+
+const{
+mutate:acceptInvite,
+isPending:isAccepting
+}=useAcceptGroupInvite();
+
+const{
+mutate:rejectInvite,
+isPending:isRejecting
+}=useRejectGroupInvite();
 
 return(
 
-<Card
-sx={{
-display:"flex",
-alignItems:"center",
-padding:2,
-borderRadius:3
-}}
->
+<div className="group-request-card">
 
+<div className="group-request-image">
 
-<Avatar
-src={invite.group?.image}
-sx={{
-width:55,
-height:55
+<img
+src={invite.group?.groupimage}
+alt={invite.group?.groupname}
+/>
+
+</div>
+
+<div className="group-request-content">
+
+<h2>
+
+{invite.group?.groupname}
+
+</h2>
+
+<p>
+
+Invited by
+
+<strong>
+
+{" "}
+{invite.sender?.user?.username||
+invite.sender?.username||
+"Unknown User"}
+
+</strong>
+
+</p>
+
+<div className="group-request-buttons">
+
+<button
+className="accept-btn"
+disabled={isAccepting}
+onClick={()=>{
+
+acceptInvite(
+invite._id,
+{
+onSuccess:()=>{
+
+toast.success(
+"Invitation accepted"
+);
+
+},
+onError:(error)=>{
+
+toast.error(
+error.response?.data||
+"Unable to accept invitation"
+);
+
+}
+}
+);
+
 }}
 >
 
 {
-invite.group?.name
-?.charAt(0)
+
+isAccepting
+?
+"Accepting..."
+:
+"Accept"
+
 }
 
-</Avatar>
+</button>
 
+<button
+className="reject-btn"
+disabled={isRejecting}
+onClick={()=>{
 
-<CardContent
-sx={{
-flex:1
+rejectInvite(
+invite._id,
+{
+onSuccess:()=>{
+
+toast.success(
+"Invitation rejected"
+);
+
+},
+onError:(error)=>{
+
+toast.error(
+error.response?.data||
+"Unable to reject invitation"
+);
+
+}
+}
+);
+
 }}
->
-
-<Typography
-fontWeight={700}
 >
 
 {
-invite.group?.name
+
+isRejecting
+?
+"Rejecting..."
+:
+"Reject"
+
 }
 
-</Typography>
+</button>
 
+</div>
 
-<Typography
-color="gray"
->
+</div>
 
-Group Invitation
-
-</Typography>
-
-
-</CardContent>
-
-
-<Box>
-
-<Button
-variant="contained"
-color="success"
-onClick={onAccept}
->
-
-Accept
-
-</Button>
-
-
-<Button
-variant="outlined"
-color="error"
-sx={{
-ml:1
-}}
-onClick={onReject}
->
-
-Reject
-
-</Button>
-
-
-</Box>
-
-
-</Card>
+</div>
 
 );
 
 }
-
-export default GroupRequestCard;

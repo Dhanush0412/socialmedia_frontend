@@ -1,5 +1,5 @@
-import {usePendingGroupInvites} from "../../hooks/group/usePendingInvites";
-import InviteCard from "../../components/InviteCard";
+import GroupRequestCard from "../../components/GroupRequestCard";
+import {usePendingGroupInvites} from "../../hooks/group/usePendingGroupInvites";
 import "./GroupRequest.css";
 
 export default function GroupRequests(){
@@ -11,32 +11,44 @@ isError
 }=usePendingGroupInvites();
 
 if(isLoading){
+
 return(
-<div className="group-request-loading">
-Loading Requests...
+
+<div className="group-requests-loading">
+
+Loading Group Invitations...
+
 </div>
+
 );
+
 }
 
 if(isError){
+
 return(
-<div className="group-request-loading">
-Unable to load requests
+
+<div className="group-requests-loading">
+
+Unable to load invitations
+
 </div>
+
 );
+
 }
 
 return(
 
-<div className="group-request-page">
+<div className="group-requests-page">
 
-<div className="group-request-header">
+<div className="group-requests-header">
 
-<h1>Group Requests</h1>
+<h1>Group Invitations</h1>
 
 <p>
 
-Accept or reject your pending group invitations.
+Accept or reject invitations from your friends.
 
 </p>
 
@@ -46,36 +58,38 @@ Accept or reject your pending group invitations.
 
 invites.length===0?
 
-<div className="empty-request">
+(
+
+<div className="group-requests-empty">
 
 <img
 src="https://cdn-icons-png.flaticon.com/512/4076/4076478.png"
-alt="No Requests"
+alt="No Invitations"
 />
 
-<h2>
-
-No Pending Requests
-
-</h2>
+<h2>No Pending Invitations</h2>
 
 <p>
 
-You don't have any group invitations.
+You don't have any pending group invitations.
 
 </p>
 
 </div>
 
+)
+
 :
 
-<div className="invite-list">
+(
+
+<div className="group-requests-list">
 
 {
 
 invites.map(invite=>(
 
-<InviteCard
+<GroupRequestCard
 key={invite._id}
 invite={invite}
 />
@@ -85,6 +99,8 @@ invite={invite}
 }
 
 </div>
+
+)
 
 }
 

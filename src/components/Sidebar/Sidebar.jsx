@@ -11,6 +11,7 @@ import {
   FaPlusSquare,
   FaChevronLeft,
   FaChevronRight,
+  FaRegQuestionCircle,
 } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import Tooltip from "@mui/material/Tooltip";
@@ -20,11 +21,13 @@ const menuItems = [
   { path: "/dashboard", icon: FaUser, label: "Profile" },
   { path: "/search-users", icon: FaSearch, label: "Find Friends" },
   { path: "/friends", icon: FaUserFriends, label: "My Friends" },
-  { path: "/Group", icon: FiUser, label: "GroupList" },
+  { path: "/groupchat", icon: FiUser, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
   { path: "/create-group", icon: FaUsers, label: "Create Group" },
   { path: "/messages", icon: FaComments, label: "Messages" },
+   { path: "/group/requests", icon: FaRegQuestionCircle, label: "Group Request" },
+
 ];
 
 function Sidebar({ isMinimized, onToggle }) {
