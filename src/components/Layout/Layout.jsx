@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import styles from "./Layout.module.css";
+import ActivityTracker from "../ActivityTracker/ActivityTracker";
 
 function Layout({ children }) {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -26,6 +27,7 @@ function Layout({ children }) {
 
   return (
     <div className={styles.layout}>
+      <ActivityTracker />
       <Sidebar isMinimized={isMinimized} onToggle={toggleSidebar} />
       <main
         className={`${styles.mainContent} ${
