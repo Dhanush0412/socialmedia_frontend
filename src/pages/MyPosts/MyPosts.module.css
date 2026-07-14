@@ -2,9 +2,10 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 24px 16px; 
   background: #f8f9fa;
   min-height: 100vh;
+  box-sizing: border-box; 
 }
 
 .headerSection {
@@ -12,7 +13,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 32px;
-  padding: 16px 20px;
+  padding: 16px 24px; 
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
@@ -24,12 +25,39 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap; 
 }
 
-.headerRight {
+/* Add this new class for total posts */
+.totalPostsCard {
   display: flex;
   align-items: center;
   gap: 12px;
+  background: #f8f9fa;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.totalPostsTitle {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.totalPostsValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f68b1f;
+  background: #fff;
+  padding: 2px 12px;
+  border-radius: 12px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.postCount {
+  display: none; 
 }
 
 .backButton {
@@ -61,7 +89,7 @@
 }
 
 .pageTitle {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #1a1a1a;
   background: linear-gradient(135deg, #f68b1f, #f9a84c);
@@ -69,17 +97,7 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
-}
-
-.postCount {
-  font-size: 14px;
-  color: #666;
-  background: #f0f0f0;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  margin: 0;
+  white-space: nowrap;
 }
 
 .loadingText {
@@ -120,19 +138,17 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   padding: 4px 0;
+  width: 100%;
 }
 
-/* ===== POST CARD STYLES ===== */
-/* These styles apply to PostCard component if you want to control them here */
-/* If PostCard has its own styles, you may need to add them there too */
-
-/* For demonstration - adding background to PostCard wrapper */
+/* ===== POST CARD WRAPPER STYLES ===== */
 .postsGrid > * {
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
   overflow: hidden;
+  width: 100%;
 }
 
 .postsGrid > *:hover {
@@ -142,13 +158,15 @@
 
 /* ===== RESPONSIVE ===== */
 
+/* Tablet */
 @media (max-width: 1024px) {
   .mypostsContainer {
-    padding: 20px 24px;
+    padding: 20px 16px;
   }
   
   .headerSection {
-    padding: 14px 18px;
+    padding: 14px 20px;
+    gap: 14px;
   }
   
   .postsGrid {
@@ -157,82 +175,133 @@
   }
   
   .pageTitle {
-    font-size: 28px;
+    font-size: 24px;
   }
   
   .backButton {
     padding: 8px 18px;
     font-size: 14px;
   }
+  
+  .totalPostsCard {
+    padding: 6px 16px;
+  }
+  
+  .totalPostsTitle {
+    font-size: 13px;
+  }
+  
+  .totalPostsValue {
+    font-size: 18px;
+  }
 }
 
+/* Small Tablet / Large Mobile */
+@media (max-width: 820px) {
+  .headerSection {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .headerLeft {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .headerRight {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .pageTitle {
+    font-size: 22px;
+  }
+  
+  .totalPostsCard {
+    align-self: flex-start;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .mypostsContainer {
-    padding: 16px;
+    padding: 16px 12px;
   }
   
   .headerSection {
     padding: 12px 16px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   
   .headerLeft {
     width: 100%;
-    gap: 12px;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
   }
   
   .headerRight {
     width: 100%;
-    justify-content: flex-start;
   }
   
   .pageTitle {
-    font-size: 24px;
-  }
-  
-  .postCount {
-    font-size: 13px;
-    padding: 6px 16px;
+    font-size: 20px;
+    white-space: normal;
   }
   
   .backButton {
-    padding: 8px 16px;
+    padding: 8px 14px;
     font-size: 13px;
   }
   
   .postsGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 14px;
   }
   
   .postsGrid > * {
     border-radius: 12px;
   }
+  
+  .totalPostsCard {
+    padding: 6px 14px;
+  }
+  
+  .totalPostsTitle {
+    font-size: 12px;
+  }
+  
+  .totalPostsValue {
+    font-size: 16px;
+    padding: 2px 10px;
+  }
 }
 
+/* Small Mobile */
 @media (max-width: 480px) {
   .mypostsContainer {
-    padding: 12px;
+    padding: 12px 8px;
     background: #f5f6fa;
   }
   
   .headerSection {
-    padding: 12px 14px;
+    padding: 10px 12px;
     border-radius: 12px;
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
+    margin-bottom: 16px;
   }
   
   .headerLeft {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
+    justify-content: space-between;
   }
   
   .headerRight {
@@ -241,23 +310,24 @@
   }
   
   .pageTitle {
-    font-size: 20px;
-  }
-  
-  .postCount {
-    font-size: 12px;
-    padding: 5px 14px;
+    font-size: 17px;
+    white-space: normal;
   }
   
   .backButton {
-    padding: 7px 14px;
+    padding: 6px 12px;
     font-size: 12px;
     border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(246, 139, 31, 0.3);
+  }
+  
+  .backButton:hover {
+    transform: translateY(-1px) scale(1.01);
   }
   
   .postsGrid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
     padding: 0;
   }
   
@@ -277,43 +347,71 @@
   .emptyState h3 {
     font-size: 20px;
   }
-}
-
-@media (max-width: 360px) {
-  .mypostsContainer {
-    padding: 8px;
-  }
   
-  .headerSection {
-    padding: 10px 12px;
-  }
-  
-  .headerLeft {
+  .totalPostsCard {
+    padding: 4px 12px;
     gap: 8px;
   }
   
+  .totalPostsTitle {
+    font-size: 11px;
+  }
+  
+  .totalPostsValue {
+    font-size: 14px;
+    padding: 2px 8px;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .mypostsContainer {
+    padding: 8px 4px;
+  }
+  
+  .headerSection {
+    padding: 8px 10px;
+    border-radius: 10px;
+    gap: 8px;
+  }
+  
+  .headerLeft {
+    gap: 6px;
+  }
+  
   .backButton {
-    padding: 5px 12px;
+    padding: 5px 10px;
     font-size: 11px;
     border-radius: 6px;
   }
   
   .pageTitle {
-    font-size: 18px;
-  }
-  
-  .postCount {
-    font-size: 11px;
-    padding: 4px 12px;
+    font-size: 15px;
   }
   
   .postsGrid {
-    gap: 12px;
+    gap: 10px;
+  }
+  
+  .postsGrid > * {
+    border-radius: 10px;
+  }
+  
+  .totalPostsCard {
+    padding: 4px 10px;
+  }
+  
+  .totalPostsTitle {
+    font-size: 10px;
+  }
+  
+  .totalPostsValue {
+    font-size: 13px;
+    padding: 1px 6px;
   }
 }
 
 /* ===== DARK MODE ===== */
-
 @media (prefers-color-scheme: dark) {
   .mypostsContainer {
     background: #121212;
@@ -335,9 +433,18 @@
     box-shadow: 0 6px 20px rgba(246, 139, 31, 0.5);
   }
   
-  .postCount {
+  .totalPostsCard {
     background: #2a2a2a;
+    border-color: #333;
+  }
+  
+  .totalPostsTitle {
     color: #aaa;
+  }
+  
+  .totalPostsValue {
+    background: #1e1e1e;
+    color: #f68b1f;
   }
   
   .emptyState {
@@ -365,4 +472,12 @@
   .loadingText {
     color: #aaa;
   }
+}
+
+/* Optional: Add smooth transition for dark mode */
+.mypostsContainer,
+.headerSection,
+.postsGrid > *,
+.emptyState {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }

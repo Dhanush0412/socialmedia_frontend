@@ -1,24 +1,27 @@
 .layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: #fff8f0;
 }
 
 .mainContent {
   flex: 1;
   margin-left: 260px;
-  min-height: 100vh;
-  padding: 30px;
+  height: 100vh;
+  padding: 16px 20px;
   background: linear-gradient(135deg, #fff8f0, #fff3e6);
   transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 .contentExpanded {
   margin-left: 72px;
 }
 
-/* Responsive */
+/* Tablet & Mobile */
 @media (max-width: 768px) {
   .mainContent {
     margin-left: 72px;
