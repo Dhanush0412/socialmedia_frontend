@@ -25,7 +25,7 @@ alt={group.groupname}
 <div className="group-footer">
  
 <p>{group.members?.length || 0} Members</p>
- 
+ <div className="group-buttons">
 <button
 onClick={(e)=>{
 e.stopPropagation();
@@ -43,6 +43,7 @@ navigate(`/group/details/${group._id}`);
 >
 Add Member
 </button>
+</div>
 </div>
  
 </div>

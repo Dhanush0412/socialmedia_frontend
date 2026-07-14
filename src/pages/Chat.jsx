@@ -5,7 +5,7 @@ import { useSendMessage } from "../hooks/chat/useSendMessage";
 import { useMarkRead } from "../hooks/chat/useMarkRead";
 import { socket } from "../socket";
 import { FaArrowLeft, FaPaperPlane } from "react-icons/fa";
-import "../Css/Chat.css";
+import "../css/Chat.css";
 import Layout from "../components/Layout/Layout";
 
 function Avatar({ src, name, className }) {
