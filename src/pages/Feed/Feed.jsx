@@ -2,11 +2,28 @@ import Layout from "../../components/Layout/Layout";
 import { useFeed } from "../../hooks/useFeed";
 import styles from "./Feed.module.css";
 import PostCard from "../../components/PostCard/PostCard";
+import pandaLoading from "../../assets/Panda1.png";
 
 function Feed() {
   const { data: posts, isLoading, refetch } = useFeed();
 
-  if (isLoading) return <h2 className={styles.loadingText}>Loading...</h2>;
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className={styles.loadingContainer}>
+          <img
+            src={pandaLoading}
+            alt="Loading Panda"
+            className={styles.loadingPanda}
+          />
+
+          <p className={styles.loadingText}>
+            Waiting for Panda...
+          </p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
