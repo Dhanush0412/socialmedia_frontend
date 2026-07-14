@@ -25,27 +25,16 @@ function MyPosts() {
             </button>
             <h1 className={styles.pageTitle}>📸 My Posts</h1>
           </div>
-          <div className={styles.headerRight}>
-            <Badge 
-              badgeContent={posts?.length || 0} 
-              color="primary"
-              className={styles.postsBadge}
-              sx={{
-                '& .MuiBadge-badge': {
-                  background: 'linear-gradient(135deg, #ff9f1a, #ff7900)',
-                  color: 'white',
-                  fontWeight: 700,
-                  fontSize: '14px',
-                  minWidth: '28px',
-                  height: '28px',
-                  borderRadius: '14px',
-                  boxShadow: '0 2px 8px rgba(255, 145, 0, 0.3)',
-                  padding: '0 10px',
-                }
-              }}
-            >
-              <span className={styles.postsLabel}>Total Posts</span>
-            </Badge>
+          <div className={styles.totalPostsCard}>
+
+            <span className={styles.totalPostsTitle}>
+              Total Posts
+            </span>
+
+            <span className={styles.totalPostsValue}>
+              {posts?.length || 0}
+            </span>
+
           </div>
         </div>
         {posts?.length === 0 ? (

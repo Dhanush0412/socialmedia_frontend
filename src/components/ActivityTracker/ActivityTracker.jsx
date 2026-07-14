@@ -6,8 +6,6 @@ function ActivityTracker() {
   const startTime = useRef(Date.now());
 
   useEffect(() => {
-    console.log("Tracker Started");
-
     startTime.current = Date.now();
 
     const sendActivity = () => {
@@ -16,8 +14,6 @@ function ActivityTracker() {
       const seconds = Math.floor(
         (endTime - startTime.current) / 1000
       );
-
-      console.log("Used Seconds:", seconds);
 
       if (seconds > 0) {
         mutate(
