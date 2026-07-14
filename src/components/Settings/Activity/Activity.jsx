@@ -15,6 +15,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  LabelList,
 } from "recharts";
 
 function Activity() {
@@ -46,55 +47,88 @@ function Activity() {
       <Box
         sx={{
           width: "100%",
-          height: 320,
           background: "#fff",
-          borderRadius: "15px",
-          p: 2,
-          mb: 3,
-          boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
+          borderRadius: "18px",
+          p: 3,
+          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
+          border: "1px solid #f2f2f2",
+          overflow: "hidden",
         }}
       >
         <Typography
-          variant="h6"
           sx={{
-            fontWeight: 600,
-            mb: 2,
+            fontSize: 22,
+            fontWeight: 700,
+            color: "#222",
+            mb: 3,
           }}
         >
-          Last 7 Days Usage
+          📊 Last 7 Days Usage
         </Typography>
 
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
+        <ResponsiveContainer width="100%" height={240}>
+          <BarChart
+            data={chartData}
+            margin={{
+              top: 45,
+              right: 10,
+              left: 0,
+              bottom: 10,
+            }}
+          >
+            <defs>
+              <linearGradient id="usageBar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#FFB74D" />
+                <stop offset="100%" stopColor="#FB8C00" />
+              </linearGradient>
+            </defs>
 
-            <XAxis dataKey="day" />
+            <CartesianGrid
+              vertical={false}
+              stroke="#ECECEC"
+              strokeDasharray="4 4"
+            />
+
+            <XAxis
+              dataKey="day"
+              tick={{
+                fill: "#555",
+                fontSize: 12,
+                fontWeight: 600,
+              }}
+              tickMargin={10}
+              tickLine={false}
+              axisLine={false}
+            />
 
             <YAxis
-              tickFormatter={(value) => {
-                const totalMinutes = value * 60;
-
-                if (totalMinutes < 60) {
-                  return `${totalMinutes}m`;
-                }
-
-                const hours = Math.floor(totalMinutes / 60);
-                const minutes = totalMinutes % 60;
-
-                if (minutes === 0) {
-                  return `${hours}h`;
-                }
-
-                return `${hours}h ${minutes}m`;
+              width={50}
+              tick={{
+                fill: "#666",
+                fontSize: 12,
+                fontWeight: 600,
               }}
-              label={{
-                value: "Usage Time",
-                angle: -90,
-                position: "insideLeft",
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => {
+                const minutes = Math.round(value * 60);
+
+                if (minutes < 60) return `${minutes}m`;
+
+                const h = Math.floor(minutes / 60);
+                const m = minutes % 60;
+
+                return m === 0 ? `${h}h` : `${h}h ${m}m`;
               }}
             />
 
             <Tooltip
+              cursor={{ fill: "rgba(255,167,38,.08)" }}
+              contentStyle={{
+                borderRadius: 12,
+                border: "none",
+                boxShadow: "0 6px 18px rgba(0,0,0,.15)",
+              }}
               formatter={(value, name, props) => [
                 props.payload.duration,
                 "Usage",
@@ -103,9 +137,21 @@ function Activity() {
 
             <Bar
               dataKey="hours"
-              fill="#ff8c00"
-              radius={[8, 8, 0, 0]}
-            />
+              fill="url(#usageBar)"
+              radius={[12, 12, 0, 0]}
+              barSize={30}
+            >
+              <LabelList
+                dataKey="duration"
+                position="top"
+                offset={5}
+                style={{
+                  fill: "#333",
+                  fontSize: 11,
+                  fontWeight: 600,
+                }}
+              />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Box>
