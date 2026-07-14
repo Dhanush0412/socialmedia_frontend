@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../Css/ConnectionCard.css";
+import "../css/ConnectionCard.css";
 
 function ConnectionCard({ friend, unreadCount }) {
 

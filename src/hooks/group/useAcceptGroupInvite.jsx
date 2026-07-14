@@ -1,33 +1,54 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { URL } from "../../../config";
 
-const acceptInvite=async(inviteid)=>{
-  const response=await axios.put(
+const acceptInvite = async (inviteid) => {
+
+  const response = await axios.put(
     `${URL}/group/accept/${inviteid}`,
     {},
-{
-headers:{
-Authorization:`Bearer ${localStorage.getItem("token")}`
-}
-}
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    }
   );
+
   return response.data;
+
 };
 
-export const useAcceptGroupInvite=()=>{
+export const useAcceptGroupInvite = () => {
+
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn:acceptInvite,
-    onSuccess:(data)=>{
-      toast.success(
-        data.message || "Invite accepted"
-      );
+
+    mutationFn: acceptInvite,
+
+    onSuccess: (data) => {
+
+      toast.success(data.message || "Invite accepted");
+
+      queryClient.invalidateQueries({
+        queryKey: ["group-invites"]
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["my-groups"]
+      });
+
     },
-    onError:(error)=>{
+
+    onError: (error) => {
+
       toast.error(
         error.response?.data || "Accept failed"
       );
+
     }
+
   });
+
 };

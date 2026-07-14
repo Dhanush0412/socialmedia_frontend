@@ -19,9 +19,13 @@ const getUnreadCount = async () => {
 export const useUnreadCount = () => {
 
   return useQuery({
-    queryKey: ["unreadCount"],
-    queryFn: getUnreadCount,
-    refetchOnWindowFocus: false
-  });
+  queryKey: ["unreadCount"],
+  queryFn: getUnreadCount,
+  staleTime: 0,
+  refetchOnMount: true,
+  refetchOnReconnect: true,
+  refetchOnWindowFocus: true,
+  refetchInterval: 1000
+});
 
 };

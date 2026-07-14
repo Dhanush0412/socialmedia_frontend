@@ -6,9 +6,60 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#edf2f7;
+background:#f5f7fb;
 }
 
+.icon-btn{
+width:42px !important;
+height:42px !important;
+padding:0 !important;
+margin-bottom:20px;
+display:flex !important;
+align-items:center;
+justify-content:center;
+border:none !important;
+border-radius:50% !important;
+background:#fff3eb !important;
+color:#ff6b1a !important;
+cursor:pointer;
+font-size:18px;
+box-shadow:0 4px 10px rgba(255,107,26,.2);
+}
+
+.icon-btn:hover{
+background:#ff6b1a !important;
+color:#fff !important;
+}
+
+.icon-btn:active{
+transform:scale(.95);
+}
+
+.icon-btn svg{
+font-size:18px;
+}
+
+@media(max-width:768px){
+
+.icon-btn{
+width:40px;
+height:40px;
+font-size:17px;
+margin-bottom:18px;
+}
+
+}
+
+@media(max-width:480px){
+
+.icon-btn{
+width:38px;
+height:38px;
+font-size:16px;
+margin-bottom:15px;
+}
+
+}
 .create-group-page{
 width:100%;
 min-height:100vh;
@@ -16,92 +67,108 @@ display:flex;
 justify-content:center;
 align-items:center;
 padding:30px;
+background:#f5f7fb;
 }
 
 .create-group-card{
 width:100%;
-max-width:500px;
-background:#fff;
-border-radius:18px;
+max-width:520px;
+background:#ffffff;
+border-radius:20px;
 padding:35px;
-box-shadow:0 10px 25px rgba(0,0,0,.12);
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+border:1px solid #ececec;
+transition:.3s;
+}
+
+.create-group-card:hover{
+box-shadow:0 12px 30px rgba(255,107,26,.15);
 }
 
 .create-group-card h1{
-font-size:28px;
+font-size:30px;
+font-weight:700;
 color:#222;
 margin-bottom:8px;
 }
 
 .create-group-card p{
 color:#666;
-margin-bottom:30px;
+font-size:15px;
+margin-bottom:28px;
 }
 
 .image-preview{
 width:170px;
 height:170px;
-margin:auto;
+margin:0 auto 22px;
 border-radius:50%;
 overflow:hidden;
-background:#f4f4f4;
+background:#fafafa;
 display:flex;
 justify-content:center;
 align-items:center;
-border:3px solid #e4e4e4;
-margin-bottom:20px;
+border:4px solid #ff6b1a;
+box-shadow:0 8px 20px rgba(255,107,26,.18);
 }
 
 .image-preview img{
 width:100%;
 height:100%;
 object-fit:cover;
+display:block;
 }
 
 .placeholder{
 padding:20px;
 text-align:center;
 font-size:14px;
-color:#888;
+color:#999;
+line-height:1.5;
 }
 
 .upload-btn{
 display:block;
-width:180px;
-margin:15px auto;
-background:#4f46e5;
-color:#fff;
+width:200px;
+margin:18px auto;
 padding:12px;
+background:#ff6b1a;
+color:#fff;
 text-align:center;
+font-size:15px;
+font-weight:600;
 border-radius:10px;
 cursor:pointer;
 transition:.3s;
 }
 
 .upload-btn:hover{
-background:#4338ca;
+background:#e85b0d;
+transform:translateY(-2px);
 }
 
-.create-group-card input[type=text]{
+.create-group-card input[type="text"]{
 width:100%;
-padding:14px;
-border:1px solid #ccc;
+padding:14px 16px;
+margin-top:20px;
+margin-bottom:25px;
+border:2px solid #e6e6e6;
 border-radius:10px;
 outline:none;
 font-size:15px;
-margin-top:20px;
-margin-bottom:25px;
 transition:.3s;
+background:#fff;
 }
 
-.create-group-card input[type=text]:focus{
-border-color:#4f46e5;
+.create-group-card input[type="text"]:focus{
+border-color:#ff6b1a;
+box-shadow:0 0 0 4px rgba(255,107,26,.12);
 }
 
-.create-group-card button{
+.create-group-card form button{
 width:100%;
 padding:14px;
-background:#4f46e5;
+background:#ff6b1a;
 border:none;
 border-radius:10px;
 color:#fff;
@@ -109,29 +176,64 @@ font-size:16px;
 cursor:pointer;
 transition:.3s;
 }
-
-.create-group-card button:hover{
-background:#4338ca;
+.create-group-card button:hover:not(:disabled){
+background:#e85b0d;
+transform:translateY(-2px);
 }
 
 .create-group-card button:disabled{
-background:#b4b4b4;
+background:#cfcfcf;
 cursor:not-allowed;
+transform:none;
 }
 
-@media(max-width:600px){
+@media(max-width:768px){
 
-.create-group-card{
+.create-group-page{
 padding:20px;
 }
 
+.create-group-card{
+padding:28px 22px;
+}
+
 .image-preview{
-width:130px;
-height:130px;
+width:150px;
+height:150px;
 }
 
 .create-group-card h1{
-font-size:24px;
+font-size:26px;
+}
+
+}
+
+@media(max-width:480px){
+
+.create-group-page{
+padding:15px;
+}
+
+.create-group-card{
+padding:20px;
+border-radius:16px;
+}
+
+.image-preview{
+width:120px;
+height:120px;
+}
+
+.create-group-card h1{
+font-size:22px;
+}
+
+.create-group-card p{
+font-size:14px;
+}
+
+.upload-btn{
+width:100%;
 }
 
 }
