@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from "react";
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {FaArrowLeft,FaPaperPlane} from "react-icons/fa";
 
 import Layout from "../../components/Layout/Layout";
 
@@ -8,17 +9,71 @@ import {useGroupDetails} from "../../hooks/group/useGroupDetails";
 import {useGroupMessages} from "../../hooks/group/useGroupMessages";
 import {useSendGroupMessage} from "../../hooks/groupchat/useSendGroupMessage";
 
+import {socket} from "../../socket";
+
 import "./GroupChat.css";
+
+function Avatar({src,name,className}){
+
+const [imgError,setImgError]=useState(false);
+
+return(
+
+<div className={`avatar-wrap ${className}`}>
+
+{
+
+src&&!imgError?
+
+(
+
+<img
+src={src}
+alt={name}
+onError={()=>setImgError(true)}
+/>
+
+)
+
+:
+
+(
+
+<span>
+
+{
+
+(name||"G")
+.charAt(0)
+.toUpperCase()
+
+}
+
+</span>
+
+)
+
+}
+
+</div>
+
+);
+
+}
 
 export default function GroupChat(){
 
 const {groupid}=useParams();
 
+const navigate=useNavigate();
+
 const profileid=localStorage.getItem("profileid");
 
 const [text,setText]=useState("");
 
-const bottomRef=useRef(null);
+const [messages,setMessages]=useState([]);
+
+const messageEndRef=useRef(null);
 
 const{
 data:group={},
@@ -26,59 +81,161 @@ isLoading:isGroupLoading
 }=useGroupDetails(groupid);
 
 const{
-data:messages=[],
+data:groupMessages=[],
 isLoading:isMessagesLoading
 }=useGroupMessages(groupid);
 
-const{
-mutate:sendMessage,
-isPending:isSending
-}=useSendGroupMessage();
+const sendMutation=useSendGroupMessage();
 
 useEffect(()=>{
 
-bottomRef.current?.scrollIntoView({
+if(Array.isArray(groupMessages)){
+
+setMessages(groupMessages);
+
+}
+
+},[groupMessages]);
+
+useEffect(()=>{
+
+if(!socket.connected){
+
+socket.connect();
+
+}
+
+socket.emit("joingroup",groupid);
+
+const receiveMessage=(newMessage)=>{
+
+setMessages(prev=>{
+
+const exists=prev.some(
+msg=>msg._id===newMessage._id
+);
+
+if(exists){
+
+return prev;
+
+}
+
+return[
+
+...prev,
+newMessage
+
+];
+
+});
+
+};
+
+socket.on(
+"receivemessage",
+receiveMessage
+);
+
+return()=>{
+
+socket.off(
+"receivemessage",
+receiveMessage
+);
+
+};
+
+},[groupid]);
+
+useEffect(()=>{
+
+messageEndRef.current?.scrollIntoView({
+
 behavior:"smooth"
+
 });
 
 },[messages]);
 
 const handleSend=()=>{
 
-if(text.trim()===""){
+if(!text.trim()){
+
 return;
+
 }
 
-sendMessage(
+sendMutation.mutate(
+
 {
+
 groupid,
-text
+text:text.trim()
+
 },
+
 {
-onSuccess:()=>{
-setText("");
-},
-onError:(error)=>{
-toast.error(
-error.response?.data||
-"Unable to send message"
+
+onSuccess:(savedMessage)=>{
+
+setMessages(prev=>{
+
+const exists=prev.some(
+msg=>msg._id===savedMessage._id
 );
+
+if(exists){
+
+return prev;
+
 }
+
+return[
+
+...prev,
+savedMessage
+
+];
+
+});
+
+setText("");
+
+},
+
+onError:(error)=>{
+
+toast.error(
+
+error.response?.data||
+
+"Unable to send message"
+
+);
+
 }
+
+}
+
 );
 
 };
-console.log(groupid)
-
 if(isGroupLoading||isMessagesLoading){
 
 return(
 
 <Layout>
 
-<div className="group-chat-loading">
+<div className="chat-loading">
 
-Loading Chat...
+<div className="loader"></div>
+
+<p>
+
+Loading Group Chat...
+
+</p>
 
 </div>
 
@@ -92,23 +249,40 @@ return(
 
 <Layout>
 
-<div className="group-chat">
+<div className="chat-container">
 
 <div className="chat-header">
 
-<div className="chat-header-left">
+<div className="header-left">
 
-<img
-className="group-avatar"
+<button
+className="icon-btn"
+onClick={()=>navigate("/groupchat")}
+>
+
+<FaArrowLeft/>
+
+</button>
+
+<Avatar
 src={group.groupimage}
-alt={group.groupname}
+name={group.groupname}
+className="profile-image"
 />
 
-<div>
+<div className="header-info">
 
-<h2>{group.groupname}</h2>
+<h3>
 
-<p>{group.members?.length||0} Members</p>
+{group.groupname}
+
+</h3>
+
+<span>
+
+{group.members?.length||0} Members
+
+</span>
 
 </div>
 
@@ -116,66 +290,96 @@ alt={group.groupname}
 
 </div>
 
-<div className="chat-body">
-    {Array.isArray(messages)&&messages.map(message=>{
+<div className="chat-messages">
 
-const own=
-message.sender?._id===profileid;
+{
+
+messages.map((msg,index)=>{
+
+const isMine=
+
+String(msg.sender?._id)===
+
+String(profileid);
+
+const senderName=
+
+msg.sender?.user?.username||
+
+msg.sender?.fullname||
+
+msg.sender?.username||
+
+"Unknown";
+console.log("message",messages)
+const senderPic=
+
+msg.sender?.profilepic;
 
 return(
 
 <div
-key={message._id}
-className={
-own
-?
-"message-row own"
-:
-"message-row"
-}
+key={msg._id||index}
+className={`message-row ${isMine?"mine":"other"}`}
 >
+
+{
+
+!isMine&&(
+
+<Avatar
+src={senderPic}
+name={senderName}
+className="message-avatar"
+/>
+
+)
+
+}
 
 <div
-className={
-own
-?
-"message sent"
-:
-"message received"
-}
+className={`message-bubble ${isMine?"sent-message":"received-message"}`}
 >
 
-{!own&&(
+{
+
+!isMine&&(
 
 <div className="sender-name">
 
-{
-message.sender?.user?.username||
-message.sender?.fullname||
-message.sender?.username||
-"Unknown"
+{senderName}
+
+</div>
+
+)
+
 }
 
-</div>
+<p>
 
-)}
+{msg.text}
 
-<div className="message-text">
+</p>
 
-{message.text}
-
-</div>
-
-<div className="message-time">
+<span className="message-time">
 
 {
-new Date(message.createdAt).toLocaleTimeString([],{
+
+msg.createdAt&&
+
+new Date(msg.createdAt)
+
+.toLocaleTimeString([],{
+
 hour:"2-digit",
+
 minute:"2-digit"
+
 })
+
 }
 
-</div>
+</span>
 
 </div>
 
@@ -183,36 +387,74 @@ minute:"2-digit"
 
 );
 
-})}
+})
 
-<div ref={bottomRef}></div>
+}
+
+{
+
+messages.length===0&&(
+
+<div className="empty-chat">
+
+<h3>
+
+No Messages Yet
+
+</h3>
+
+<p>
+
+Start the conversation with your group.
+
+</p>
 
 </div>
-<div className="chat-footer">
+
+)
+
+}
+
+<div ref={messageEndRef}></div>
+
+</div>
+
+<div className="chat-input-area">
 
 <input
 type="text"
-placeholder="Type a message..."
+placeholder="Type your message..."
 value={text}
 onChange={(e)=>setText(e.target.value)}
 onKeyDown={(e)=>{
+
 if(e.key==="Enter"){
+
 handleSend();
+
 }
+
 }}
 />
 
 <button
+className="send-btn"
 onClick={handleSend}
-disabled={isSending}
+disabled={sendMutation.isPending||!text.trim()}
 >
 
 {
-isSending
+
+sendMutation.isPending
+
 ?
-"Sending..."
+
+"..."
+
 :
-"Send"
+
+<FaPaperPlane/>
+
 }
 
 </button>

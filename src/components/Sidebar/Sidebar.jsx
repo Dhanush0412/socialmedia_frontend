@@ -24,9 +24,6 @@ const menuItems = [
   { path: "/groupchat", icon: FiUser, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
-  { path: "/create-group", icon: FaUsers, label: "Create Group" },
-  { path: "/messages", icon: FaComments, label: "Messages" },
-   { path: "/group/requests", icon: FaRegQuestionCircle, label: "Group Request" },
 
 ];
 

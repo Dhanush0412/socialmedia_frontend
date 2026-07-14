@@ -14,8 +14,6 @@ const Home = lazy(() => import("../pages/Home"));
 const MyPosts = lazy(() => import("../pages/MyPosts/MyPosts"));
 const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
-const Groups = lazy(() => import("../pages/Groups"));
-const Messages = lazy(() => import("../pages/Messages"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Friends = lazy(() => import("../pages/Friends"));
 
@@ -50,8 +48,7 @@ function AppRoutes() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/newpost" element={<NewPost />} />
       <Route path="/feed" element={<Feed />} />
-      <Route path="/groups" element={<Groups />} />
-      <Route path="/messages" element={<Messages />} />
+      
       <Route path="/settings" element={<Settings />} />
       <Route path="/myposts" element={<MyPosts />} />
       <Route path="/friends" element={<Friends />} />

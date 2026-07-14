@@ -1,146 +1,120 @@
-import {toast} from "react-toastify";
-import {useAcceptGroupInvite} from "../hooks/group/useAcceptGroupInvite";
-import {useRejectGroupInvite} from "../hooks/group/useRejectGroupInvite";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useAcceptGroupInvite } from "../hooks/group/useAcceptGroupInvite";
+import { useRejectGroupInvite } from "../hooks/group/useRejectGroupInvite";
 import "../css/GroupRequests.css";
 
-export default function GroupRequestCard({invite}){
+export default function GroupRequestCard({ invite }) {
 
-const{
-mutate:acceptInvite,
-isPending:isAccepting
-}=useAcceptGroupInvite();
+  const {
+    mutate: acceptInvite,
+    isPending: isAccepting
+  } = useAcceptGroupInvite();
 
-const{
-mutate:rejectInvite,
-isPending:isRejecting
-}=useRejectGroupInvite();
+  const {
+    mutate: rejectInvite,
+    isPending: isRejecting
+  } = useRejectGroupInvite();
 
-return(
+  const [hidden, setHidden] = useState(false);
 
-<div className="group-request-card">
+  if (hidden) {
+    return null;
+  }
 
-<div className="group-request-image">
+  const handleAccept = () => {
 
-<img
-src={invite.group?.groupimage}
-alt={invite.group?.groupname}
-/>
+    setHidden(true);
 
-</div>
+    acceptInvite(invite._id, {
 
-<div className="group-request-content">
+      onError: (error) => {
 
-<h2>
+        setHidden(false);
 
-{invite.group?.groupname}
+        toast.error(
+          error.response?.data || "Unable to accept invitation"
+        );
 
-</h2>
+      }
 
-<p>
+    });
 
-Invited by
+  };
 
-<strong>
+  const handleReject = () => {
 
-{" "}
-{invite.sender?.user?.username||
-invite.sender?.username||
-"Unknown User"}
+    setHidden(true);
 
-</strong>
+    rejectInvite(invite._id, {
 
-</p>
+      onError: (error) => {
 
-<div className="group-request-buttons">
+        setHidden(false);
 
-<button
-className="accept-btn"
-disabled={isAccepting}
-onClick={()=>{
+        toast.error(
+          error.response?.data || "Unable to reject invitation"
+        );
 
-acceptInvite(
-invite._id,
-{
-onSuccess:()=>{
+      }
 
-toast.success(
-"Invitation accepted"
-);
+    });
 
-},
-onError:(error)=>{
+  };
 
-toast.error(
-error.response?.data||
-"Unable to accept invitation"
-);
+  return (
 
-}
-}
-);
+    <div className="group-request-card">
 
-}}
->
+      <div className="group-request-image">
 
-{
+        <img
+          src={invite.group?.groupimage}
+          alt={invite.group?.groupname}
+        />
 
-isAccepting
-?
-"Accepting..."
-:
-"Accept"
+      </div>
 
-}
+      <div className="group-request-content">
 
-</button>
+        <h2>
+          {invite.group?.groupname}
+        </h2>
 
-<button
-className="reject-btn"
-disabled={isRejecting}
-onClick={()=>{
+        <p>
+          Invited by
+          <strong>
+            {" "}
+            {invite.sender?.user?.username ||
+              invite.sender?.username ||
+              "Unknown User"}
+          </strong>
+        </p>
 
-rejectInvite(
-invite._id,
-{
-onSuccess:()=>{
+        <div className="group-request-buttons">
 
-toast.success(
-"Invitation rejected"
-);
+          <button
+            className="accept-btn"
+            disabled={isAccepting || isRejecting}
+            onClick={handleAccept}
+          >
+            {isAccepting ? "Accepting..." : "Accept"}
+          </button>
 
-},
-onError:(error)=>{
+          <button
+            className="reject-btn"
+            disabled={isAccepting || isRejecting}
+            onClick={handleReject}
+          >
+            {isRejecting ? "Rejecting..." : "Reject"}
+          </button>
 
-toast.error(
-error.response?.data||
-"Unable to reject invitation"
-);
+        </div>
 
-}
-}
-);
+      </div>
 
-}}
->
+    </div>
 
-{
-
-isRejecting
-?
-"Rejecting..."
-:
-"Reject"
-
-}
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-);
+  );
 
 }
