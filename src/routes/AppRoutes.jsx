@@ -17,13 +17,14 @@ const Feed = lazy(() => import("../pages/Feed/Feed"));
 const Groups = lazy(() => import("../pages/Groups"));
 const Messages = lazy(() => import("../pages/Messages"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
-const GroupRequests = lazy(() => import("../pages/Groups/GroupRequest"));
 const Friends = lazy(() => import("../pages/Friends"));
 
-const GroupChat = lazy(() => import("../pages/GroupChat"));
+const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
 const Group = lazy(() => import("../pages/Group"));
 const CreateGroup = lazy(() => import("../pages/Groups/CreateGroup"))
 const GroupDetails = lazy(() => import("../pages/Groups/GroupDetails"))
+const GroupRequests = lazy(() => import("../pages/Groups/GroupRequest"));
+const GroupList=lazy(()=>import("../pages/Groups/GroupList"))
 
 const SearchUsers = lazy(() => import("../pages/SearchUsers"));
 const PendingRequests = lazy(() => import("../pages/PendingRequests"));
@@ -47,7 +48,6 @@ function AppRoutes() {
 
       {/* Sidebar Pages */}
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/group-requests" element={<GroupRequests />} />
       <Route path="/newpost" element={<NewPost />} />
       <Route path="/feed" element={<Feed />} />
       <Route path="/groups" element={<Groups />} />
@@ -61,6 +61,10 @@ function AppRoutes() {
       <Route path="/chat/:id" element={<Chat />} />
       <Route path="/create-group" element={<CreateGroup />} />
       <Route path="/group/details/:groupid" element={<GroupDetails />} />
+      <Route path="/group/chat/:groupid" element={<GroupChat />} />
+      <Route path="/group/requests" element={<GroupRequests />} />
+      <Route path="/groupchat" element={<GroupList />} />
+
 
       {/*Connection*/}
       <Route path="/search-users" element={<SearchUsers />} />

@@ -1,26 +1,52 @@
 .groups-container{
-padding:20px;
+width:100%;
+padding:15px;
+}
+
+.groups-container h1{
+font-size:32px;
+font-weight:700;
+color:#222;
+margin-bottom:25px;
 }
 
 .group-wrapper{
 display:flex;
+flex-direction:column;
 gap:20px;
-flex-wrap:wrap;
+width:100%;
 }
 
-.group-card{
-width:250px;
-padding:20px;
-background:white;
-border-radius:10px;
-box-shadow:0 4px 10px #ddd;
+@media(max-width:1200px){
+
+.groups-container{
+padding:15px;
 }
 
-.group-card button{
-padding:10px 15px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:6px;
-cursor:pointer;
+}
+
+@media(max-width:768px){
+
+.groups-container{
+padding:10px;
+}
+
+.groups-container h1{
+font-size:28px;
+margin-bottom:20px;
+}
+
+}
+
+@media(max-width:480px){
+
+.groups-container{
+padding:5px;
+}
+
+.groups-container h1{
+font-size:24px;
+text-align:center;
+}
+
 }

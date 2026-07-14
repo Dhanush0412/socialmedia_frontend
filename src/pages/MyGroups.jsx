@@ -6,7 +6,7 @@ function MyGroups(){
 
 const {data=[]}=useMyGroups();
 
-
+console.log(data);
 return(
 
 <div>
