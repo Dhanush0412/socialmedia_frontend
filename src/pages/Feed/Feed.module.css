@@ -194,3 +194,37 @@
     color: #aaa;
   }
 }
+
+.loadingContainer {
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.loadingPanda {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  animation: pandaBounce 1.5s infinite ease-in-out;
+}
+
+.loadingText {
+  font-size: 22px;
+  font-weight: 600;
+  color: #F68B1F;
+  letter-spacing: 0.5px;
+}
+
+@keyframes pandaBounce {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}

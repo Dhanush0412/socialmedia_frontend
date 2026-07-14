@@ -4,12 +4,29 @@ import styles from "./MyPosts.module.css";
 import { useNavigate } from "react-router-dom";
 import PostCard from "../../components/PostCard/PostCard";
 import { Badge } from "@mui/material";
+import pandaLoading from "../../assets/Panda1.png";
 
 function MyPosts() {
   const navigate = useNavigate();
   const { data: posts, isLoading } = useMyPosts();
 
-  if (isLoading) return <h2 className={styles.loadingText}>Loading...</h2>;
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className={styles.loadingContainer}>
+          <img
+            src={pandaLoading}
+            alt="Loading Panda"
+            className={styles.loadingPanda}
+          />
+
+          <p className={styles.loadingText}>
+            Waiting for Panda...
+          </p>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

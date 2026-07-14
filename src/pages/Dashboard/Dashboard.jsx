@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useDashboard } from "../../hooks/useDashboard";
 import { useNotifications } from "../../hooks/useSettings";
 import { useNavigate } from "react-router-dom";
-
+import pandaLoading from "../../assets/Panda1.png";
 import Layout from "../../components/Layout/Layout.jsx";
 import Notifications from "../../components/Settings/Notifications/Notifications";
 
@@ -46,8 +46,15 @@ function Dashboard() {
     return (
       <Layout>
         <div className={styles.loadingContainer}>
-          <CircularProgress sx={{ color: "#F68B1F" }} />
-          <p className={styles.loadingText}>Loading...</p>
+          <img
+            src={pandaLoading}
+            alt="Loading Panda"
+            className={styles.loadingPanda}
+          />
+
+          <p className={styles.loadingText}>
+            Waiting for Panda...
+          </p>
         </div>
       </Layout>
     );
@@ -164,7 +171,11 @@ function Dashboard() {
 
         <div className={styles.statsSection}>
 
-          <div className={styles.statCard}>
+          {/* Groups */}
+          <div
+            className={`${styles.statCard} ${styles.clickableCard}`}
+            onClick={() => navigate("/groupchat")}
+          >
             <h3 className={styles.statTitle}>Groups</h3>
 
             <div className={styles.countCircle}>
@@ -172,7 +183,12 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className={styles.statCard}>
+          {/* Connections */}
+
+          <div
+            className={`${styles.statCard} ${styles.clickableCard}`}
+            onClick={() => navigate("/friends")}
+          >
             <h3 className={styles.statTitle}>Connections</h3>
 
             <div className={styles.countCircle}>
@@ -180,10 +196,15 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* Posts */}
+
           <div className={styles.statCard}>
             <h3 className={styles.statTitle}>Posts</h3>
 
-            <div className={styles.countCircle}>
+            <div
+              className={`${styles.countCircle} ${styles.clickableCircle}`}
+              onClick={() => navigate("/myposts")}
+            >
               {profile?.posts || 0}
             </div>
           </div>
