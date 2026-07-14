@@ -373,20 +373,20 @@
 }
 
 .modalDeleteIcon {
-  font-size: 18px !important;
+  font-size: 28px !important;
   color: #ccc !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
   flex-shrink: 0 !important;
   padding: 6px !important;
   border-radius: 50% !important;
-  opacity: 0.8 !important;
+  opacity: 1 !important;
 }
 
 .modalDeleteIcon:hover {
   color: #ed4956 !important;
   background: rgba(237, 73, 86, 0.1) !important;
-  transform: scale(1.1);
+  transform: scale(1.12);
 }
 
 .modalDeleteIcon:active {
