@@ -1,13 +1,17 @@
 import Layout from "../components/Layout/Layout";
 import styles from "./Dashboard/Dashboard.module.css";
 import { useState } from "react";
+import {useDebounce} from "../hooks/useDebounce";
 import { useSearchUsers } from "../hooks/connection/useSearchUsers";
 import UserCard from "../components/UserCard";
 import "../Css/SearchUsers.css";
 
 function SearchUsers() {
   const [search, setSearch] = useState("");
-  const { data, isLoading } = useSearchUsers(search);
+
+const debouncedSearch = useDebounce(search, 1000);
+
+const { data = [], isLoading } = useSearchUsers(debouncedSearch);
 
   return (
     <Layout>
@@ -36,14 +40,14 @@ function SearchUsers() {
         )}
       </div>
 
-      {isLoading && search && (
+      {isLoading && debouncedSearch && (
         <div className="search-users__status">
           <div className="search-users__spinner" />
           <span>Searching for "{search}"...</span>
         </div>
       )}
 
-      {!isLoading && data?.length === 0 && search && (
+      {!isLoading && debouncedSearch && data.length === 0 && (
         <div className="search-users__empty">
           <div className="search-users__empty-icon">👤</div>
           <h3>No users found</h3>
@@ -51,7 +55,7 @@ function SearchUsers() {
         </div>
       )}
 
-      {search && Array.isArray(data) && data.length > 0 && (
+     {debouncedSearch && data.length > 0 && (
         <>
           <p className="search-users__count">{data.length} result{data.length !== 1 ? "s" : ""} found</p>
           <div className="search-users__results">
@@ -62,7 +66,7 @@ function SearchUsers() {
         </>
       )}
 
-      {!search && (
+      {!debouncedSearch && (
         <div className="search-users__placeholder">
           <div className="search-users__placeholder-icon">👥</div>
           <p>Start typing to search for friends</p>

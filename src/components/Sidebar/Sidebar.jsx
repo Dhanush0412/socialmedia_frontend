@@ -13,6 +13,7 @@ import {
   FaChevronRight,
   FaRegQuestionCircle,
 } from "react-icons/fa";
+import { MdGroups } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "./Sidebar.module.css";
@@ -21,7 +22,7 @@ const menuItems = [
   { path: "/dashboard", icon: FaUser, label: "Profile" },
   { path: "/search-users", icon: FaSearch, label: "Find Friends" },
   { path: "/friends", icon: FaUserFriends, label: "My Friends" },
-  { path: "/groupchat", icon: FiUser, label: "GroupList" },
+  { path: "/groupchat", icon: MdGroups, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
 
