@@ -4,18 +4,18 @@ import {
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
+const Login = lazy(() => import("../pages/Login/Login"));
+const Register = lazy(() => import("../pages/Register/Register"));
 const Profile = lazy(() => import("../pages/Profile/Profile"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
-const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
+const ForgotPassword = lazy(() => import("../pages/ForgorPassword/ForgotPassword"));
 const Home = lazy(() => import("../pages/Home"));
 
 const MyPosts = lazy(() => import("../pages/MyPosts/MyPosts"));
 const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
-const Friends = lazy(() => import("../pages/Friends"));
+const Friends = lazy(() => import("../pages/Friends/Friends"));
 
 const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
 const Group = lazy(() => import("../pages/Group"));

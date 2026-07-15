@@ -1,0 +1,735 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+:global(body){
+  font-family:"Inter",sans-serif;
+  background:#eef2f7;
+}
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.registerContainer{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+  background:linear-gradient(135deg,#eef3ff,#ffffff);
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.registerCard{
+  width:860px;
+  min-height:620px;
+  display:flex;
+  overflow:hidden;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.12);
+  animation:fadeUp .6s ease;
+}
+
+/* ===========================
+   LEFT PANEL
+=========================== */
+
+.registerLeft{
+  width:42%;
+  background:#0f172a;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+}
+
+/* ===========================
+   ORBS
+=========================== */
+
+.orb{
+  position:absolute;
+  border-radius:50%;
+}
+
+.orbOne{
+  width:260px;
+  height:260px;
+  right:-90px;
+  top:-90px;
+  background:rgba(255,107,26,.15);
+}
+
+.orbTwo{
+  width:220px;
+  height:220px;
+  left:-70px;
+  bottom:-70px;
+  background:rgba(99,102,241,.12);
+}
+
+/* ===========================
+   LEFT CONTENT
+=========================== */
+
+.leftContent{
+  position:relative;
+  z-index:2;
+  width:100%;
+}
+
+.brandTop{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:35px;
+}
+
+.brandImage{
+  width:62px;
+  height:62px;
+  border-radius:18px;
+  background:#ff6b1a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  font-size:28px;
+}
+
+.brandTop h3{
+  color:#fff;
+  font-size:30px;
+  font-weight:800;
+}
+
+.brandTop span{
+  color:#ff6b1a;
+}
+
+.leftContent h1{
+  color:#fff;
+  font-size:40px;
+  line-height:1.2;
+  margin-bottom:20px;
+}
+
+.leftContent h1 span{
+  color:#ff6b1a;
+}
+
+.leftContent p{
+  color:rgba(255,255,255,.72);
+  line-height:1.7;
+  font-size:15px;
+  margin-bottom:35px;
+}
+
+/* ===========================
+   FEATURES
+=========================== */
+
+.features{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.feature{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:12px 15px;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  transition:.3s;
+}
+
+.feature:hover{
+  background:rgba(255,107,26,.15);
+  transform:translateX(5px);
+}
+
+.feature div{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(255,107,26,.18);
+  font-size:18px;
+}
+
+.feature span{
+  color:#fff;
+  font-size:14px;
+  font-weight:500;
+}
+
+/* ===========================
+   CHAT PREVIEW
+=========================== */
+
+.chatPreview{
+  margin-top:35px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.chatMsg{
+  max-width:230px;
+  padding:12px 16px;
+  border-radius:16px;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.receive{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  align-self:flex-start;
+}
+
+.send{
+  background:#ff6b1a;
+  color:#fff;
+  align-self:flex-end;
+}
+
+/* ===========================
+   RIGHT PANEL
+=========================== */
+
+.registerFormSection{
+  width:58%;
+  background:linear-gradient(135deg,#ffffff 0%,#f7f9ff 100%);
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:45px;
+  overflow:hidden;
+}
+
+.registerFormSection::before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  background:rgba(255,107,26,.06);
+  top:-120px;
+  right:-120px;
+}
+
+.registerFormSection::after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(99,102,241,.06);
+  bottom:-80px;
+  left:-80px;
+}
+
+.registerFormSection>*{
+  position:relative;
+  z-index:2;
+}
+
+.registerFormSection h2{
+  font-size:32px;
+  color:#111827;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:30px;
+}
+
+.registerForm{
+  display:flex;
+  flex-direction:column;
+}
+/* ===========================
+   INPUTS
+=========================== */
+
+.registerForm input{
+  width:100%;
+  height:52px;
+  padding:0 18px;
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+  outline:none;
+  font-size:14px;
+  transition:.3s;
+}
+
+.registerForm input:focus{
+  border-color:#ff6b1a;
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(255,107,26,.08);
+}
+
+.registerForm input:disabled{
+  background:#f3f4f6;
+  color:#9ca3af;
+  cursor:not-allowed;
+}
+
+.registerForm input::placeholder{
+  color:#9ca3af;
+}
+
+/* ===========================
+   ERROR
+=========================== */
+
+.error{
+  min-height:18px;
+  margin:6px 0 12px;
+  color:#dc2626;
+  font-size:12px;
+}
+
+/* ===========================
+   EMAIL + OTP
+=========================== */
+
+.emailRow{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.emailRow input{
+  flex:1;
+}
+
+/* ===========================
+   OTP BUTTON
+=========================== */
+
+.otpButton{
+  min-width:140px;
+  height:52px;
+  border:none;
+  border-radius:12px;
+  background:#ff6b1a;
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.3s;
+}
+
+.otpButton:hover{
+  background:#ea580c;
+}
+
+.otpButton:disabled{
+  background:#d1d5db;
+  cursor:not-allowed;
+}
+
+/* ===========================
+   VERIFY SECTION
+=========================== */
+
+.verifySection{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.verifySection input{
+  flex:1;
+}
+
+.verifyButton{
+  width:140px;
+  height:48px;
+  border:none;
+  border-radius:12px;
+  background:#111827;
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.verifyButton:hover{
+  background:#1f2937;
+}
+
+/* ===========================
+   VERIFIED MESSAGE
+=========================== */
+
+.verifiedMessage{
+  margin-bottom:16px;
+  padding:12px;
+  border:1px solid #bbf7d0;
+  border-radius:10px;
+  background:#dcfce7;
+  color:#16a34a;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* ===========================
+   SUBMIT BUTTON
+=========================== */
+
+.registerForm button[type="submit"]{
+  width:100%;
+  height:54px;
+  margin-top:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#ff6b1a,#ff8a3d);
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 12px 30px rgba(255,107,26,.25);
+}
+
+.registerForm button[type="submit"]:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 35px rgba(255,107,26,.35);
+}
+
+.registerForm button[type="submit"]:active{
+  transform:scale(.98);
+}
+
+.registerForm button[type="submit"]:disabled{
+  background:#d1d5db;
+  color:#888;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+/* ===========================
+   LOGIN LINK
+=========================== */
+
+.bottomLink{
+  margin-top:22px;
+  text-align:center;
+  color:#555;
+  font-size:14px;
+}
+
+.bottomLink a{
+  margin-left:8px;
+  color:#ff6b1a;
+  font-weight:700;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.bottomLink a:hover{
+  color:#e85d04;
+  text-decoration:underline;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+:global(::-webkit-scrollbar){
+  width:8px;
+}
+
+:global(::-webkit-scrollbar-thumb){
+  background:#d6d6d6;
+  border-radius:20px;
+}
+
+:global(::-webkit-scrollbar-thumb:hover){
+  background:#bdbdbd;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+/* Large Tablet */
+
+@media (max-width:1024px){
+
+  .registerCard{
+    width:95%;
+  }
+
+  .registerLeft{
+    padding:30px;
+  }
+
+  .registerFormSection{
+    padding:35px;
+  }
+
+  .leftContent h1{
+    font-size:34px;
+  }
+
+  .brandTop h3{
+    font-size:26px;
+  }
+
+}
+
+/* Tablet */
+
+@media (max-width:768px){
+
+  .registerContainer{
+    padding:20px;
+  }
+
+  .registerCard{
+    width:100%;
+    max-width:650px;
+    flex-direction:column;
+    min-height:auto;
+  }
+
+  .registerLeft{
+    width:100%;
+    padding:35px 25px;
+  }
+
+  .registerFormSection{
+    width:100%;
+    padding:35px 25px;
+  }
+
+  .leftContent h1{
+    font-size:30px;
+  }
+
+  .brandTop h3{
+    font-size:24px;
+  }
+
+  .chatPreview{
+    display:none;
+  }
+
+  .emailRow{
+    flex-direction:column;
+    align-items:stretch;
+    gap:12px;
+  }
+
+  .otpButton{
+    width:100%;
+    min-width:unset;
+  }
+
+  .verifySection{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .verifyButton{
+    width:100%;
+  }
+
+  .registerForm button[type="submit"]{
+    width:100%;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width:576px){
+
+  .registerContainer{
+    padding:12px;
+  }
+
+  .registerCard{
+    border-radius:16px;
+  }
+
+  .registerLeft{
+    padding:25px 18px;
+  }
+
+  .registerFormSection{
+    padding:25px 18px;
+  }
+
+  .brandImage{
+    width:52px;
+    height:52px;
+    font-size:22px;
+  }
+
+  .brandTop{
+    margin-bottom:20px;
+  }
+
+  .brandTop h3{
+    font-size:22px;
+  }
+
+  .leftContent h1{
+    font-size:26px;
+  }
+
+  .leftContent p{
+    font-size:14px;
+  }
+
+  .features{
+    gap:10px;
+  }
+
+  .feature{
+    padding:10px;
+  }
+
+  .feature div{
+    width:36px;
+    height:36px;
+    font-size:16px;
+  }
+
+  .feature span{
+    font-size:13px;
+  }
+
+  .registerFormSection h2{
+    font-size:26px;
+  }
+
+  .subtitle{
+    font-size:13px;
+    margin-bottom:20px;
+  }
+
+  .registerForm input{
+    height:48px;
+    font-size:14px;
+  }
+
+  .otpButton{
+    height:48px;
+    font-size:14px;
+  }
+
+  .verifyButton{
+    height:48px;
+    font-size:14px;
+  }
+
+  .registerForm button[type="submit"]{
+    height:50px;
+    font-size:15px;
+  }
+
+  .bottomLink{
+    font-size:13px;
+  }
+
+  .orbOne{
+    width:170px;
+    height:170px;
+    right:-70px;
+    top:-70px;
+  }
+
+  .orbTwo{
+    width:150px;
+    height:150px;
+    left:-60px;
+    bottom:-60px;
+  }
+
+}
+
+/* Small Mobile */
+
+@media (max-width:400px){
+
+  .registerContainer{
+    padding:8px;
+  }
+
+  .registerLeft{
+    padding:20px 15px;
+  }
+
+  .registerFormSection{
+    padding:20px 15px;
+  }
+
+  .leftContent h1{
+    font-size:22px;
+  }
+
+  .brandTop h3{
+    font-size:20px;
+  }
+
+  .registerFormSection h2{
+    font-size:22px;
+  }
+
+  .registerForm input{
+    padding:0 14px;
+  }
+
+  .feature span{
+    font-size:12px;
+  }
+
+}

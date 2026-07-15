@@ -1,15 +1,14 @@
-import "../Css/register.css";
+import styles from "./Register.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../validation/registerSchema";
-
+import { registerSchema } from "../../validation/registerSchema";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { useRegister } from "../hooks/useRegister";
-import { URL } from "../../config";
+import { useRegister } from "../../hooks/useRegister";
+import { URL } from "../../../config";
 
 function Register() {
   const navigate = useNavigate();
@@ -52,7 +51,6 @@ function Register() {
     }
   };
 
-
   const verifyOTP = async () => {
     try {
       if (!otp) {
@@ -63,16 +61,14 @@ function Register() {
         `${URL}/user/verifyotp`,
         {
           email,
-          otp
+          otp,
         }
       );
 
-      // if (
-      //   response.data.success === true ||
-      //   response.data.message?.toLowerCase().includes("success")
-      // )
       if (
-        response.data.toLowerCase().includes("verified")
+        response.data
+          .toLowerCase()
+          .includes("verified")
       ) {
         toast.success("Email Verified Successfully");
         setEmailVerified(true);
@@ -80,59 +76,17 @@ function Register() {
         setEmailVerified(false);
         toast.error("Invalid OTP");
       }
-
     } catch (error) {
       setEmailVerified(false);
 
       toast.error(
         error?.response?.data?.message ||
-        error?.response?.data ||
-        "Invalid OTP"
+          error?.response?.data ||
+          "Invalid OTP"
       );
     }
   };
-  // const verifyOTP = async () => {
-  //   try {
-
-  //     if (!otp) {
-  //       return toast.error("Enter OTP");
-  //     }
-
-  //     const response = await axios.post(
-  //       `${URL}/user/verifyotp`,
-  //       {
-  //         email,
-  //         otp
-  //       }
-  //     );
-
-  //     if (
-  //       response.data.toLowerCase().includes("verified")
-  //     ) {
-
-  //       toast.success("Email Verified Successfully");
-  //       setEmailVerified(true);
-
-  //     } else {
-
-  //       setEmailVerified(false);
-  //       toast.error(response.data);
-
-  //     }
-
-  //   } catch(error) {
-
-  //     setEmailVerified(false);
-
-  //     toast.error(
-  //       error?.response?.data ||
-  //       "Invalid OTP"
-  //     );
-
-  //   }
-  // };
-
-  const onSubmit = (data) => {
+    const onSubmit = (data) => {
     if (!emailVerified) {
       return toast.error(
         "Please verify your email first"
@@ -158,27 +112,40 @@ function Register() {
       onError: (error) => {
         toast.error(
           error?.response?.data ||
-          "Registration failed"
+            "Registration failed"
         );
       },
     });
   };
 
   return (
-    <div className="register-container">
-      <div className="register-card">
+    <div className={styles.registerContainer}>
+      <div className={styles.registerCard}>
+
         {/* LEFT SIDE */}
-        <div className="register-left">
-          <div className="orb orb-one"></div>
-          <div className="orb orb-two"></div>
 
-          <div className="left-content">
-            <div className="brand-top">
-              <div className="brand-image">💬</div>
+        <div className={styles.registerLeft}>
 
-              <h3 >
+          <div
+            className={`${styles.orb} ${styles.orbOne}`}
+          ></div>
+
+          <div
+            className={`${styles.orb} ${styles.orbTwo}`}
+          ></div>
+
+          <div className={styles.leftContent}>
+
+            <div className={styles.brandTop}>
+
+              <div className={styles.brandImage}>
+                💬
+              </div>
+
+              <h3>
                 Panda<span>Chat</span>
               </h3>
+
             </div>
 
             <h1>
@@ -191,67 +158,83 @@ function Register() {
 
             <p>
               Create your account and connect
-              with friends using private messages
-              and group chats.
+              with friends using private
+              messages and group chats.
             </p>
 
-            <div className="features">
-              <div className="feature">
+            <div className={styles.features}>
+
+              <div className={styles.feature}>
                 <div>💬</div>
                 <span>Instant Messaging</span>
               </div>
 
-              <div className="feature">
+              <div className={styles.feature}>
                 <div>👥</div>
                 <span>Group Chat</span>
               </div>
 
-              <div className="feature">
+              <div className={styles.feature}>
                 <div>🔒</div>
                 <span>Secure Communication</span>
               </div>
+
             </div>
 
-            <div className="chat-preview">
-              <div className="chat-msg receive">
+            <div className={styles.chatPreview}>
+
+              <div
+                className={`${styles.chatMsg} ${styles.receive}`}
+              >
                 Welcome to PandaChat 👋
               </div>
 
-              <div className="chat-msg send">
+              <div
+                className={`${styles.chatMsg} ${styles.send}`}
+              >
                 Let's connect 🚀
               </div>
 
-              <div className="chat-msg receive">
+              <div
+                className={`${styles.chatMsg} ${styles.receive}`}
+              >
                 Create groups and chat easily
               </div>
+
             </div>
+
           </div>
+
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="register-form-section">
+
+        <div
+          className={styles.registerFormSection}
+        >
+
           <h2>Create Account</h2>
 
-          <p className="subtitle">
-            Enter your details to start chatting
+          <p className={styles.subtitle}>
+            Enter your details to start
+            chatting
           </p>
 
           <form
-            className="register-form"
+            className={styles.registerForm}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <input
+                      <input
               type="text"
               placeholder="Username"
               {...register("username")}
             />
 
-            <p className="error">
+            <p className={styles.error}>
               {errors.username?.message}
             </p>
 
-
-            <div className="email-row">
+            <div className={styles.emailRow}>
 
               <input
                 type="email"
@@ -262,7 +245,7 @@ function Register() {
               {!emailVerified && (
                 <button
                   type="button"
-                  className="otp-button"
+                  className={styles.otpButton}
                   onClick={sendOTP}
                   disabled={otpSent}
                 >
@@ -272,24 +255,26 @@ function Register() {
 
             </div>
 
-            <p className="error">
+            <p className={styles.error}>
               {errors.email?.message}
             </p>
 
             {otpSent && !emailVerified && (
 
-              <div className="verify-section">
+              <div className={styles.verifySection}>
 
                 <input
                   type="text"
                   placeholder="Enter OTP"
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+                  onChange={(e) =>
+                    setOtp(e.target.value)
+                  }
                 />
 
                 <button
                   type="button"
-                  className="verify-button"
+                  className={styles.verifyButton}
                   onClick={verifyOTP}
                 >
                   Verify
@@ -301,68 +286,75 @@ function Register() {
 
             {emailVerified && (
 
-              <p className="verified-message">
+              <p
+                className={styles.verifiedMessage}
+              >
                 ✅ Email Verified Successfully
               </p>
 
             )}
 
-
             <input
               type="number"
-              disabled={!emailVerified}
               placeholder="Phone Number"
+              disabled={!emailVerified}
               {...register("phone")}
             />
 
-            <p className="error">
+            <p className={styles.error}>
               {errors.phone?.message}
             </p>
 
             <input
               type="password"
-              disabled={!emailVerified}
               placeholder="Password"
+              disabled={!emailVerified}
               {...register("password")}
             />
 
-            <p className="error">
+            <p className={styles.error}>
               {errors.password?.message}
             </p>
 
             <input
               type="password"
-              disabled={!emailVerified}
               placeholder="Confirm Password"
+              disabled={!emailVerified}
               {...register("confirmPassword")}
             />
 
-            <p className="error">
+            <p className={styles.error}>
               {errors.confirmPassword?.message}
             </p>
 
             <button
               type="submit"
-              disabled={isPending || !emailVerified}
+              disabled={
+                isPending || !emailVerified
+              }
             >
               {isPending
                 ? "Creating..."
                 : "Create Account"}
             </button>
 
-            <div className="bottom-link">
+            <div className={styles.bottomLink}>
+
               Already have account?
 
               <Link to="/login">
                 Login
               </Link>
+
             </div>
-          </form>
+                      </form>
+
         </div>
+
       </div>
+
     </div>
   );
 }
 
 export default Register;
-
