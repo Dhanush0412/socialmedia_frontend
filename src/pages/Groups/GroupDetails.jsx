@@ -5,7 +5,6 @@ import { useDebounce } from "../../hooks/useDebounce";
 import Layout from "../../components/Layout/Layout";
 import { useSearchConnectedUsers } from "../../hooks/group/useSearchConnectedUsers";
 import { useSendGroupInvite } from "../../hooks/group/useSendGroupInvite";
-
 import {
   Autocomplete,
   Avatar,
@@ -17,22 +16,19 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-
-import "../../Css/SearchUsers.css";
-import "./GroupDetails.css";
+import styles from "./GroupDetails.module.css";
 
 export default function GroupDetails() {
   const { groupid } = useParams();
-
- const [search, setSearch] = useState("");
-
-const debouncedSearch = useDebounce(search, 1000);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 1000);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const {
-  data = [],
-  isLoading,
-} = useSearchConnectedUsers(debouncedSearch);
+    data = [],
+    isLoading,
+  } = useSearchConnectedUsers(groupid,debouncedSearch);
+
   const { mutate: sendInvite } = useSendGroupInvite();
 
   const inviteSelected = () => {
@@ -58,25 +54,24 @@ const debouncedSearch = useDebounce(search, 1000);
       );
     });
 
-    toast.success("Invitations sent");
-
+    // toast.success("Invitations sent");
     setSelectedUsers([]);
     setSearch("");
   };
 
   return (
     <Layout>
-      <div className="search-users">
-        <div className="search-users__header">
-          <div className="search-users__icon">
+      <div className={styles["search-users"]}>
+        <div className={styles["search-users__header"]}>
+          <div className={styles["search-users__icon"]}>
             👥
           </div>
 
-          <h1 className="search-users__title">
+          <h1 className={styles["search-users__title"]}>
             Invite Friends
           </h1>
 
-          <p className="search-users__subtitle">
+          <p className={styles["search-users__subtitle"]}>
             Search and select multiple friends to invite into this group
           </p>
         </div>
@@ -146,8 +141,7 @@ const debouncedSearch = useDebounce(search, 1000);
                     variant="body2"
                     color="text.secondary"
                   >
-                    {option.bio ||
-                      "No bio available"}
+                    {option.bio || "No bio available"}
                   </Typography>
                 </Box>
               </li>
@@ -187,14 +181,8 @@ const debouncedSearch = useDebounce(search, 1000);
                 />
 
                 <div>
-                  <h4>
-                    {user.user.username}
-                  </h4>
-
-                  <p>
-                    {user.bio ||
-                      "No bio available"}
-                  </p>
+                  <h4>{user.user.username}</h4>
+                  <p>{user.bio || "No bio available"}</p>
                 </div>
               </div>
             ))}

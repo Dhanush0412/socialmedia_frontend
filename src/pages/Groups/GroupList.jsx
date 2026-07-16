@@ -1,32 +1,20 @@
 import Layout from "../../components/Layout/Layout";
-import Group from "../Group";
+import Group from "./Group";
 import GroupRequests from "./GroupRequest";
-import "./GroupList.css";
+import styles from "./GroupList.module.css";
 
-export default function GroupList(){
+export default function GroupList() {
+  return (
+    <Layout>
+      <div className={styles["groups-page"]}>
+        <div className={styles["groups-left"]}>
+          <Group />
+        </div>
 
-return(
-
-<Layout>
-
-<div className="groups-page">
-
-<div className="groups-left">
-
-<Group/>
-
-</div>
-
-<div className="groups-right">
-
-<GroupRequests/>
-
-</div>
-
-</div>
-
-</Layout>
-
-);
-
+        <div className={styles["groups-right"]}>
+          <GroupRequests />
+        </div>
+      </div>
+    </Layout>
+  );
 }
