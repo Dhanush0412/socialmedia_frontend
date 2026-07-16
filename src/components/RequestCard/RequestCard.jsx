@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useAcceptRequest } from "../hooks/connection/useAcceptRequest";
-import { useRejectRequest } from "../hooks/connection/useRejectRequest";
-import "../Css/RequestCard.css";
+import { useAcceptRequest } from "../../hooks/connection/useAcceptRequest";
+import { useRejectRequest } from "../../hooks/connection/useRejectRequest";
+import styles from "./RequestCard.module.css";
 
 function RequestCard({ request }) {
   const accept = useAcceptRequest();
@@ -41,29 +41,29 @@ function RequestCard({ request }) {
   }
 
   return (
-    <div className="request-card">
-      <div className="request-user">
-        <div className="request-avatar">
+    <div className={styles["request-card"]}>
+      <div className={styles["request-user"]}>
+        <div className={styles["request-avatar"]}>
           {profilePic ? (
             <img
               src={profilePic}
               alt={username}
-              className="request-avatar-img"
+              className={styles["request-avatar-img"]}
             />
           ) : (
             username.charAt(0).toUpperCase()
           )}
         </div>
 
-        <div className="request-info">
+        <div className={styles["request-info"]}>
           <h3>{username}</h3>
           <p>wants to connect with you</p>
         </div>
       </div>
 
-      <div className="request-actions">
+      <div className={styles["request-actions"]}>
         <button
-          className="accept-btn"
+          className={styles["accept-btn"]}
           onClick={handleAccept}
           disabled={accept.isPending || reject.isPending}
         >
@@ -71,7 +71,7 @@ function RequestCard({ request }) {
         </button>
 
         <button
-          className="reject-btn"
+          className={styles["reject-btn"]}
           onClick={handleReject}
           disabled={accept.isPending || reject.isPending}
         >

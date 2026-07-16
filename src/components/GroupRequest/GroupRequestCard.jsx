@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAcceptGroupInvite } from "../hooks/group/useAcceptGroupInvite";
-import { useRejectGroupInvite } from "../hooks/group/useRejectGroupInvite";
-import "../css/GroupRequests.css";
+import { useAcceptGroupInvite } from "../../hooks/group/useAcceptGroupInvite";
+import { useRejectGroupInvite } from "../../hooks/group/useRejectGroupInvite";
+import styles from "./GroupRequest.module.css";
 
 export default function GroupRequestCard({ invite }) {
 
   const {
     mutate: acceptInvite,
-    isPending: isAccepting
+    isPending: isAccepting,
   } = useAcceptGroupInvite();
 
   const {
     mutate: rejectInvite,
-    isPending: isRejecting
+    isPending: isRejecting,
   } = useRejectGroupInvite();
 
   const [hidden, setHidden] = useState(false);
@@ -27,17 +27,16 @@ export default function GroupRequestCard({ invite }) {
     setHidden(true);
 
     acceptInvite(invite._id, {
-
       onError: (error) => {
 
         setHidden(false);
 
         toast.error(
-          error.response?.data || "Unable to accept invitation"
+          error.response?.data ||
+          "Unable to accept invitation"
         );
 
-      }
-
+      },
     });
 
   };
@@ -47,26 +46,25 @@ export default function GroupRequestCard({ invite }) {
     setHidden(true);
 
     rejectInvite(invite._id, {
-
       onError: (error) => {
 
         setHidden(false);
 
         toast.error(
-          error.response?.data || "Unable to reject invitation"
+          error.response?.data ||
+          "Unable to reject invitation"
         );
 
-      }
-
+      },
     });
 
   };
 
   return (
 
-    <div className="group-request-card">
+    <div className={styles.groupRequestCard}>
 
-      <div className="group-request-image">
+      <div className={styles.groupRequestImage}>
 
         <img
           src={invite.group?.groupimage}
@@ -75,7 +73,7 @@ export default function GroupRequestCard({ invite }) {
 
       </div>
 
-      <div className="group-request-content">
+      <div className={styles.groupRequestContent}>
 
         <h2>
           {invite.group?.groupname}
@@ -91,10 +89,10 @@ export default function GroupRequestCard({ invite }) {
           </strong>
         </p>
 
-        <div className="group-request-buttons">
+        <div className={styles.groupRequestButtons}>
 
           <button
-            className="accept-btn"
+            className={styles.acceptBtn}
             disabled={isAccepting || isRejecting}
             onClick={handleAccept}
           >
@@ -102,7 +100,7 @@ export default function GroupRequestCard({ invite }) {
           </button>
 
           <button
-            className="reject-btn"
+            className={styles.rejectBtn}
             disabled={isAccepting || isRejecting}
             onClick={handleReject}
           >

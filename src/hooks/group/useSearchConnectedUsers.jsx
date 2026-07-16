@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { URL } from "../../../config";
 
-const searchConnectedUsers = async (search) => {
+const searchConnectedUsers = async (groupid, search) => {
   const response = await axios.get(
-    `${URL}/group/searchconnecteduser`,
+    `${URL}/group/searchconnecteduser/${groupid}`,
     {
       params: {
         username: search,
@@ -18,11 +18,15 @@ const searchConnectedUsers = async (search) => {
   return response.data;
 };
 
-export const useSearchConnectedUsers = (search) => {
+export const useSearchConnectedUsers = (groupid, search) => {
   return useQuery({
-    queryKey: ["search-connected-users", search],
-    queryFn: () => searchConnectedUsers(search),
-    enabled: search.trim().length > 0,
+    queryKey: ["search-connected-users", groupid, search],
+
+    queryFn: () => searchConnectedUsers(groupid, search),
+
+    enabled: !!groupid && search.trim().length > 0,
+
     staleTime: 0,
+    refetchOnWindowFocus: false,
   });
 };

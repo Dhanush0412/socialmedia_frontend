@@ -1,0 +1,114 @@
+.card{
+  width:100%;
+  border-radius:16px !important;
+  box-shadow:0 6px 20px rgba(0,0,0,.08) !important;
+  display:flex;
+  align-items:center;
+  flex-shrink:0;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,.12) !important;
+}
+
+.cardContent{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:18px !important;
+}
+
+.avatarWrapper{
+  position:relative;
+  flex-shrink:0;
+}
+
+.avatar{
+  width:65px !important;
+  height:65px !important;
+  font-size:28px !important;
+}
+
+.onlineDot{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:#22c55e;
+  border-radius:50%;
+  right:2px;
+  bottom:3px;
+  border:3px solid #fff;
+}
+
+.userInfo{
+  flex:1;
+  overflow:hidden;
+}
+
+.username{
+  font-weight:700 !important;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.connectButton{
+  border-radius:30px !important;
+  text-transform:none !important;
+  padding:8px 24px !important;
+  flex-shrink:0;
+  background:linear-gradient(135deg,#e38655,#dc6d31) !important;
+  transition:.3s !important;
+}
+
+.connectButton:hover{
+  background:linear-gradient(135deg,#e85b0d,#e85b0d) !important;
+}
+
+.sentButton{
+  background:#22c55e !important;
+}
+
+.sentButton:hover{
+  background:#16a34a !important;
+}
+
+@media (max-width:768px){
+
+  .cardContent{
+    gap:14px;
+    padding:16px !important;
+  }
+
+  .avatar{
+    width:55px !important;
+    height:55px !important;
+    font-size:22px !important;
+  }
+
+  .connectButton{
+    padding:7px 18px !important;
+    font-size:13px !important;
+  }
+
+}
+
+@media (max-width:480px){
+
+  .cardContent{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .userInfo{
+    width:100%;
+  }
+
+  .connectButton{
+    width:100%;
+  }
+
+}

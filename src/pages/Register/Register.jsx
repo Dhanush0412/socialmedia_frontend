@@ -1,14 +1,14 @@
-import styles from "../Css/Register.module.css";
+import styles from "./Register.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "../validation/registerSchema";
+import { registerSchema } from "../../validation/registerSchema";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { useRegister } from "../hooks/useRegister";
-import { URL } from "../../config";
+import { useRegister } from "../../hooks/useRegister";
+import { URL } from "../../../config";
 
 function Register() {
   const navigate = useNavigate();
@@ -224,15 +224,17 @@ function Register() {
             className={styles.registerForm}
             onSubmit={handleSubmit(onSubmit)}
           >
-                      <input
-              type="text"
-              placeholder="Username"
-              {...register("username")}
-            />
+            <div className={styles.formGroup}>
+  <input
+    type="text"
+    placeholder="Username"
+    {...register("username")}
+  />
 
-            <p className={styles.error}>
-              {errors.username?.message}
-            </p>
+  <p className={styles.error}>
+    {errors.username?.message}
+  </p>
+</div>
 
             <div className={styles.emailRow}>
 
@@ -281,16 +283,6 @@ function Register() {
                 </button>
 
               </div>
-
-            )}
-
-            {emailVerified && (
-
-              <p
-                className={styles.verifiedMessage}
-              >
-                ✅ Email Verified Successfully
-              </p>
 
             )}
 

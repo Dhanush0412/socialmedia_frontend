@@ -4,30 +4,30 @@ import {
 } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
+const Login = lazy(() => import("../pages/Login/Login"));
+const Register = lazy(() => import("../pages/Register/Register"));
 const Profile = lazy(() => import("../pages/Profile/Profile"));
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
-const ForgotPassword = lazy(() => import("../pages/ForgotPassword"));
-const Home = lazy(() => import("../pages/Home"));
+const ForgotPassword = lazy(() => import("../pages/ForgorPassword/ForgotPassword"));
+const Home = lazy(() => import("../pages/Home/Home"));
 
 const MyPosts = lazy(() => import("../pages/MyPosts/MyPosts"));
 const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
-const Friends = lazy(() => import("../pages/Friends"));
+const Friends = lazy(() => import("../pages/Friends/Friends"));
 
 const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
-const Group = lazy(() => import("../pages/Group"));
+const Group = lazy(() => import("../pages/Groups/Group"));
 const CreateGroup = lazy(() => import("../pages/Groups/CreateGroup"))
 const GroupDetails = lazy(() => import("../pages/Groups/GroupDetails"))
 const GroupRequests = lazy(() => import("../pages/Groups/GroupRequest"));
 const GroupList=lazy(()=>import("../pages/Groups/GroupList"))
 
-const SearchUsers = lazy(() => import("../pages/SearchUsers"));
-const PendingRequests = lazy(() => import("../pages/PendingRequests"));
-const MyConnections = lazy(() => import("../pages/MyConnections"));
-const Chat = lazy(() => import("../pages/Chat"));
+const SearchUsers = lazy(() => import("../pages/SearchUsers/SearchUsers"));
+const PendingRequests = lazy(() => import("../pages/PendingRequests/PendingRequests"));
+const MyConnections = lazy(() => import("../pages/MyConnection/MyConnection"));
+const Chat = lazy(() => import("../pages/Chat/Chat"));
 function AppRoutes() {
   return (
 
