@@ -82,57 +82,37 @@ function ForgotPassword() {
     }
 
   };
+  const verifyOTP = async () => {
+  try {
 
+    if (!otp) {
+      return toast.info("Enter OTP");
+    }
 
-
-  const verifyOTP = async()=>{
-
-    try{
-
-      if(!otp){
-
-        return toast.info(
-          "Enter OTP"
-        );
-
+    const response = await axios.post(
+      `${URL}/user/verifyforgototp`,
+      {
+        login,
+        otp,
       }
+    );
 
+    setEmailVerified(true);
 
-      const response = await axios.post(
-        `${URL}/user/verifyforgototp`,
-        {
-          login,
-          otp
-        }
-      );
+    toast.success(
+      response.data.message || "OTP Verified Successfully 🎉"
+    );
 
+  } catch (error) {
 
-      toast.success(
-        response.data.message ||
-        "OTP Verified"
-      );
+    setEmailVerified(false);
 
+    toast.error(
+      error?.response?.data?.message || "Invalid OTP"
+    );
 
-      setEmailVerified(true);
-
-
-    }
-    catch(error){
-
-      setEmailVerified(false);
-
-
-      toast.error(
-        error?.response?.data?.message ||
-        "Invalid OTP"
-      );
-
-    }
-
-  };
-
-
-
+  }
+};
   const onSubmit=(data)=>{
 
 
@@ -303,47 +283,54 @@ function ForgotPassword() {
             className={styles["forgot-form"]}
             onSubmit={handleSubmit(onSubmit)}
           >
-            <input
-              placeholder="Email or Phone"
-              {...register("login")}
-            />
-            <p className={styles["forgot-error"]}>
-              {errors.login?.message}
-            </p>
-            <div className={styles["otp-section"]}>
-              {!emailVerified && (
-                <button
-                  type="button"
-                  className={styles["otp-button"]}
-                  onClick={sendOTP}
-                  disabled={otpSent}
-                >
-                  {otpSent ? "OTP Sent" : "Send OTP"}
-                </button>
-              )}
-              {otpSent && !emailVerified && (
-                <div className={styles["verify-section"]}>
-                  <input
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    onChange={(e)=>setOtp(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className={styles["verify-button"]}
-                    onClick={verifyOTP}
-                  >
-                    Verify OTP
-                  </button>
-                </div>
-              )}
-              {emailVerified && (
-                <p className={styles["verified-message"]}>
-                  ✅ Email Verified Successfully
-                </p>
-              )}
-            </div>
+            
+            
+              
+              <div className={styles["email-row"]}>
+
+  <input
+    placeholder="Email or Phone"
+    {...register("login")}
+  />
+
+  {!emailVerified && (
+    <button
+      type="button"
+      className={styles["otp-button"]}
+      onClick={sendOTP}
+      disabled={otpSent}
+    >
+      {otpSent ? "OTP Sent" : "Send OTP"}
+    </button>
+  )}
+
+</div>
+
+<p className={styles["forgot-error"]}>
+  {errors.login?.message}
+</p>
+
+{otpSent && !emailVerified && (
+  <div className={styles["verify-section"]}>
+
+    <input
+      type="text"
+      placeholder="Enter OTP"
+      value={otp}
+      onChange={(e) => setOtp(e.target.value)}
+    />
+
+    <button
+      type="button"
+      className={styles["verify-button"]}
+      onClick={verifyOTP}
+    >
+      Verify OTP
+    </button>
+
+  </div>
+)}
+
                         <input
               type="password"
               disabled={!emailVerified}

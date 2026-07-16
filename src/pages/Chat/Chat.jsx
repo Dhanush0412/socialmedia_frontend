@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDirectMessages } from "../hooks/chat/useDirectMessages";
-import { useSendMessage } from "../hooks/chat/useSendMessage";
-import { useMarkRead } from "../hooks/chat/useMarkRead";
-import { socket } from "../socket";
+import { useDirectMessages } from "../../hooks/chat/useDirectMessages";
+import { useSendMessage } from "../../hooks/chat/useSendMessage";
+import { useMarkRead } from "../../hooks/chat/useMarkRead";
+import { socket } from "../../socket";
 import { FaArrowLeft, FaPaperPlane } from "react-icons/fa";
-import "../css/Chat.css";
-import Layout from "../components/Layout/Layout";
+import styles from "./Chat.module.css";
+import Layout from "../../components/Layout/Layout";
 
 function Avatar({ src, name, className }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className={`avatar-wrap ${className}`}>
+    <div className={`${styles["avatar-wrap"]} ${className || ""}`}>
       {src && !imgError ? (
         <img
           src={src}
@@ -51,8 +51,7 @@ function Chat() {
     if (!id) return;
     markReadMutation.mutate(id);
   }, [id]);
-
-  useEffect(() => {
+    useEffect(() => {
     if (!socket.connected) {
       socket.connect();
     }
@@ -118,8 +117,8 @@ function Chat() {
 
   if (isLoading) {
     return (
-      <div className="chat-loading">
-        <div className="loader"></div>
+      <div className={styles["chat-loading"]}>
+        <div className={styles["loader"]}></div>
         <p>Loading Conversation...</p>
       </div>
     );
@@ -127,14 +126,13 @@ function Chat() {
 
   const otherPersonName = chatUser?.user?.username || "User";
   const otherPersonPic = chatUser?.profilepic;
-
-  return (
+    return (
     <Layout>
-      <div className="chat-container">
-        <div className="chat-header">
-          <div className="header-left">
+      <div className={styles["chat-container"]}>
+        <div className={styles["chat-header"]}>
+          <div className={styles["header-left"]}>
             <button
-              className="icon-btn"
+              className={styles["icon-btn"]}
               onClick={() => navigate("/friends")}
             >
               <FaArrowLeft />
@@ -143,16 +141,16 @@ function Chat() {
             <Avatar
               src={otherPersonPic}
               name={otherPersonName}
-              className="profile-image"
+              className={styles["profile-image"]}
             />
 
-            <div className="header-info">
+            <div className={styles["header-info"]}>
               <h3>{otherPersonName}</h3>
             </div>
           </div>
         </div>
 
-        <div className="chat-messages">
+        <div className={styles["chat-messages"]}>
           {messages.map((msg, index) => {
             const isMine =
               String(msg.sender?._id || msg.sender) === String(profileId);
@@ -163,24 +161,28 @@ function Chat() {
             return (
               <div
                 key={msg._id || index}
-                className={`message-row ${isMine ? "mine" : "other"}`}
+                className={`${styles["message-row"]} ${
+                  isMine ? styles["mine"] : styles["other"]
+                }`}
               >
                 {!isMine && (
                   <Avatar
                     src={senderPic}
                     name={senderName}
-                    className="message-avatar"
+                    className={styles["message-avatar"]}
                   />
                 )}
 
                 <div
-                  className={`message-bubble ${
-                    isMine ? "sent-message" : "received-message"
+                  className={`${styles["message-bubble"]} ${
+                    isMine
+                      ? styles["sent-message"]
+                      : styles["received-message"]
                   }`}
                 >
                   <p>{msg.text}</p>
 
-                  <span className="message-time">
+                  <span className={styles["message-time"]}>
                     {msg.createdAt &&
                       new Date(msg.createdAt).toLocaleTimeString([], {
                         hour: "2-digit",
@@ -194,8 +196,7 @@ function Chat() {
 
           <div ref={messageEndRef}></div>
         </div>
-
-        <div className="chat-input-area">
+                <div className={styles["chat-input-area"]}>
           <input
             type="text"
             placeholder="Type your message..."
@@ -209,7 +210,7 @@ function Chat() {
           />
 
           <button
-            className="send-btn"
+            className={styles["send-btn"]}
             onClick={sendMessage}
             disabled={sendMutation.isPending || !message.trim()}
           >

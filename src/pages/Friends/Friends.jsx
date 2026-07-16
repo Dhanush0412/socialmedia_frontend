@@ -1,7 +1,7 @@
 import Layout from "../../components/Layout/Layout";
 import styles from "./Friends.module.css";
-import MyConnections from "../MyConnections";
-import PendingRequests from "../PendingRequests";
+import MyConnections from "../MyConnection/MyConnection";
+import PendingRequests from "../PendingRequests/PendingRequests";
 
 export default function Friends(){
   return(

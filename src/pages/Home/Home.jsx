@@ -1,12 +1,14 @@
-import "../Css/Home.css"
+import styles from "./Home.module.css";
 import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="home-page">
-      <div className="home-card">
+    <div className={styles["home-page"]}>
 
-        <div className="home-content">
+      <div className={styles["home-card"]}>
+
+        <div className={styles["home-content"]}>
+
           <h1>
             Welcome to
             <span>{" "}Chat Connect 💬</span>
@@ -19,60 +21,68 @@ function Home() {
             and secure way.
           </p>
 
-          <div className="home-buttons">
+          <div className={styles["home-buttons"]}>
+
             <Link
               to="/login"
-              className="login-link"
+              className={styles["login-link"]}
             >
               Login
             </Link>
 
             <Link
               to="/register"
-              className="register-link"
+              className={styles["register-link"]}
             >
               Create Account
             </Link>
+
           </div>
+
         </div>
 
-        <div className="home-image">
-          <div className="chat-box">
+        <div className={styles["home-image"]}>
 
-            <div className="message received">
+          <div className={styles["chat-box"]}>
+
+            <div className={`${styles["message"]} ${styles["received"]}`}>
               Hey 👋
             </div>
 
-            <div className="message sent">
+            <div className={`${styles["message"]} ${styles["sent"]}`}>
               Hello! How are you?
             </div>
 
-            <div className="message received">
+            <div className={`${styles["message"]} ${styles["received"]}`}>
               Let's start chatting 🚀
             </div>
-            <div className="message received">
+
+            <div className={`${styles["message"]} ${styles["received"]}`}>
               Welcome to Chat Connect.
             </div>
 
-            <div className="message sent">
+            <div className={`${styles["message"]} ${styles["sent"]}`}>
               Fast, secure and private.
             </div>
 
-            <div className="message received">
+            <div className={`${styles["message"]} ${styles["received"]}`}>
               Start chatting with your friends.
             </div>
 
-            <div className="message sent">
+            <div className={`${styles["message"]} ${styles["sent"]}`}>
               Anytime. Anywhere.
             </div>
 
-            <div className="message received">
+            <div className={`${styles["message"]} ${styles["received"]}`}>
               💬 Stay Connected.
             </div>
+
           </div>
+
         </div>
 
       </div>
+
     </div>
   );
 }

@@ -224,15 +224,17 @@ function Register() {
             className={styles.registerForm}
             onSubmit={handleSubmit(onSubmit)}
           >
-                      <input
-              type="text"
-              placeholder="Username"
-              {...register("username")}
-            />
+            <div className={styles.formGroup}>
+  <input
+    type="text"
+    placeholder="Username"
+    {...register("username")}
+  />
 
-            <p className={styles.error}>
-              {errors.username?.message}
-            </p>
+  <p className={styles.error}>
+    {errors.username?.message}
+  </p>
+</div>
 
             <div className={styles.emailRow}>
 
@@ -281,16 +283,6 @@ function Register() {
                 </button>
 
               </div>
-
-            )}
-
-            {emailVerified && (
-
-              <p
-                className={styles.verifiedMessage}
-              >
-                ✅ Email Verified Successfully
-              </p>
 
             )}
 
