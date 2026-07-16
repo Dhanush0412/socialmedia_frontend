@@ -27,7 +27,7 @@ export default function GroupDetails() {
   const {
     data = [],
     isLoading,
-  } = useSearchConnectedUsers(groupid,debouncedSearch);
+  } = useSearchConnectedUsers(groupid, debouncedSearch);
 
   const { mutate: sendInvite } = useSendGroupInvite();
 
@@ -47,7 +47,7 @@ export default function GroupDetails() {
           onError: (error) => {
             toast.error(
               error.response?.data ||
-                "Unable to send invitation"
+              "Unable to send invitation"
             );
           },
         }
@@ -146,24 +146,18 @@ export default function GroupDetails() {
                 </Box>
               </li>
             )}
-            
+
             renderInput={(params) => (
-  <TextField
-    {...params}
-    label="Search Friends"
-    placeholder="Type username..."
-  />
-)}
+              <TextField
+                {...params}
+                label="Search Friends"
+                placeholder="Type username..."
+              />
+            )}
           />
         </Box>
 
-        <div className="search-users__count">
-          Selected :
-          <strong>
-            {" "}
-            {selectedUsers.length}
-          </strong>
-        </div>
+
 
         {selectedUsers.length > 0 && (
           <div className="selected-users-preview">
@@ -182,7 +176,7 @@ export default function GroupDetails() {
 
                 <div>
                   <h4>{user.user.username}</h4>
-                  <p>{user.bio || "No bio available"}</p>
+
                 </div>
               </div>
             ))}
