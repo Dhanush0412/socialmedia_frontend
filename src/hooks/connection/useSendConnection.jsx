@@ -5,8 +5,6 @@ import {URL} from "../../../config";
 
 const sendConnection=async(receiverid)=>{
 
-console.log("Receiver ID:",receiverid);
-
 const response=await axios.post(
 `${URL}/connection/send/${receiverid}`,
 {},
