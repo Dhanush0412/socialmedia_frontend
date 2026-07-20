@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation,useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { URL } from "../../../config";
 
@@ -22,9 +22,18 @@ Authorization:`Bearer ${localStorage.getItem("token")}`
 
 
 export const useSendGroupInvite=()=>{
+const queryClient = useQueryClient();
 
- return useMutation({
-  mutationFn:sendInvite
- });
+  return useMutation({
+    mutationFn: sendInvite,
 
-};
+    onSuccess: () => {
+
+      queryClient.invalidateQueries({
+        queryKey: ["group-invites"]
+      });
+
+    }
+
+
+})}

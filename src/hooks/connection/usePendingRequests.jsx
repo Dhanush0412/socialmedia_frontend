@@ -13,8 +13,6 @@ const getRequests = async () => {
     }
   );
 
-  console.log("Pending API Response:", response.data);
-
   return response.data;
 
 };

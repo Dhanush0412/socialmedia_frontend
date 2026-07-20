@@ -13,8 +13,6 @@ function PendingRequests() {
     ? data.data
     : [];
 
-  console.log(data);
-
   if (isLoading) {
     return (
       <div className={styles["request-loading"]}>
