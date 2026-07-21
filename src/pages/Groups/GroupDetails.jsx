@@ -58,6 +58,11 @@ export default function GroupDetails() {
           receiverid: user._id,
         },
         {
+          onSuccess: (response) => {
+          toast.success(
+            response?.data || "Invitation sent successfully"
+          );
+        },
           onError: (error) => {
             toast.error(
               error.response?.data ||
@@ -67,8 +72,6 @@ export default function GroupDetails() {
         }
       );
     });
-
-    toast.success("Invitations sent successfully");
 
     setSelectedUsers([]);
   };
