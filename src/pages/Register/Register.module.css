@@ -211,6 +211,13 @@
   color:#fff;
   align-self:flex-end;
 }
+.otpButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 110px;
+}
 
 /* ===========================
    RIGHT PANEL

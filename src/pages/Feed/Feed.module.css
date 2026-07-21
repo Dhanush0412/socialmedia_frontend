@@ -4,7 +4,7 @@
   margin: 0 auto;
   padding: 24px 32px;
   background: #f8f9fa;
-  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .headerSection {
@@ -31,43 +31,10 @@
 .postCount {
   font-size: 14px;
   color: #666;
-  background: white;
+  background: #fff;
   padding: 6px 16px;
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  margin: 0;
-}
-
-.loadingText {
-  text-align: center;
-  color: #666;
-  margin-top: 60px;
-  font-size: 24px;
-  font-weight: 500;
-}
-
-.emptyState {
-  text-align: center;
-  padding: 80px 20px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-.emptyIcon {
-  font-size: 64px;
-  margin-bottom: 16px;
-}
-
-.emptyState h3 {
-  font-size: 24px;
-  color: #1a1a1a;
-  margin: 0 0 8px 0;
-}
-
-.emptyState p {
-  color: #888;
-  font-size: 16px;
   margin: 0;
 }
 
@@ -78,122 +45,35 @@
   padding: 4px 0;
 }
 
-@media (max-width: 1024px) {
-  .feedContainer {
-    padding: 20px 24px;
-  }
-  
-  .postsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-  
-  .pageTitle {
-    font-size: 28px;
-  }
+/* ===========================
+   Pagination
+=========================== */
+
+.paginationContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
 }
 
-@media (max-width: 768px) {
-  .feedContainer {
-    padding: 16px;
-  }
-  
-  .headerSection {
-    margin-bottom: 24px;
-  }
-  
-  .pageTitle {
-    font-size: 24px;
-  }
-  
-  .postCount {
-    font-size: 12px;
-    padding: 4px 14px;
-  }
-  
-  .postsGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
+.paginationContainer :global(.MuiPagination-root) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-@media (max-width: 480px) {
-  .feedContainer {
-    padding: 12px;
-    background: #f5f6fa;
-  }
-  
-  .headerSection {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .pageTitle {
-    font-size: 22px;
-  }
-  
-  .postCount {
-    font-size: 12px;
-    padding: 4px 12px;
-  }
-  
-  .postsGrid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 0;
-  }
-  
-  .emptyState {
-    padding: 60px 16px;
-  }
-  
-  .emptyIcon {
-    font-size: 48px;
-  }
-  
-  .emptyState h3 {
-    font-size: 20px;
-  }
+.paginationContainer :global(.MuiPagination-ul) {
+  justify-content: center;
 }
 
-@media (max-width: 360px) {
-  .feedContainer {
-    padding: 8px;
-  }
-  
-  .postsGrid {
-    gap: 12px;
-  }
+.paginationContainer :global(.MuiPaginationItem-root) {
+  font-weight: 600;
 }
 
-@media (prefers-color-scheme: dark) {
-  .feedContainer {
-    background: #121212;
-  }
-  
-  .postCount {
-    background: #2a2a2a;
-    color: #aaa;
-  }
-  
-  .emptyState {
-    background: #1a1a1a;
-  }
-  
-  .emptyState h3 {
-    color: #e0e0e0;
-  }
-  
-  .emptyState p {
-    color: #888;
-  }
-  
-  .loadingText {
-    color: #aaa;
-  }
-}
+/* ===========================
+   Loading
+=========================== */
 
 .loadingContainer {
   min-height: 75vh;
@@ -215,16 +95,185 @@
   font-size: 22px;
   font-weight: 600;
   color: #F68B1F;
-  letter-spacing: 0.5px;
+  letter-spacing: .5px;
+}
+
+/* ===========================
+   Empty State
+=========================== */
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .04);
+}
+
+.emptyIcon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.emptyState h3 {
+  font-size: 24px;
+  color: #1a1a1a;
+  margin: 0 0 8px;
+}
+
+.emptyState p {
+  color: #888;
+  font-size: 16px;
+  margin: 0;
+}
+.feedContainer * {
+  box-sizing: border-box;
 }
 
 @keyframes pandaBounce {
-  0%,
-  100% {
-    transform: translateY(0px);
+  0%,100% {
+    transform: translateY(0);
   }
 
   50% {
     transform: translateY(-12px);
   }
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width:1024px) {
+
+  .feedContainer {
+    padding: 20px 24px;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+  }
+
+  .pageTitle {
+    font-size: 28px;
+  }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:768px) {
+
+  .feedContainer {
+    padding: 16px;
+  }
+
+  .headerSection {
+    margin-bottom: 24px;
+  }
+
+  .pageTitle {
+    font-size: 24px;
+  }
+
+  .postCount {
+    font-size: 12px;
+    padding: 4px 14px;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(2,1fr);
+    gap: 16px;
+  }
+
+}
+
+@media (max-width:480px) {
+
+  .feedContainer {
+    padding: 12px;
+    background: #f5f6fa;
+  }
+
+  .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pageTitle {
+    font-size: 22px;
+  }
+
+  .postCount {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+
+  .postsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .emptyState {
+    padding: 60px 16px;
+  }
+
+  .emptyIcon {
+    font-size: 48px;
+  }
+
+  .emptyState h3 {
+    font-size: 20px;
+  }
+
+}
+
+@media (max-width:360px) {
+
+  .feedContainer {
+    padding: 8px;
+  }
+
+  .postsGrid {
+    gap: 12px;
+  }
+
+}
+
+/* ===========================
+   Dark Mode
+=========================== */
+
+@media (prefers-color-scheme: dark) {
+
+  .feedContainer {
+    background: #121212;
+  }
+
+  .postCount {
+    background: #2a2a2a;
+    color: #aaa;
+  }
+
+  .emptyState {
+    background: #1a1a1a;
+  }
+
+  .emptyState h3 {
+    color: #e0e0e0;
+  }
+
+  .emptyState p {
+    color: #888;
+  }
+
+  .loadingText {
+    color: #aaa;
+  }
+
 }

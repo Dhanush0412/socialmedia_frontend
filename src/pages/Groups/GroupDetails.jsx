@@ -1,33 +1,47 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDebounce } from "../../hooks/useDebounce";
 import Layout from "../../components/Layout/Layout";
 import { useSearchConnectedUsers } from "../../hooks/group/useSearchConnectedUsers";
 import { useSendGroupInvite } from "../../hooks/group/useSendGroupInvite";
+
 import {
-  Autocomplete,
   Avatar,
   Box,
-  Checkbox,
-  Chip,
-  CircularProgress,
-  TextField,
-  Typography,
   Button,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  Typography,
 } from "@mui/material";
+
 import styles from "./GroupDetails.module.css";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 5 + ITEM_PADDING_TOP,
+      width: 420,
+    },
+  },
+};
 
 export default function GroupDetails() {
   const { groupid } = useParams();
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 1000);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   const {
     data = [],
     isLoading,
-  } = useSearchConnectedUsers(groupid, debouncedSearch);
+  } = useSearchConnectedUsers(groupid, "");
 
   const { mutate: sendInvite } = useSendGroupInvite();
 
@@ -47,16 +61,16 @@ export default function GroupDetails() {
           onError: (error) => {
             toast.error(
               error.response?.data ||
-              "Unable to send invitation"
+                "Unable to send invitation"
             );
           },
         }
       );
     });
 
-    // toast.success("Invitations sent");
+    toast.success("Invitations sent successfully");
+
     setSelectedUsers([]);
-    setSearch("");
   };
 
   return (
@@ -72,7 +86,8 @@ export default function GroupDetails() {
           </h1>
 
           <p className={styles["search-users__subtitle"]}>
-            Search and select multiple friends to invite into this group
+            Select your connected friends and invite them to this
+            group.
           </p>
         </div>
 
@@ -83,125 +98,165 @@ export default function GroupDetails() {
             margin: "30px auto",
           }}
         >
-          <Autocomplete
-            multiple
-            disableCloseOnSelect
-            loading={isLoading}
-            options={Array.isArray(data) ? data : []}
-            value={selectedUsers}
-            filterOptions={(x) => x}
-            getOptionLabel={(option) =>
-              option?.user?.username || ""
-            }
-            isOptionEqualToValue={(option, value) =>
-              option._id === value._id
-            }
-            onInputChange={(event, value) => {
-              setSearch(value);
-            }}
-            onChange={(event, newValue) => {
-              setSelectedUsers(newValue);
-            }}
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  avatar={
-                    <Avatar src={option.profilepic} />
-                  }
-                  label={option.user.username}
-                  {...getTagProps({ index })}
-                  key={option._id}
-                />
-              ))
-            }
-            renderOption={(props, option, { selected }) => (
-              <li {...props} key={option._id}>
-                <Checkbox
-                  checked={selected}
-                  sx={{ mr: 2 }}
-                />
+          <FormControl fullWidth>
+  <InputLabel id="friends-select-label">
+    Select Friends
+  </InputLabel>
 
-                <Avatar
-                  src={option.profilepic}
-                  sx={{
-                    width: 42,
-                    height: 42,
-                    mr: 2,
-                  }}
-                />
+  <Select
+    labelId="friends-select-label"
+    multiple
+    value={selectedUsers.map((user) => user._id)}
+    input={<OutlinedInput label="Select Friends" />}
+    MenuProps={MenuProps}
+    displayEmpty
+    renderValue={(selected) => {
+      if (selected.length === 0) {
+        return "Select Friends";
+      }
 
-                <Box>
-                  <Typography
-                    fontWeight={600}
-                  >
-                    {option.user.username}
-                  </Typography>
+      return selectedUsers
+        .map((user) => user.user.username)
+        .join(", ");
+    }}
+    onChange={(event) => {
+      const selectedIds = event.target.value;
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                  >
-                    {option.bio || "No bio available"}
-                  </Typography>
-                </Box>
-              </li>
-            )}
+      const selected = data.filter((user) =>
+        selectedIds.includes(user._id)
+      );
 
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Search Friends"
-                placeholder="Type username..."
-              />
+      setSelectedUsers(selected);
+    }}
+  >
+    {isLoading ? (
+      <MenuItem disabled>
+        Loading...
+      </MenuItem>
+    ) : data.length === 0 ? (
+      <MenuItem disabled>
+        No connected friends found
+      </MenuItem>
+    ) : (
+      data.map((user) => (
+        <MenuItem
+          key={user._id}
+          value={user._id}
+        >
+          <Checkbox
+            checked={selectedUsers.some(
+              (item) => item._id === user._id
             )}
           />
-        </Box>
 
+          <Avatar
+            src={user.profilepic}
+            sx={{
+              width: 40,
+              height: 40,
+              mr: 2,
+            }}
+          />
 
+          <ListItemText
+            primary={user.user.username}
+            secondary={
+              user.bio || "No bio available"
+            }
+          />
+        </MenuItem>
+      ))
+    )}
+  </Select>
+</FormControl>
 
-        {selectedUsers.length > 0 && (
-          <div className="selected-users-preview">
-            {selectedUsers.map((user) => (
-              <div
-                className="selected-user-card"
-                key={user._id}
-              >
-                <Avatar
-                  src={user.profilepic}
-                  sx={{
-                    width: 45,
-                    height: 45,
-                  }}
-                />
+</Box>
+{selectedUsers.length > 0 && (
+  <div className={styles.selectedUsers}>
+    <Typography
+      variant="h6"
+      sx={{
+        mb: 2,
+        fontWeight: 600,
+      }}
+    >
+      Selected Friends ({selectedUsers.length})
+    </Typography>
 
-                <div>
-                  <h4>{user.user.username}</h4>
-
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <Button
-          variant="contained"
-          size="large"
-          disabled={!selectedUsers.length}
-          onClick={inviteSelected}
+    {selectedUsers.map((user) => (
+      <div
+        key={user._id}
+        className={styles.selectedUser}
+      >
+        <Avatar
+          src={user.profilepic}
+          alt={user.user.username}
           sx={{
-            mt: 3,
-            width: "100%",
-            maxWidth: 300,
-            display: "block",
-            mx: "auto",
-            borderRadius: "12px",
-            textTransform: "none",
-            fontSize: "16px",
-            fontWeight: 600,
+            width: 50,
+            height: 50,
+            mr: 2,
+          }}
+        />
+
+        <div
+          style={{
+            flex: 1,
           }}
         >
-          Invite Selected ({selectedUsers.length})
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+          >
+            {user.user.username}
+          </Typography>
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+          >
+            {user.bio || "No bio available"}
+          </Typography>
+        </div>
+
+        <Button
+          color="error"
+          variant="outlined"
+          size="small"
+          onClick={() =>
+            setSelectedUsers((prev) =>
+              prev.filter(
+                (item) => item._id !== user._id
+              )
+            )
+          }
+        >
+          Remove
         </Button>
+      </div>
+    ))}
+  </div>
+)}
+<Button
+  variant="contained"
+  size="large"
+  disabled={!selectedUsers.length}
+  onClick={inviteSelected}
+  sx={{
+    mt: 4,
+    width: "100%",
+    maxWidth: 320,
+    display: "block",
+    mx: "auto",
+    py: 1.5,
+    borderRadius: "12px",
+    textTransform: "none",
+    fontSize: "16px",
+    fontWeight: 600,
+  }}
+>
+  Invite Selected ({selectedUsers.length})
+</Button>
+
       </div>
     </Layout>
   );

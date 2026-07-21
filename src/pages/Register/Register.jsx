@@ -6,7 +6,7 @@ import { registerSchema } from "../../validation/registerSchema";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import { useRegister } from "../../hooks/useRegister";
 import { URL } from "../../../config";
 
@@ -16,6 +16,7 @@ function Register() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
+  const [sendingOTP, setSendingOTP] = useState(false);
 
   const {
     register,
@@ -32,24 +33,28 @@ function Register() {
   const { mutate, isPending } = useRegister();
 
   const sendOTP = async () => {
-    try {
-      if (!email) {
-        return toast.error("Enter email first");
-      }
-
-      const response = await axios.post(
-        `${URL}/user/sentotp`,
-        { email }
-      );
-
-      toast.success(response.data);
-      setOtpSent(true);
-    } catch (error) {
-      toast.error(
-        error?.response?.data || "OTP sending failed"
-      );
+  try {
+    if (!email) {
+      return toast.error("Enter email first");
     }
-  };
+
+    setSendingOTP(true);
+
+    const response = await axios.post(
+      `${URL}/user/sentotp`,
+      { email }
+    );
+
+    toast.success(response.data);
+    setOtpSent(true);
+  } catch (error) {
+    toast.error(
+      error?.response?.data || "OTP sending failed"
+    );
+  } finally {
+    setSendingOTP(false);
+  }
+};
 
   const verifyOTP = async () => {
     try {
@@ -246,13 +251,23 @@ function Register() {
 
               {!emailVerified && (
                 <button
-                  type="button"
-                  className={styles.otpButton}
-                  onClick={sendOTP}
-                  disabled={otpSent}
-                >
-                  {otpSent ? "OTP Sent" : "Send OTP"}
-                </button>
+  type="button"
+  className={styles.otpButton}
+  onClick={sendOTP}
+  disabled={otpSent || sendingOTP}
+>
+  {sendingOTP ? (
+    <CircularProgress
+      size={18}
+      thickness={5}
+      sx={{ color: "#fff" }}
+    />
+  ) : otpSent ? (
+    "OTP Sent"
+  ) : (
+    "Send OTP"
+  )}
+</button>
               )}
 
             </div>
