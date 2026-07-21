@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { URL } from "../../../config";
 import { useNavigate, Link } from "react-router-dom";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -22,7 +22,7 @@ function ForgotPassword() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
-
+const [sendingOTP, setSendingOTP] = useState(false);
 
   const {
     register,
@@ -45,43 +45,33 @@ function ForgotPassword() {
 
 
 
-  const sendOTP = async()=>{
+  const sendOTP = async () => {
+  try {
+    if (!login) {
+      return toast.error("Enter email or phone first");
+    }
 
-    try{
+    setSendingOTP(true); // <-- Add this
 
-      if(!login){
-
-        return toast.error(
-          "Enter email or phone first"
-        );
-
+    const response = await axios.post(
+      `${URL}/user/sendforgototp`,
+      {
+        login,
       }
+    );
 
+    toast.success(response.data);
+    setOtpSent(true);
 
-      const response = await axios.post(
-        `${URL}/user/sendforgototp`,
-        {
-          login
-        }
-      );
-
-
-      toast.success(response.data);
-
-      setOtpSent(true);
-
-
-    }
-    catch(error){
-
-      toast.error(
-        error?.response?.data ||
-        "OTP sending failed"
-      );
-
-    }
-
-  };
+  } catch (error) {
+    toast.error(
+      error?.response?.data ||
+      "OTP sending failed"
+    );
+  } finally {
+    setSendingOTP(false);
+  }
+};
   const verifyOTP = async () => {
   try {
 
@@ -293,17 +283,27 @@ function ForgotPassword() {
     {...register("login")}
   />
 
-  {!emailVerified && (
+  {!emailVerified && ( 
     <button
-      type="button"
-      className={styles["otp-button"]}
-      onClick={sendOTP}
-      disabled={otpSent}
-    >
-      {otpSent ? "OTP Sent" : "Send OTP"}
-    </button>
+  type="button"
+  className={styles["otp-button"]}
+  onClick={sendOTP}
+  disabled={otpSent || sendingOTP}
+>
+  {sendingOTP ? (
+    <CircularProgress
+      size={18}
+      thickness={5}
+      sx={{ color: "#fff" }}
+    />
+  ) : otpSent ? (
+    "OTP Sent"
+  ) : (
+    "Send OTP"
   )}
+</button>
 
+  )}
 </div>
 
 <p className={styles["forgot-error"]}>

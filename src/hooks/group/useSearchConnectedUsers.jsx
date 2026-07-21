@@ -24,7 +24,7 @@ export const useSearchConnectedUsers = (groupid, search) => {
 
     queryFn: () => searchConnectedUsers(groupid, search),
 
-    enabled: !!groupid && search.trim().length > 0,
+    enabled: !!groupid,
 
     staleTime: 0,
     refetchOnWindowFocus: false,
