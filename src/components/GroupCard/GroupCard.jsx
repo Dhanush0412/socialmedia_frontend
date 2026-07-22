@@ -18,6 +18,11 @@ import { useRejectedGroupInvites } from "../../hooks/group/useRejectedGroupInvit
 export default function GroupCard({ group }) {
 
   const navigate = useNavigate();
+const profileid = localStorage.getItem("profileid");
+
+const isAdmin =
+  String(group.createdby?._id || group.createdby) ===
+  localStorage.getItem("profileid");
 
   const [openMembers, setOpenMembers] =
     useState(false);
@@ -35,9 +40,8 @@ export default function GroupCard({ group }) {
     data: rejectedInvites = [],
   } = useRejectedGroupInvites(
     group._id,
-    openMembers
+    openMembers && isAdmin
   );
-
   return (
     <>
 
@@ -197,7 +201,8 @@ export default function GroupCard({ group }) {
             </Typography>
 
           )}
-
+{isAdmin && (
+  <>
           <Divider sx={{ my: 3 }} />
 
           {/* Rejected Invitations */}
@@ -263,7 +268,8 @@ export default function GroupCard({ group }) {
 
             ))
 
-          ) : (
+          )
+           : (
 
             <Typography
               className={styles.emptyRejected}
@@ -272,7 +278,8 @@ export default function GroupCard({ group }) {
             </Typography>
 
           )}
-
+</>
+)}
         </DialogContent>
 
       </Dialog>

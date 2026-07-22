@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import styles from "./Logout.module.css";
 import {
   Box,
@@ -11,228 +11,259 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  TextField,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Logout as LogoutIcon,
-  DeleteForever,
   ExitToApp,
-  PersonOff,
-} from '@mui/icons-material';
-import { useLogout, useDeleteAccount } from '../../../hooks/useSettings';
+  WarningAmber,
+  Security,
+  Lock,
+  VerifiedUser,
+} from "@mui/icons-material";
+import { useLogout } from "../../../hooks/useSettings";
+import Layout from "../../Layout/Layout";
 
 function Logout({ showSnackbar }) {
   const logoutMutation = useLogout();
-  const deleteAccountMutation = useDeleteAccount();
+  const [openDialog, setOpenDialog] = useState(false);
 
-  // Delete account dialog state
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [confirmText, setConfirmText] = useState('');
-  const [deleteError, setDeleteError] = useState('');
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
 
-  // Handle logout
+  const handleCloseDialog = () => {
+    if (!logoutMutation.isPending) {
+      setOpenDialog(false);
+    }
+  };
+
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
+        setOpenDialog(false);
         showSnackbar("Logged out successfully", "success");
-
+        localStorage.removeItem("token");
+        localStorage.removeItem("profileid");
+        localStorage.removeItem("userid");
         setTimeout(() => {
           window.location.href = "/login";
         }, 1000);
       },
       onError: (error) => {
-        const errorMessage = error.response?.data?.message || 'Failed to logout';
-        showSnackbar(errorMessage, 'error');
+        const errorMessage =
+          error.response?.data?.message ||
+          "Failed to logout";
+        showSnackbar(errorMessage, "error");
       },
     });
-  };
-
-  // Handle delete account
-  const handleDeleteAccount = () => {
-    if (confirmText !== 'DELETE') {
-      setDeleteError('Please type "DELETE" to confirm');
-      return;
-    }
-
-    setDeleteError('');
-    deleteAccountMutation.mutate(undefined, {
-      onSuccess: () => {
-        showSnackbar("Account deleted successfully", "success");
-        handleCloseDeleteDialog();
-
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 1000);
-      },
-
-      onError: (error) => {
-        const errorMessage = error.response?.data?.message || 'Failed to delete account';
-        showSnackbar(errorMessage, 'error');
-        setDeleteError(errorMessage);
-      },
-    });
-  };
-
-  const handleOpenDeleteDialog = () => {
-    setDeleteDialogOpen(true);
-    setConfirmText('');
-    setDeleteError('');
-  };
-
-  const handleCloseDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setConfirmText('');
-    setDeleteError('');
   };
 
   return (
-    <>
+    <Layout>
       <Box className={styles.contentWrapper}>
-        <Typography variant="h6" className={styles.contentTitle}>
-          Account Actions
-        </Typography>
-        <Typography variant="body2" color="textSecondary" className={styles.contentSubtitle}>
-          Manage your account security
-        </Typography>
-
-        <Box className={styles.accountActions}>
-          {/* Logout Card */}
-          <Paper elevation={2} className={styles.actionCard}>
+        <Paper
+          elevation={0}
+          className={styles.actionCard}
+        >
+          <Box className={styles.topSection}>
             <Box className={styles.cardIconWrapper}>
-              <ExitToApp className={styles.cardIcon} style={{ color: '#ff9417' }} />
+              <ExitToApp
+                className={styles.cardIcon}
+              />
             </Box>
-            <Typography variant="h6" className={styles.cardTitle}>
-              Logout
-            </Typography>
-            <Typography variant="body2" color="textSecondary" className={styles.cardDescription}>
-              Sign out of your account on this device
-            </Typography>
-            <Button
-              variant="contained"
-              startIcon={logoutMutation.isLoading ? <CircularProgress size={20} color="inherit" /> : <LogoutIcon />}
-              onClick={handleLogout}
-              className={styles.logoutBtn}
-              fullWidth
-              disabled={logoutMutation.isLoading}
-            >
-              {logoutMutation.isLoading ? 'Logging out...' : 'Logout'}
-            </Button>
-          </Paper>
 
-          {/* Delete Account Card */}
-          <Paper elevation={2} className={`${styles.actionCard} ${styles.dangerCard}`}>
-            <Box className={styles.cardIconWrapper}>
-              <PersonOff className={styles.cardIcon} style={{ color: '#ff9417' }} />
-            </Box>
             <Typography
-              variant="h6"
-              sx={{ color: "#ff9417", fontWeight: 600 }}
+              variant="h3"
+              className={styles.cardTitle}
             >
-              Delete Account
+              Logout from PandaChat
             </Typography>
-            <Typography variant="body2" color="textSecondary" className={styles.cardDescription}>
-              Permanently delete your account and all data
-            </Typography>
-            <Button
-              variant="outlined"
-              color="error"
-              startIcon={deleteAccountMutation.isLoading ? <CircularProgress size={20} color="error" /> : <DeleteForever />}
-              onClick={handleOpenDeleteDialog}
-              className={styles.deleteBtn}
-              fullWidth
-              disabled={deleteAccountMutation.isLoading}
+
+            <Typography
+              className={styles.cardDescription}
             >
-              {deleteAccountMutation.isLoading ? 'Deleting...' : 'Delete Account'}
-            </Button>
-          </Paper>
-        </Box>
-      </Box>
-
-      {/* Delete Account Confirmation Dialog */}
-      <Dialog
-        open={deleteDialogOpen}
-        onClose={handleCloseDeleteDialog}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle className={styles.dialogTitle}>
-          <Typography
-            variant="h6"
-            sx={{
-              color: "#ff9417",
-              fontWeight: 600,
-            }}
-          >
-            Delete Account
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText className={styles.dialogText}>
-            <strong>Warning:</strong> This action is <strong>permanent</strong> and cannot be undone.
-            <br /><br />
-            All your data including:
-            <ul>
-              <li>Posts and comments</li>
-              <li>Messages and conversations</li>
-              <li>Connections and blocked users</li>
-              <li>Profile information</li>
-              <li>Activity history</li>
-            </ul>
-            will be deleted forever.
-          </DialogContentText>
-
-          <Box className={styles.confirmBox}>
-            <Typography variant="body2" className={styles.confirmLabel}>
-              To confirm, type <strong>"DELETE"</strong> in the field below:
+              You're currently signed in on this
+              device. Logging out will securely end
+              your current session while keeping all
+              your chats, groups and account data
+              safe on our servers.
             </Typography>
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="small"
-              value={confirmText}
-              onChange={(e) => setConfirmText(e.target.value)}
-              placeholder="Type DELETE to confirm"
-              error={!!deleteError}
-              helperText={deleteError}
-              className={styles.confirmInput}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && confirmText === "DELETE") {
-                  handleDeleteAccount();
-                }
-              }}
-              autoFocus
-            />
           </Box>
 
-          {deleteAccountMutation.isLoading && (
-            <Box className={styles.loadingContainer}>
-              <CircularProgress size={24} />
-              <Typography variant="body2" color="textSecondary">
-                Deleting your account...
+          <Box className={styles.features}>
+            <Box className={styles.featureCard}>
+              <Security
+                className={styles.featureIcon}
+              />
+              <Typography
+                className={styles.featureTitle}
+              >
+                Secure Logout
+              </Typography>
+              <Typography
+                className={styles.featureText}
+              >
+                End your current session safely.
               </Typography>
             </Box>
-          )}
-        </DialogContent>
-        <DialogActions className={styles.dialogActions}>
+
+            <Box className={styles.featureCard}>
+              <Lock
+                className={styles.featureIcon}
+              />
+              <Typography
+                className={styles.featureTitle}
+              >
+                Privacy Protected
+              </Typography>
+              <Typography
+                className={styles.featureText}
+              >
+                Your information stays protected.
+              </Typography>
+            </Box>
+
+            <Box className={styles.featureCard}>
+              <VerifiedUser
+                className={styles.featureIcon}
+              />
+              <Typography
+                className={styles.featureTitle}
+              >
+                Login Anytime
+              </Typography>
+              <Typography
+                className={styles.featureText}
+              >
+                Sign in again using your account.
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box className={styles.infoSection}>
+            <Typography
+              className={styles.infoTitle}
+            >
+              Before you logout
+            </Typography>
+
+            <Box className={styles.infoList}>
+              <Typography
+                className={styles.infoItem}
+              >
+                ✓ Your messages and media remain
+                safe in your account.
+              </Typography>
+
+              <Typography
+                className={styles.infoItem}
+              >
+                ✓ Group memberships are not
+                affected.
+              </Typography>
+
+              <Typography
+                className={styles.infoItem}
+              >
+                ✓ You can login anytime with your
+                registered credentials.
+              </Typography>
+
+              <Typography
+                className={styles.infoItem}
+              >
+                ✓ Your account remains completely
+                secure.
+              </Typography>
+            </Box>
+          </Box>
+
           <Button
-            onClick={handleCloseDeleteDialog}
-            className={styles.cancelButton}
-            disabled={deleteAccountMutation.isLoading}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleDeleteAccount}
             variant="contained"
-            className={styles.confirmDeleteButton}
-            disabled={deleteAccountMutation.isLoading || confirmText !== 'DELETE'}
-            className={styles.confirmDeleteButton}
+            startIcon={<LogoutIcon />}
+            className={styles.logoutBtn}
+            onClick={handleOpenDialog}
           >
-            {deleteAccountMutation.isLoading ? 'Deleting...' : 'Permanently Delete'}
+            Logout Account
           </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        </Paper>
+
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          maxWidth="xs"
+          fullWidth
+          PaperProps={{
+            className: styles.dialogPaper,
+          }}
+        >
+          <DialogTitle
+            className={styles.dialogTitle}
+          >
+            <Box className={styles.dialogHeader}>
+              <WarningAmber
+                className={styles.warningIcon}
+              />
+
+              <Typography
+                variant="h6"
+                fontWeight={700}
+              >
+                Confirm Logout
+              </Typography>
+            </Box>
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText
+              className={styles.dialogText}
+            >
+              Are you sure you want to logout from
+              PandaChat?
+              <br />
+              <br />
+              You will need to login again to access
+              your account.
+            </DialogContentText>
+          </DialogContent>
+
+          <DialogActions
+            className={styles.dialogActions}
+          >
+            <Button
+              onClick={handleCloseDialog}
+              className={styles.cancelButton}
+              disabled={logoutMutation.isPending}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              variant="contained"
+              className={
+                styles.confirmLogoutButton
+              }
+              onClick={handleLogout}
+              disabled={logoutMutation.isPending}
+              startIcon={
+                logoutMutation.isPending ? (
+                  <CircularProgress
+                    size={18}
+                    color="inherit"
+                  />
+                ) : (
+                  <LogoutIcon />
+                )
+              }
+            >
+              {logoutMutation.isPending
+                ? "Logging Out..."
+                : "Logout"}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
+    </Layout>
   );
 }
 

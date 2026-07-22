@@ -3,7 +3,6 @@ import axios from "axios";
 import { URL } from "../../../config";
 
 const getRejectedGroupInvites = async (groupid) => {
-
   const response = await axios.get(
     `${URL}/group/rejectedlist/${groupid}`,
     {
@@ -16,16 +15,13 @@ const getRejectedGroupInvites = async (groupid) => {
   return response.data;
 };
 
-export const useRejectedGroupInvites = (groupid) => {
-
+export const useRejectedGroupInvites = (
+  groupid,
+  enabled = true
+) => {
   return useQuery({
-
     queryKey: ["rejected-group-invites", groupid],
-
     queryFn: () => getRejectedGroupInvites(groupid),
-
-    enabled: !!groupid,
-
+    enabled: !!groupid && enabled,
   });
-
 };

@@ -1,166 +1,316 @@
-.contentWrapper {
-  animation: fadeIn 0.3s ease-in-out;
+.contentWrapper{
+width:100%;
+min-height:calc(100vh - 140px);
+display:flex;
+justify-content:center;
+align-items:center;
+padding:32px;
+background:linear-gradient(135deg,#fffaf3 0%,#fff4e6 50%,#ffffff 100%);
+animation:fadeIn .4s ease;
+box-sizing:border-box;
 }
 
-.contentTitle {
-  font-weight: 600 !important;
-  color: #1a1a2e;
-  margin-bottom: 4px !important;
+.actionCard{
+width:100%;
+max-width:980px;
+padding:60px !important;
+border-radius:30px !important;
+background:#ffffff !important;
+border:1px solid #f0f0f0;
+box-shadow:0 20px 60px rgba(0,0,0,.08) !important;
+display:flex;
+flex-direction:column;
+align-items:center;
+transition:.35s;
 }
 
-.contentSubtitle {
-  margin-bottom: 24px !important;
-  opacity: 0.7;
+.actionCard:hover{
+transform:translateY(-6px);
+box-shadow:0 28px 70px rgba(0,0,0,.12) !important;
 }
 
-.accountActions {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 420px));
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+.topSection{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+margin-bottom:45px;
 }
 
-.actionCard {
-  padding: 22px 20px;
-  border-radius: 16px !important;
-  text-align: center;
-  min-height: 200px;   
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.cardIconWrapper{
+width:130px;
+height:130px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#fff4df,#ffe3bb);
+box-shadow:0 12px 30px rgba(255,148,23,.18);
+margin-bottom:28px;
 }
 
-.actionCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1) !important;
+.cardIcon{
+font-size:70px !important;
+color:#ff9417;
 }
 
-.dangerCard {
-  border: none !important;
+.cardTitle{
+font-weight:700 !important;
+font-size:2.3rem !important;
+color:#222;
+margin-bottom:18px !important;
 }
 
-.dangerCard:hover {
-  border: 1px solid rgba(244, 67, 54, 0.2) !important;
+.cardDescription{
+max-width:720px;
+font-size:17px !important;
+line-height:1.8 !important;
+color:#666;
 }
 
-.cardIconWrapper {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(255, 148, 23, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
+.features{
+width:100%;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:24px;
+margin-bottom:45px;
 }
 
-.dangerCard .cardIconWrapper {
-  background: rgba(255, 148, 23, 0.1);
+.featureCard{
+padding:30px 24px;
+border-radius:20px;
+background:#fffaf5;
+border:1px solid #ffe3c2;
+text-align:center;
+transition:.3s;
 }
 
-.cardIcon {
-  font-size: 32px !important;
+.featureCard:hover{
+transform:translateY(-5px);
+background:#fff6ec;
+box-shadow:0 12px 30px rgba(255,148,23,.12);
 }
 
-.cardTitle {
-  margin-bottom: 8px !important;
-  color: #1a1a2e;
+.featureIcon{
+font-size:42px !important;
+color:#ff9417;
+margin-bottom:14px;
 }
 
-.cardDescription {
-  margin-bottom: 20px !important;
-  min-height: 40px;
+.featureTitle{
+font-size:18px !important;
+font-weight:700 !important;
+color:#222;
+margin-bottom:10px !important;
 }
 
-.logoutBtn {
-  text-transform: none !important;
-  border-radius: 12px !important;
-  padding: 12px !important;
-  background: linear-gradient(135deg, #ff9417, #e68300) !important;
-  color: white !important;
-  box-shadow: 0 8px 24px rgba(255, 148, 23, 0.3) !important;
-  transition: all 0.3s ease !important;
+.featureText{
+font-size:14px !important;
+color:#777;
+line-height:1.6 !important;
 }
 
-.logoutBtn:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 32px rgba(255, 148, 23, 0.4) !important;
+.infoSection{
+width:100%;
+padding:35px;
+border-radius:22px;
+background:#fafafa;
+border:1px solid #eeeeee;
+margin-bottom:40px;
 }
 
-.deleteBtn {
-  text-transform: none !important;
-  border-radius: 12px !important;
-  padding: 12px !important;
-  background: linear-gradient(135deg, #ff9417, #e68300) !important;
-  color: white !important;
-  border: none !important;
-  box-shadow: 0 8px 24px rgba(255, 148, 23, 0.3) !important;
-  transition: all 0.3s ease !important;
+.infoTitle{
+font-size:22px !important;
+font-weight:700 !important;
+color:#222;
+margin-bottom:24px !important;
+text-align:center;
 }
 
-.deleteBtn:hover {
-  transform: scale(1.02);
-  background: linear-gradient(135deg, #ff9417, #e68300) !important;
-  box-shadow: 0 12px 32px rgba(255, 148, 23, 0.4) !important;
+.infoList{
+display:flex;
+flex-direction:column;
+gap:18px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.infoItem{
+font-size:16px !important;
+color:#555;
+line-height:1.7 !important;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .accountActions {
-    grid-template-columns: 1fr;
-  }
+.logoutBtn{
+width:320px;
+height:58px;
+border-radius:16px !important;
+text-transform:none !important;
+font-size:18px !important;
+font-weight:700 !important;
+background:linear-gradient(135deg,#ff9417,#ff7b00) !important;
+color:#fff !important;
+box-shadow:0 15px 35px rgba(255,148,23,.35) !important;
+transition:.3s !important;
 }
 
-.dialogTitle {
-  padding-bottom: 8px;
+.logoutBtn:hover{
+transform:translateY(-3px);
+background:linear-gradient(135deg,#ffa126,#ff8600) !important;
+box-shadow:0 22px 45px rgba(255,148,23,.45) !important;
 }
 
-.dialogTitle h6 {
-  color: #ff9417 !important;
-  font-weight: 600 !important;
+.dialogPaper{
+border-radius:22px !important;
+padding:10px;
 }
 
-.confirmDeleteButton {
-  background: linear-gradient(135deg, #ff9417, #e68300) !important;
-  color: white !important;
-  text-transform: none !important;
-  border-radius: 10px !important;
-  padding: 10px 22px !important;
-  box-shadow: 0 8px 24px rgba(255, 148, 23, 0.3) !important;
+.dialogTitle{
+padding:24px 24px 10px !important;
 }
 
-.confirmDeleteButton:hover {
-  background: linear-gradient(135deg, #ff9417, #e68300) !important;
-  box-shadow: 0 12px 32px rgba(255, 148, 23, 0.4) !important;
+.dialogHeader{
+display:flex;
+align-items:center;
+gap:14px;
 }
 
-.cancelButton {
-  color: #ff9417 !important;
-  font-weight: 600 !important;
-  text-transform: none !important;
+.warningIcon{
+font-size:42px !important;
+color:#ff9417;
 }
 
-.cancelButton:hover {
-  background: rgba(255, 148, 23, 0.08) !important;
+.dialogText{
+font-size:15px !important;
+line-height:1.8 !important;
+color:#666 !important;
 }
 
-.confirmInput .MuiOutlinedInput-root.Mui-focused fieldset {
-  border-color: #ff9417 !important;
+.dialogActions{
+padding:20px 24px 24px !important;
+gap:14px;
 }
 
-.confirmInput .MuiInputLabel-root.Mui-focused {
-  color: #ff9417 !important;
+.cancelButton{
+text-transform:none !important;
+font-weight:600 !important;
+border-radius:12px !important;
+padding:10px 24px !important;
+color:#666 !important;
+border:2px solid #e8e8e8 !important;
+}
+
+.cancelButton:hover{
+background:#f7f7f7 !important;
+}
+
+.confirmLogoutButton{
+text-transform:none !important;
+font-weight:700 !important;
+border-radius:12px !important;
+padding:10px 24px !important;
+background:linear-gradient(135deg,#ff9417,#ff7b00) !important;
+box-shadow:0 10px 25px rgba(255,148,23,.35) !important;
+}
+
+.confirmLogoutButton:hover{
+background:linear-gradient(135deg,#ffa126,#ff8600) !important;
+box-shadow:0 15px 35px rgba(255,148,23,.45) !important;
+}
+
+.confirmLogoutButton:disabled{
+color:#fff !important;
+opacity:.8;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(18px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@media(max-width:900px){
+.actionCard{
+padding:40px 24px !important;
+}
+
+.features{
+grid-template-columns:1fr;
+}
+
+.logoutBtn{
+width:100%;
+}
+
+.cardTitle{
+font-size:1.9rem !important;
+}
+
+.cardDescription{
+font-size:15px !important;
+}
+
+.infoSection{
+padding:24px;
+}
+}
+
+@media(max-width:600px){
+.contentWrapper{
+padding:16px;
+}
+
+.actionCard{
+padding:28px 18px !important;
+border-radius:22px !important;
+}
+
+.cardIconWrapper{
+width:90px;
+height:90px;
+}
+
+.cardIcon{
+font-size:50px !important;
+}
+
+.cardTitle{
+font-size:1.6rem !important;
+}
+
+.cardDescription{
+font-size:14px !important;
+}
+
+.featureCard{
+padding:20px 16px;
+}
+
+.featureTitle{
+font-size:16px !important;
+}
+
+.featureText{
+font-size:13px !important;
+}
+
+.infoTitle{
+font-size:18px !important;
+}
+
+.infoItem{
+font-size:14px !important;
+}
+
+.dialogActions{
+flex-direction:column;
+}
+
+.cancelButton,
+.confirmLogoutButton{
+width:100%;
+}
 }

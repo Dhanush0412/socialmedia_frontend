@@ -12,6 +12,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaRegQuestionCircle,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 import { FiUser } from "react-icons/fi";
@@ -25,7 +26,7 @@ const menuItems = [
   { path: "/groupchat", icon: MdGroups, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
-
+   {path: "/logout", icon:FaSignOutAlt, label: "Logout"}
 ];
 
 function Sidebar({ isMinimized, onToggle }) {
