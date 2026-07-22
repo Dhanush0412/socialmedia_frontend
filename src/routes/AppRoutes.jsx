@@ -16,6 +16,7 @@ const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Friends = lazy(() => import("../pages/Friends/Friends"));
+const Logout =lazy(()=> import("../components/Settings/Logout/Logout"))
 
 const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
 const Group = lazy(() => import("../pages/Groups/Group"));
@@ -28,6 +29,9 @@ const SearchUsers = lazy(() => import("../pages/SearchUsers/SearchUsers"));
 const PendingRequests = lazy(() => import("../pages/PendingRequests/PendingRequests"));
 const MyConnections = lazy(() => import("../pages/MyConnection/MyConnection"));
 const Chat = lazy(() => import("../pages/Chat/Chat"));
+
+const NotFound = lazy(()=> import("../pages/NotFound/NotFound"))
+
 function AppRoutes() {
   return (
 
@@ -52,6 +56,7 @@ function AppRoutes() {
       <Route path="/settings" element={<Settings />} />
       <Route path="/myposts" element={<MyPosts />} />
       <Route path="/friends" element={<Friends />} />
+      <Route path="/logout" element={<Logout />} />
 
       {/*Group chat */}
       <Route path="/group" element={<Group />} />
@@ -68,6 +73,7 @@ function AppRoutes() {
       <Route path="/pending-requests" element={<PendingRequests />} />
       <Route path="/connections" element={<MyConnections />} />
 
+<Route  path="*" element={<NotFound />}/>
 
     </Routes>
 
