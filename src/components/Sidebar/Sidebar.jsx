@@ -26,7 +26,6 @@ const menuItems = [
   { path: "/groupchat", icon: MdGroups, label: "GroupList" },
   { path: "/newpost", icon: FaPlusSquare, label: "New Post" },
   { path: "/feed", icon: FaNewspaper, label: "Feed" },
-   {path: "/logout", icon:FaSignOutAlt, label: "Logout"}
 ];
 
 function Sidebar({ isMinimized, onToggle }) {
@@ -36,17 +35,17 @@ function Sidebar({ isMinimized, onToggle }) {
     <div className={`${styles.sidebar} ${isMinimized ? styles.collapsed : ""}`}>
 
       {/* Toggle Button */}
-        <button
-          className={`${styles.toggleButton} ${isMinimized ? styles.toggleCollapsed : ""}`}
-          onClick={onToggle}
-        >
-          <div className={styles.hamburgerIcon}>
-            <span className={styles.line}></span>
-            <span className={styles.line}></span>
-            <span className={styles.line}></span>
-          </div>
-        </button>
-        
+      <button
+        className={`${styles.toggleButton} ${isMinimized ? styles.toggleCollapsed : ""}`}
+        onClick={onToggle}
+      >
+        <div className={styles.hamburgerIcon}>
+          <span className={styles.line}></span>
+          <span className={styles.line}></span>
+          <span className={styles.line}></span>
+        </div>
+      </button>
+
       <div className={styles.sidebarContent}>
         {/* Logo */}
         <div className={styles.logoContainer}>
@@ -86,6 +85,7 @@ function Sidebar({ isMinimized, onToggle }) {
 
         {/* Settings at bottom */}
         <div className={styles.settingsContainer}>
+
           <NavLink
             to="/settings"
             className={({ isActive }) =>
@@ -99,6 +99,23 @@ function Sidebar({ isMinimized, onToggle }) {
             </Tooltip>
             {!isMinimized && <span className={styles.label}>Settings</span>}
           </NavLink>
+          {/* Logout */}
+          <NavLink
+            to="/logout"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            <Tooltip title={isMinimized ? "Logout" : ""} placement="right" arrow>
+              <span className={styles.icon}>
+                <FaSignOutAlt />
+              </span>
+            </Tooltip>
+            {!isMinimized && (
+              <span className={styles.label}>Logout</span>
+            )}
+          </NavLink>
+
         </div>
       </div>
     </div>

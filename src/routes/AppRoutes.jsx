@@ -16,7 +16,7 @@ const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Friends = lazy(() => import("../pages/Friends/Friends"));
-const Logout =lazy(()=> import("../components/Settings/Logout/Logout"))
+const Logout =lazy(()=> import("../pages/Logout/Logout"))
 
 const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
 const Group = lazy(() => import("../pages/Groups/Group"));
