@@ -20,8 +20,8 @@ import {
   Lock,
   VerifiedUser,
 } from "@mui/icons-material";
-import { useLogout } from "../../../hooks/useSettings";
-import Layout from "../../Layout/Layout";
+import { useLogout } from "../../hooks/useSettings";
+import Layout from "../../components/Layout/Layout";
 
 function Logout({ showSnackbar }) {
   const logoutMutation = useLogout();
@@ -41,13 +41,13 @@ function Logout({ showSnackbar }) {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
         setOpenDialog(false);
+         setTimeout(() => {
+          window.location.replace("/login");
+        }, 500);
         showSnackbar("Logged out successfully", "success");
         localStorage.removeItem("token");
         localStorage.removeItem("profileid");
         localStorage.removeItem("userid");
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 1000);
       },
       onError: (error) => {
         const errorMessage =
