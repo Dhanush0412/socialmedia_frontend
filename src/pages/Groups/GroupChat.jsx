@@ -7,7 +7,7 @@ import { useGroupDetails } from "../../hooks/group/useGroupDetails";
 import { useGroupMessages } from "../../hooks/group/useGroupMessages";
 import { useSendGroupMessage } from "../../hooks/groupchat/useSendGroupMessage";
 import { socket } from "../../socket";
-import styles from "./GroupChat.module.css";
+import styles from "./GroupChat.module.css";~
 
 function Avatar({ src,name,className }) {
   const [imgError,setImgError] = useState(false);
@@ -155,7 +155,7 @@ export default function GroupChat() {
   }
 
   return (
-    
+    <Layout>
 
       <div className={styles["chat-container"]}>
 
@@ -291,6 +291,6 @@ export default function GroupChat() {
 
       </div>
 
-    
+    </Layout>
   );
 }

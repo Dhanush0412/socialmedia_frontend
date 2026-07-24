@@ -1,39 +1,75 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
+
 import Layout from "../../components/Layout/Layout";
 import { useFeed } from "../../hooks/useFeed";
 import styles from "./Feed.module.css";
 import PostCard from "../../components/PostCard/PostCard";
 import pandaLoading from "../../assets/Panda1.png";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 
 function Feed() {
 
-  const { data: posts = [], isLoading } = useFeed();
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useFeed();
 
-  const POSTS_PER_PAGE = 6;
+  const loadMoreRef = useRef(null);
 
-  const [page, setPage] = useState(1);
+  const posts = useMemo(() => {
 
-  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+    if (!data) return [];
 
-  const startIndex = (page - 1) * POSTS_PER_PAGE;
+    return data.pages.flatMap((page) => page.posts);
 
-  const endIndex = startIndex + POSTS_PER_PAGE;
+  }, [data]);
 
-  const currentPosts = posts.slice(startIndex, endIndex);
+  useEffect(() => {
 
-  const handlePageChange = (event, value) => {
+    if (!hasNextPage) return;
 
-    setPage(value);
+    const observer = new IntersectionObserver(
+      (entries) => {
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+        const firstEntry = entries[0];
 
-  };
+        if (
+          firstEntry.isIntersecting &&
+          hasNextPage &&
+          !isFetchingNextPage
+        ) {
+          fetchNextPage();
+        }
 
+      },
+      {
+        threshold: 1,
+      }
+    );
+
+    const current = loadMoreRef.current;
+
+    if (current) {
+      observer.observe(current);
+    }
+
+    return () => {
+
+      if (current) {
+        observer.unobserve(current);
+      }
+
+      observer.disconnect();
+
+    };
+
+  }, [
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  ]);
   if (isLoading) {
     return (
       <Layout>
@@ -52,7 +88,7 @@ function Feed() {
     );
   }
 
-  return (
+    return (
     <Layout>
 
       <div className={styles.feedContainer}>
@@ -71,51 +107,46 @@ function Feed() {
 
         {posts.length === 0 ? (
 
-          <div className={styles.emptyState}>
-            <div className={styles.emptyIcon}>📝</div>
+  <div className={styles.emptyState}>
+    ...
+  </div>
 
-            <h3>No posts available</h3>
+) : (
 
-            <p>
-              Your connections haven't shared anything yet.
-            </p>
-          </div>
+  <>
+    <div className={styles.postsGrid}>
+      {posts.map((post) => (
+        <PostCard
+          key={post._id}
+          post={post}
+        />
+      ))}
+    </div>
 
-        ) : (
+    <div
+      ref={loadMoreRef}
+      className={styles.loadMoreTrigger}
+    />
 
-          <>
-            <div className={styles.postsGrid}>
+    {isFetchingNextPage && (
+      <div className={styles.loadingMore}>
+        <img
+          src={pandaLoading}
+          alt="Loading more"
+          className={styles.loadingMoreImage}
+        />
+        <p>Loading more posts...</p>
+      </div>
+    )}
 
-              {currentPosts.map((post) => (
-                <PostCard
-                  key={post._id}
-                  post={post}
-                />
-              ))}
+    {!hasNextPage && posts.length > 0 && (
+      <div className={styles.endMessage}>
+        🎉 You've reached the end.
+      </div>
+    )}
+  </>
 
-            </div>
-
-            <div className={styles.paginationContainer}>
-
-              
-
-                <Pagination
-                  page={page}
-                  count={totalPages}
-                  onChange={handlePageChange}
-                  color="warning"
-                  shape="rounded"
-                  size="large"
-                />
-
-              
-
-            </div>
-
-          </>
-
-        )}
-
+)}
       </div>
 
     </Layout>
