@@ -1,66 +1,187 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./ConnectionCard.module.css";
 
-function ConnectionCard({ friend, unreadCount }) {
+import { useBlockUser } from "../../hooks/connection/useBlockUser";
+
+
+function ConnectionCard({
+  friend,
+  unreadCount
+}) {
+
+
   const navigate = useNavigate();
+
+
+  const {
+    mutate:block,
+    isPending
+  } = useBlockUser();
+
+
 
   const username =
     friend?.user?.username || "Unknown User";
 
+
   const profileImage =
     friend?.profilepic;
 
-  const openChat = () => {
+
+
+  const openChat =()=>{
+
     navigate(`/chat/${friend._id}`);
+
   };
 
+
+
+  const handleBlock =()=>{
+
+
+    if(!friend?._id){
+      console.log("Profile id missing");
+      return;
+    }
+
+
+    block(friend._id);
+
+
+  };
+
+
+
   return (
+
     <div
+
       className={`${styles["connection-card"]} ${
-        unreadCount > 0 ? styles["unread-card"] : ""
+        unreadCount > 0
+        ? styles["unread-card"]
+        : ""
       }`}
+
       onClick={openChat}
+
     >
+
+
       <div className={styles["friend-profile-image"]}>
-        {profileImage ? (
+
+
+        {
+          profileImage ?
+
           <img
             src={profileImage}
             alt={username}
           />
-        ) : (
+
+          :
+
           <div className={styles["profile-placeholder"]}>
             {username.charAt(0).toUpperCase()}
           </div>
-        )}
+
+        }
+
 
         <span className={styles["online-status"]}></span>
+
+
       </div>
+
+
+
 
       <div className={styles["friend-info"]}>
-        <h3>{username}</h3>
+
+
+        <h3>
+          {username}
+        </h3>
+
 
         <p>
-          {friend?.bio || "Start conversation"}
+          {
+            friend?.bio ||
+            "Start conversation"
+          }
         </p>
+
+
       </div>
 
-      {unreadCount > 0 && (
+
+
+
+      {
+        unreadCount > 0 &&
+
         <div className={styles["unread-badge"]}>
           {unreadCount}
         </div>
-      )}
+
+      }
+
+
+
 
       <button
+
         className={styles["chat-button"]}
-        onClick={(e) => {
+
+        onClick={(e)=>{
+
           e.stopPropagation();
+
           openChat();
+
         }}
+
       >
+
         Chat
+
       </button>
+
+
+
+
+      <button
+
+        className={styles["chat-button"]}
+
+        disabled={isPending}
+
+        onClick={(e)=>{
+
+          e.stopPropagation();
+
+          handleBlock();
+
+        }}
+
+      >
+
+        {
+          isPending
+          ? "Blocking..."
+          : "Block"
+        }
+
+
+      </button>
+
+
+
     </div>
+
   );
+
 }
+
 
 export default ConnectionCard;
