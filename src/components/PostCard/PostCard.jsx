@@ -25,6 +25,8 @@ import {
   Send,
   Close,
 } from "@mui/icons-material";
+import { IoArrowBack } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import { useDashboard } from "../../hooks/useDashboard";
 import { useLikePost } from "../../hooks/useLikePost";
 import { useUnlikePost } from "../../hooks/useUnlikePost";
@@ -39,12 +41,15 @@ import styles from "./PostCard.module.css";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-function PostCard({ post }) {
+function PostCard({
+  post,
+  isDetails = false,
+})  {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { data: dashboard } = useDashboard();
   const profileid = dashboard?.profileid;
+  const navigate=useNavigate();
 
   const { mutate: likePost } = useLikePost(profileid);
   const { mutate: unlikePost } = useUnlikePost(profileid);
@@ -148,23 +153,57 @@ function PostCard({ post }) {
   return (
     <>
       <Card className={styles.postCard} elevation={0}>
+        {isDetails && (
+  <Box className={styles.backContainer}>
+    <button
+      className={styles.backButton}
+      onClick={() => navigate(-1)}
+    >
+      <IoArrowBack />
+      <span>Back</span>
+    </button>
+  </Box>
+)}
         {/* MEDIA - Clickable to open modal */}
-        <Box className={styles.mediaWrapper} onClick={handleOpenModal}>
+        <Box
+  className={styles.mediaWrapper}
+  onClick={() => {
+    if (!isDetails) {
+      navigate(`/${post.profile.user.username}/posts/${post._id}`);
+    }
+  }}
+>
           {post.media?.includes("/video/upload/") ? (
-            <Box className={styles.mediaContainer}>
-              <video controls className={styles.media} onClick={(e) => e.stopPropagation()}>
-                <source src={post.media} />
-              </video>
-            </Box>
+            <Box
+  className={`${styles.mediaContainer} ${
+    isDetails ? styles.detailsMediaContainer : ""
+  }`}
+>
+  <video
+    controls
+    className={`${styles.media} ${
+      isDetails ? styles.detailsMedia : ""
+    }`}
+    onClick={(e) => e.stopPropagation()}
+  >
+    <source src={post.media} />
+  </video>
+</Box>
           ) : (
-            <Box className={styles.mediaContainer}>
-              <CardMedia
-                component="img"
-                image={post.media}
-                alt="post"
-                className={styles.media}
-              />
-            </Box>
+            <Box
+  className={`${styles.mediaContainer} ${
+    isDetails ? styles.detailsMediaContainer : ""
+  }`}
+>
+  <CardMedia
+    component="img"
+    image={post.media}
+    alt="post"
+    className={`${styles.media} ${
+      isDetails ? styles.detailsMedia : ""
+    }`}
+  />
+</Box>
           )}
         </Box>
 
