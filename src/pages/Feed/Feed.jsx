@@ -119,7 +119,11 @@ function Feed() {
         <PostCard
           key={post._id}
           post={post}
-        />
+        
+        onClick={() =>
+    navigate( `/name=${post.profile.user.username}/type=posts/id=${post._id}`)
+  }
+  />
       ))}
     </div>
 

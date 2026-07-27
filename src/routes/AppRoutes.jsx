@@ -14,23 +14,24 @@ const Home = lazy(() => import("../pages/Home/Home"));
 const MyPosts = lazy(() => import("../pages/MyPosts/MyPosts"));
 const NewPost = lazy(() => import("../pages/NewPost/NewPost"));
 const Feed = lazy(() => import("../pages/Feed/Feed"));
+const PostDetails = lazy(() => import("../pages/PostDetails/PostDetails"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Friends = lazy(() => import("../pages/Friends/Friends"));
-const Logout =lazy(()=> import("../pages/Logout/Logout"))
+const Logout = lazy(() => import("../pages/Logout/Logout"))
 
 const GroupChat = lazy(() => import("../pages/Groups/GroupChat"));
 const Group = lazy(() => import("../pages/Groups/Group"));
 const CreateGroup = lazy(() => import("../pages/Groups/CreateGroup"))
 const GroupDetails = lazy(() => import("../pages/Groups/GroupDetails"))
 const GroupRequests = lazy(() => import("../pages/Groups/GroupRequest"));
-const GroupList=lazy(()=>import("../pages/Groups/GroupList"))
+const GroupList = lazy(() => import("../pages/Groups/GroupList"))
 
 const SearchUsers = lazy(() => import("../pages/SearchUsers/SearchUsers"));
 const PendingRequests = lazy(() => import("../pages/PendingRequests/PendingRequests"));
 const MyConnections = lazy(() => import("../pages/MyConnection/MyConnection"));
 const Chat = lazy(() => import("../pages/Chat/Chat"));
 
-const NotFound = lazy(()=> import("../pages/NotFound/NotFound"))
+const NotFound = lazy(() => import("../pages/NotFound/NotFound"))
 
 function AppRoutes() {
   return (
@@ -52,7 +53,11 @@ function AppRoutes() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/newpost" element={<NewPost />} />
       <Route path="/feed" element={<Feed />} />
-      
+      {/* <Route   path="/name=:username/type=posts/id=:postId" element={<PostDetails />} /> */}
+      <Route
+  path="/:username/posts/:postId"
+  element={<PostDetails />}
+/>
       <Route path="/settings" element={<Settings />} />
       <Route path="/myposts" element={<MyPosts />} />
       <Route path="/friends" element={<Friends />} />
@@ -73,7 +78,7 @@ function AppRoutes() {
       <Route path="/pending-requests" element={<PendingRequests />} />
       <Route path="/connections" element={<MyConnections />} />
 
-<Route  path="*" element={<NotFound />}/>
+      <Route path="*" element={<NotFound />} />
 
     </Routes>
 

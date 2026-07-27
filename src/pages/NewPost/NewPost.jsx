@@ -55,11 +55,11 @@ import {
   Audiotrack,
 
 } from "@mui/icons-material";
- 
+
 function NewPost() {
 
   const navigate = useNavigate();
- 
+
   const [file, setFile] = useState(null);
 
   const [preview, setPreview] = useState("");
@@ -69,27 +69,27 @@ function NewPost() {
   const [fileType, setFileType] = useState("");
 
   const [dragOver, setDragOver] = useState(false);
- 
+
   const { mutateAsync: createPost, isPending } = useCreatePost();
- 
+
   const handleFileChange = (e) => {
 
     const selected = e.target.files[0];
- 
+
     if (selected) {
 
       processFile(selected);
 
     }
- 
+
     e.target.value = "";
 
   };
- 
+
   const processFile = (selected) => {
 
     let type = "";
- 
+
     if (selected.type.startsWith("image/")) {
 
       type = "image";
@@ -109,15 +109,15 @@ function NewPost() {
       return;
 
     }
- 
+
     if (preview) {
 
       URL.revokeObjectURL(preview);
 
     }
- 
+
     const previewURL = URL.createObjectURL(selected);
- 
+
     setFile(selected);
 
     setFileType(type);
@@ -125,7 +125,7 @@ function NewPost() {
     setPreview(previewURL);
 
   };
- 
+
   const removeFile = () => {
 
     if (preview) {
@@ -133,7 +133,7 @@ function NewPost() {
       URL.revokeObjectURL(preview);
 
     }
- 
+
     setFile(null);
 
     setPreview("");
@@ -141,7 +141,7 @@ function NewPost() {
     setFileType("");
 
   };
- 
+
   const handleDragOver = (e) => {
 
     e.preventDefault();
@@ -149,7 +149,7 @@ function NewPost() {
     setDragOver(true);
 
   };
- 
+
   const handleDragLeave = (e) => {
 
     e.preventDefault();
@@ -157,15 +157,15 @@ function NewPost() {
     setDragOver(false);
 
   };
- 
+
   const handleDrop = (e) => {
 
     e.preventDefault();
 
     setDragOver(false);
- 
+
     const droppedFile = e.dataTransfer.files[0];
- 
+
     if (droppedFile) {
 
       processFile(droppedFile);
@@ -173,7 +173,7 @@ function NewPost() {
     }
 
   };
- 
+
   const handlePost = async () => {
 
     try {
@@ -185,7 +185,7 @@ function NewPost() {
         return;
 
       }
- 
+
       if (!caption.trim()) {
 
         toast.error("Please enter a caption");
@@ -193,21 +193,21 @@ function NewPost() {
         return;
 
       }
- 
+
       const profileid = localStorage.getItem("profileid");
 
       const formData = new FormData();
- 
+
       formData.append("profileid", profileid);
 
       formData.append("caption", caption);
 
       formData.append("media", file);
- 
+
       await createPost(formData);
- 
+
       toast.success("Post created successfully!");
- 
+
       setTimeout(() => {
 
         navigate("/dashboard");
@@ -217,65 +217,63 @@ function NewPost() {
     } catch (error) {
 
       console.error(error);
- 
+
       toast.error(
 
         error?.response?.data?.message ||
 
-          error?.response?.data ||
+        error?.response?.data ||
 
-          "Failed to create post"
+        "Failed to create post"
 
       );
 
     }
 
   };
- 
+
   return (
-<Layout>
-<Box className={styles.container}>
-<Paper elevation={0} className={styles.card}>
+    <Layout>
+      <Box className={styles.container}>
+        <Paper elevation={0} className={styles.card}>
 
           {/* Header */}
-<Box className={styles.header}>
-<Box className={styles.headerLeft}>
-<Avatar className={styles.headerAvatar}>
-<ImageIcon />
-</Avatar>
- 
+          <Box className={styles.header}>
+            <Box className={styles.headerLeft}>
+              <Avatar className={styles.headerAvatar}>
+                <ImageIcon />
+              </Avatar>
+
               <Box>
-<Typography variant="h6" className={styles.headerTitle}>
+                <Typography variant="h6" className={styles.headerTitle}>
 
                   Create New Post
-</Typography>
- 
+                </Typography>
+
                 <Typography variant="caption" className={styles.headerSubtitle}>
 
                   Share your moment
-</Typography>
-</Box>
-</Box>
-</Box>
- 
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
           {/* Upload Area */}
 
           {!preview ? (
-<Box
+            <Box
 
-              className={`${styles.uploadArea} ${
+              className={`${styles.uploadArea} ${dragOver ? styles.dragOver : ""
 
-                dragOver ? styles.dragOver : ""
-
-              }`}
+                }`}
 
               onDragOver={handleDragOver}
 
               onDragLeave={handleDragLeave}
 
               onDrop={handleDrop}
->
-<input
+            >
+              <input
 
                 type="file"
 
@@ -288,48 +286,48 @@ function NewPost() {
                 onChange={handleFileChange}
 
               />
- 
+
               <label htmlFor="file-upload" className={styles.uploadLabel}>
-<Box className={styles.uploadContent}>
-<Box className={styles.iconWrapper}>
-<CloudUpload className={styles.uploadIcon} />
-</Box>
- 
+                <Box className={styles.uploadContent}>
+                  <Box className={styles.iconWrapper}>
+                    <CloudUpload className={styles.uploadIcon} />
+                  </Box>
+
                   <Typography variant="body1" className={styles.uploadTitle}>
 
                     Drop your files here
-</Typography>
- 
+                  </Typography>
+
                   <Typography variant="caption" className={styles.uploadSubtitle}>
 
                     or click to browse
-</Typography>
- 
+                  </Typography>
+
                   <Box className={styles.uploadBadges}>
-<Box className={styles.badgeChip}>
-<ImageIcon sx={{ fontSize: 14 }} />
-<span>JPEG, PNG, GIF</span>
-</Box>
- 
                     <Box className={styles.badgeChip}>
-<Videocam sx={{ fontSize: 14 }} />
-<span>MP4, MOV</span>
-</Box>
- 
+                      <ImageIcon sx={{ fontSize: 14 }} />
+                      <span>JPEG, PNG, GIF</span>
+                    </Box>
+
                     <Box className={styles.badgeChip}>
-<Audiotrack sx={{ fontSize: 14 }} />
-<span>MP3, WAV, OGG</span>
-</Box>
-</Box>
-</Box>
-</label>
-</Box>
+                      <Videocam sx={{ fontSize: 14 }} />
+                      <span>MP4, MOV</span>
+                    </Box>
+
+                    <Box className={styles.badgeChip}>
+                      <Audiotrack sx={{ fontSize: 14 }} />
+                      <span>MP3, WAV, OGG</span>
+                    </Box>
+                  </Box>
+                </Box>
+              </label>
+            </Box>
 
           ) : (
-<Zoom in={true}>
-<Box className={styles.previewContainer}>
-<Box className={styles.previewHeader}>
-<Typography variant="caption" className={styles.previewLabel}>
+            <Zoom in={true}>
+              <Box className={styles.previewContainer}>
+                <Box className={styles.previewHeader}>
+                  <Typography variant="caption" className={styles.previewLabel}>
 
                     {fileType === "image"
 
@@ -337,11 +335,11 @@ function NewPost() {
 
                       : fileType === "video"
 
-                      ? "🎬 Video"
+                        ? "🎬 Video"
 
-                      : "🎵 Audio"}
-</Typography>
- 
+                        : "🎵 Audio"}
+                  </Typography>
+
                   <IconButton
 
                     size="small"
@@ -349,15 +347,15 @@ function NewPost() {
                     className={styles.removeButton}
 
                     onClick={removeFile}
->
-<Clear sx={{ fontSize: 16 }} />
-</IconButton>
-</Box>
- 
+                  >
+                    <Clear sx={{ fontSize: 16 }} />
+                  </IconButton>
+                </Box>
+
                 <Box className={styles.previewWrapper}>
 
                   {fileType === "image" && (
-<img
+                    <img
 
                       src={preview}
 
@@ -368,38 +366,38 @@ function NewPost() {
                     />
 
                   )}
- 
+
                   {fileType === "video" && (
-<video controls className={styles.previewMedia}>
-<source src={preview} type={file?.type} />
+                    <video controls className={styles.previewMedia}>
+                      <source src={preview} type={file?.type} />
 
                       Your browser does not support video.
-</video>
+                    </video>
 
                   )}
- 
+
                   {fileType === "audio" && (
-<audio controls className={styles.previewMedia}>
-<source src={preview} type={file?.type} />
+                    <audio controls className={styles.previewMedia}>
+                      <source src={preview} type={file?.type} />
 
                       Your browser does not support audio.
-</audio>
+                    </audio>
 
                   )}
-</Box>
- 
+                </Box>
+
                 <Box className={styles.previewActions}>
-<label
+                  <label
 
                     htmlFor="change-file-upload"
 
                     className={styles.changeFileLabel}
->
-<AddPhotoAlternate sx={{ fontSize: 14 }} />
+                  >
+                    <AddPhotoAlternate sx={{ fontSize: 14 }} />
 
                     Change File
-</label>
- 
+                  </label>
+
                   <input
 
                     type="file"
@@ -413,26 +411,26 @@ function NewPost() {
                     onChange={handleFileChange}
 
                   />
-</Box>
-</Box>
-</Zoom>
+                </Box>
+              </Box>
+            </Zoom>
 
           )}
- 
+
           {/* Caption */}
-<Box className={styles.captionSection}>
-<Box className={styles.captionHeader}>
-<Typography variant="caption" className={styles.captionLabel}>
+          <Box className={styles.captionSection}>
+            <Box className={styles.captionHeader}>
+              <Typography variant="caption" className={styles.captionLabel}>
 
                 Caption
-</Typography>
- 
+              </Typography>
+
               <Typography variant="caption" className={styles.characterCount}>
 
                 {caption.length}/500
-</Typography>
-</Box>
- 
+              </Typography>
+            </Box>
+
             <TextField
 
               fullWidth
@@ -464,38 +462,38 @@ function NewPost() {
                 className: styles.captionTextArea,
 
                 endAdornment: (
-<Box className={styles.captionActions}>
-<IconButton size="small" className={styles.emojiButton}>
-<EmojiEmotions sx={{ fontSize: 16 }} />
-</IconButton>
-</Box>
+                  <Box className={styles.captionActions}>
+                    <IconButton size="small" className={styles.emojiButton}>
+                      <EmojiEmotions sx={{ fontSize: 16 }} />
+                    </IconButton>
+                  </Box>
 
                 ),
 
               }}
 
             />
-</Box>
- 
+          </Box>
+
           {/* Progress */}
 
           {isPending && (
-<Fade in={isPending}>
-<Box className={styles.progressSection}>
-<LinearProgress className={styles.progressBar} />
- 
+            <Fade in={isPending}>
+              <Box className={styles.progressSection}>
+                <LinearProgress className={styles.progressBar} />
+
                 <Typography variant="caption" className={styles.progressText}>
 
                   Uploading...
-</Typography>
-</Box>
-</Fade>
+                </Typography>
+              </Box>
+            </Fade>
 
           )}
- 
+
           {/* Publish */}
-<Box className={styles.actionButtons}>
-<Button
+          <Box className={styles.actionButtons}>
+            <Button
 
               variant="contained"
 
@@ -508,28 +506,27 @@ function NewPost() {
               disabled={isPending || !file || !caption.trim()}
 
               startIcon={!isPending && <Send sx={{ fontSize: 16 }} />}
->
+            >
 
               {isPending ? "Posting..." : "Publish Post"}
-</Button>
-</Box>
- 
+            </Button>
+          </Box>
+
           {/* Tips */}
-<Box className={styles.tipsSection}>
-<Alert severity="info" className={styles.tipsAlert}>
-<Typography variant="caption" className={styles.tipsText}>
+          <Box className={styles.tipsSection}>
+            <Alert severity="info" className={styles.tipsAlert}>
+              <Typography variant="caption" className={styles.tipsText}>
 
                 💡 Add hashtags to reach more people
-</Typography>
-</Alert>
-</Box>
-</Paper>
-</Box>
-</Layout>
+              </Typography>
+            </Alert>
+          </Box>
+        </Paper>
+      </Box>
+    </Layout>
 
   );
 
 }
- 
+
 export default NewPost;
- 
