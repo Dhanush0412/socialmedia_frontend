@@ -6,24 +6,21 @@ import {
 import axios from "axios";
 import "./index.css";
 import { Provider } from "react-redux";
-
 import {
   store,
   persistor,
 } from "./redux/store";
-
 import { logout } from "./redux/authSlice";
-
-import { PersistGate } from "redux-persist/integration/react";
-
+import {
+  PersistGate,
+} from "redux-persist/integration/react";
 import {
   BrowserRouter,
 } from "react-router-dom";
-
-import { ToastContainer } from "react-toastify";
-
+import {
+  ToastContainer,
+} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import App from "./App";
 
 const queryClient = new QueryClient();
@@ -51,18 +48,16 @@ axios.interceptors.response.use(
 
         try {
 
-          // Reset Redux state
           store.dispatch(logout());
 
-          // Clear persisted Redux state
           await persistor.purge();
 
-          // Clear local storage
-          localStorage.clear();
+          localStorage.removeItem("token");
+
+          queryClient.clear();
 
         } finally {
 
-          // Redirect to login page
           window.location.replace("/login");
 
         }
@@ -88,12 +83,14 @@ ReactDOM.createRoot(
         client={queryClient}
       >
         <BrowserRouter>
-
-          <ToastContainer />
-
           <App />
-
         </BrowserRouter>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+        />
+
       </QueryClientProvider>
     </PersistGate>
   </Provider>
