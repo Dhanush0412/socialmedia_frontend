@@ -10,7 +10,7 @@ export function useDirectMessages(receiverid){
     queryFn:async()=>{
 
       const response = await axios.get(
-        `${URL}/dmessage/getting/${receiverid}`,~
+        `${URL}/dmessage/getting/${receiverid}`,
         {
           headers:{
             Authorization:
