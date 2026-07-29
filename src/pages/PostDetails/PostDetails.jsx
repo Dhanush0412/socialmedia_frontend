@@ -3,23 +3,47 @@ import { useParams } from "react-router-dom";
 
 import Layout from "../../components/Layout/Layout";
 import PostCard from "../../components/PostCard/PostCard";
+
 import { useFeed } from "../../hooks/useFeed";
+import { useMyPosts } from "../../hooks/useMyPost";
 
 import styles from "./PostDetails.module.css";
 
 function PostDetails() {
-  const { username,postId } = useParams();
+  const { postId } = useParams();
 
-  const { data, isLoading } = useFeed();
+  // Feed posts
+  const {
+    data: feedData,
+    isLoading: feedLoading,
+  } = useFeed();
 
+  // My posts
+  const {
+    data: myPosts = [],
+    isLoading: myPostsLoading,
+  } = useMyPosts();
+
+  // Merge both lists and remove duplicates
   const posts = useMemo(() => {
-    if (!data) return [];
-    return data.pages.flatMap((page) => page.posts);
-  }, [data]);
+    const feedPosts = feedData
+      ? feedData.pages.flatMap((page) => page.posts)
+      : [];
 
-  const post = posts.find((item) => item._id === postId);
+    const allPosts = [...feedPosts, ...myPosts];
 
-  if (isLoading) {
+    return allPosts.filter(
+      (post, index, self) =>
+        index === self.findIndex((p) => p._id === post._id)
+    );
+  }, [feedData, myPosts]);
+
+  // Find selected post
+  const post = useMemo(() => {
+    return posts.find((item) => item._id === postId);
+  }, [posts, postId]);
+
+  if (feedLoading || myPostsLoading) {
     return (
       <Layout>
         <h2>Loading...</h2>
@@ -41,9 +65,9 @@ function PostDetails() {
     <Layout>
       <div className={styles.container}>
         <PostCard
-  post={post}
-  isDetails={true}
-/>
+          post={post}
+          isDetails={true}
+        />
       </div>
     </Layout>
   );
