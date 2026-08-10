@@ -4,18 +4,12 @@ import {
   FaUser,
   FaUserFriends,
   FaNewspaper,
-  FaUsers,
-  FaComments,
-  FaCog,
   FaSearch,
   FaPlusSquare,
-  FaChevronLeft,
-  FaChevronRight,
-  FaRegQuestionCircle,
+  FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
-import { FiUser } from "react-icons/fi";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "./Sidebar.module.css";
 
@@ -33,11 +27,11 @@ function Sidebar({ isMinimized, onToggle }) {
 
   return (
     <div className={`${styles.sidebar} ${isMinimized ? styles.collapsed : ""}`}>
-
       {/* Toggle Button */}
       <button
         className={`${styles.toggleButton} ${isMinimized ? styles.toggleCollapsed : ""}`}
         onClick={onToggle}
+        aria-label="Toggle Navigation Sidebar"
       >
         <div className={styles.hamburgerIcon}>
           <span className={styles.line}></span>
@@ -83,9 +77,8 @@ function Sidebar({ isMinimized, onToggle }) {
           ))}
         </ul>
 
-        {/* Settings at bottom */}
+        {/* Settings & Logout at bottom */}
         <div className={styles.settingsContainer}>
-
           <NavLink
             to="/settings"
             className={({ isActive }) =>
@@ -99,11 +92,11 @@ function Sidebar({ isMinimized, onToggle }) {
             </Tooltip>
             {!isMinimized && <span className={styles.label}>Settings</span>}
           </NavLink>
-          {/* Logout */}
+
           <NavLink
             to="/logout"
             className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.active : ""}`
+              `${styles.navLink} ${isActive ? styles.active : ""} ${styles.logoutBtn}`
             }
           >
             <Tooltip title={isMinimized ? "Logout" : ""} placement="right" arrow>
@@ -111,11 +104,8 @@ function Sidebar({ isMinimized, onToggle }) {
                 <FaSignOutAlt />
               </span>
             </Tooltip>
-            {!isMinimized && (
-              <span className={styles.label}>Logout</span>
-            )}
+            {!isMinimized && <span className={styles.label}>Logout</span>}
           </NavLink>
-
         </div>
       </div>
     </div>

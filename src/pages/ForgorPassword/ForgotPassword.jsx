@@ -76,7 +76,7 @@ const [sendingOTP, setSendingOTP] = useState(false);
   try {
 
     if (!otp) {
-      return toast.info("Enter OTP");
+      return toast.error("Enter OTP");
     }
 
     const response = await axios.post(

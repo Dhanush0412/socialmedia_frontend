@@ -80,8 +80,7 @@ function Login(){
         onError:(error)=>{
 
           toast.error(
-            error?.response?.data?.message ||
-            "Invalid login details"
+            error?.response?.data?.message 
           );
 
         }
