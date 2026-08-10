@@ -13,10 +13,7 @@ export default function CreateGroup() {
   const [preview, setPreview] = useState(null);
   const [image, setImage] = useState(null);
 
-  const {
-    mutate,
-    isPending
-  } = useCreateGroup();
+  const { mutate, isPending } = useCreateGroup();
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -39,33 +36,23 @@ export default function CreateGroup() {
 
     const formData = new FormData();
 
-    formData.append(
-      "groupname",
-      groupname
-    );
+    formData.append("groupname", groupname);
 
     if (image) {
-      formData.append(
-        "groupimage",
-        image
-      );
+      formData.append("groupimage", image);
     }
 
     mutate(formData, {
       onSuccess: (group) => {
-        toast.success(
-          "Group created successfully"
-        );
-
+        toast.success("Group created successfully");
         navigate(`/group/details/${group._id}`);
       },
 
       onError: (error) => {
         toast.error(
-          error.response?.data ||
-          "Unable to create group"
+          error.response?.data || "Unable to create group"
         );
-      }
+      },
     });
   };
 
@@ -81,21 +68,14 @@ export default function CreateGroup() {
             <FaArrowLeft />
           </button>
 
-          <h1>
-            Create New Group
-          </h1>
+          <h1>Create New Group</h1>
 
-          <p>
-            Create your own private communication group.
-          </p>
+          <p>Create your own private communication group.</p>
 
           <form onSubmit={handleSubmit}>
             <div className={styles["image-preview"]}>
               {preview ? (
-                <img
-                  src={preview}
-                  alt="Preview"
-                />
+                <img src={preview} alt="Preview" />
               ) : (
                 <div className={styles["placeholder"]}>
                   Upload Group Image
@@ -103,33 +83,27 @@ export default function CreateGroup() {
               )}
             </div>
 
-            <label className={styles["upload-btn"]}>
-              Choose Image
-
-              <input
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handleImage}
-              />
-            </label>
+            <div className={styles["upload-btn-wrapper"]}>
+              <label className={styles["upload-btn"]}>
+                Choose Image
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleImage}
+                />
+              </label>
+            </div>
 
             <input
               type="text"
               placeholder="Enter Group Name"
               value={groupname}
-              onChange={(e) =>
-                setGroupname(e.target.value)
-              }
+              onChange={(e) => setGroupname(e.target.value)}
             />
 
-            <button
-              type="submit"
-              disabled={isPending}
-            >
-              {isPending
-                ? "Creating..."
-                : "Create Group"}
+            <button type="submit" disabled={isPending}>
+              {isPending ? "Creating..." : "Create Group"}
             </button>
           </form>
         </div>

@@ -26,12 +26,7 @@
   justify-content:center;
   border-radius:50%;
   font-size:30px;
-  background:
-  linear-gradient(
-    135deg,
-    #f68b1f,
-    #ff9f43
-  );
+  background:#2563eb;
   box-shadow:
   0 10px 25px
   rgba(246,139,31,0.3);
@@ -63,7 +58,7 @@
 }
 .chat-search span{
   font-size:18px;
-  color:#f68b1f;
+  color:#2563eb;
 }
 .chat-search input{
   flex:1;
@@ -86,7 +81,7 @@
   width:6px;
 }
 .friends-list::-webkit-scrollbar-thumb{
-  background:#f68b1f;
+  background:#4c82f7;
   border-radius:20px;
 }
 .no-friends{
@@ -117,5 +112,5 @@
   align-items:center;
   font-size:20px;
   font-weight:600;
-  color:#f68b1f;
+  color:#2563eb;
 }

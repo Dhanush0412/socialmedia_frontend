@@ -3,7 +3,6 @@ import styles from "./Activity.module.css";
 import {
   Box,
   Typography,
-  Chip,
   CircularProgress,
 } from '@mui/material';
 import { useActivity } from '../../../hooks/useSettings';
@@ -33,8 +32,8 @@ function Activity() {
   if (isLoading) {
     return (
       <Box className={styles.loadingContainer}>
-        <CircularProgress />
-        <Typography variant="body2" color="textSecondary">
+        <CircularProgress sx={{ color: '#2563eb' }} />
+        <Typography variant="body2" sx={{ color: '#64748b', mt: 1 }}>
           Loading activity...
         </Typography>
       </Box>
@@ -47,11 +46,11 @@ function Activity() {
       <Box
         sx={{
           width: "100%",
-          background: "#fff",
+          background: "#ffffff",
           borderRadius: "18px",
           p: 3,
-          boxShadow: "0 4px 15px rgba(0,0,0,0.08)",
-          border: "1px solid #f2f2f2",
+          boxShadow: "0 4px 15px rgba(15, 23, 42, 0.05)",
+          border: "1px solid #e2e8f0",
           overflow: "hidden",
         }}
       >
@@ -59,7 +58,7 @@ function Activity() {
           sx={{
             fontSize: 22,
             fontWeight: 700,
-            color: "#222",
+            color: "#0f172a",
             mb: 3,
           }}
         >
@@ -78,21 +77,21 @@ function Activity() {
           >
             <defs>
               <linearGradient id="usageBar" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#FFB74D" />
-                <stop offset="100%" stopColor="#FB8C00" />
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#1d4ed8" />
               </linearGradient>
             </defs>
 
             <CartesianGrid
               vertical={false}
-              stroke="#ECECEC"
+              stroke="#e2e8f0"
               strokeDasharray="4 4"
             />
 
             <XAxis
               dataKey="day"
               tick={{
-                fill: "#555",
+                fill: "#64748b",
                 fontSize: 12,
                 fontWeight: 600,
               }}
@@ -104,7 +103,7 @@ function Activity() {
             <YAxis
               width={50}
               tick={{
-                fill: "#666",
+                fill: "#64748b",
                 fontSize: 12,
                 fontWeight: 600,
               }}
@@ -123,11 +122,13 @@ function Activity() {
             />
 
             <Tooltip
-              cursor={{ fill: "rgba(255,167,38,.08)" }}
+              cursor={{ fill: "rgba(37, 99, 235, 0.06)" }}
               contentStyle={{
                 borderRadius: 12,
-                border: "none",
-                boxShadow: "0 6px 18px rgba(0,0,0,.15)",
+                border: "1px solid #e2e8f0",
+                boxShadow: "0 6px 18px rgba(15, 23, 42, 0.1)",
+                backgroundColor: "#ffffff",
+                color: "#0f172a",
               }}
               formatter={(value, name, props) => [
                 props.payload.duration,
@@ -146,7 +147,7 @@ function Activity() {
                 position="top"
                 offset={5}
                 style={{
-                  fill: "#333",
+                  fill: "#334155",
                   fontSize: 11,
                   fontWeight: 600,
                 }}

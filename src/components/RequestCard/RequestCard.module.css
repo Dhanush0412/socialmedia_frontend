@@ -85,23 +85,20 @@
   transition:0.3s ease;
 }
 .accept-btn{
-  background:linear-gradient(
-    135deg,
-    #f68b1f,
-    #ff9f43
-  );
+  background:#255aed;
   color:white;
 }
 .accept-btn:hover{
+  background: #1d4ed8;
   transform:scale(1.05);
   box-shadow:0 8px 20px rgba(246,139,31,0.35);
 }
 .reject-btn{
-  background:#fff1df;
-  color:#d96f00;
+  background:#5e84ee;
+  color:white;
 }
 .reject-btn:hover{
-  background:#ffe0bd;
+  background:#1d4ed8;
   transform:scale(1.05);
 }
 .request-actions button:disabled{

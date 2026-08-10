@@ -16,16 +16,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useRejectedGroupInvites } from "../../hooks/group/useRejectedGroupInvites";
 
 export default function GroupCard({ group }) {
-
   const navigate = useNavigate();
-const profileid = localStorage.getItem("profileid");
+  const profileid = localStorage.getItem("profileid");
 
-const isAdmin =
-  String(group.createdby?._id || group.createdby) ===
-  localStorage.getItem("profileid");
+  const isAdmin =
+    String(group.createdby?._id || group.createdby) ===
+    localStorage.getItem("profileid");
 
-  const [openMembers, setOpenMembers] =
-    useState(false);
+  const [openMembers, setOpenMembers] = useState(false);
 
   const handleOpenMembers = (e) => {
     e.stopPropagation();
@@ -36,34 +34,22 @@ const isAdmin =
     setOpenMembers(false);
   };
 
-  const {
-    data: rejectedInvites = [],
-  } = useRejectedGroupInvites(
+  const { data: rejectedInvites = [] } = useRejectedGroupInvites(
     group._id,
     openMembers && isAdmin
   );
+
   return (
     <>
-
       <div className={styles["group-card"]}>
-
         <div className={styles["group-image"]}>
-
-          <img
-            src={group.groupimage}
-            alt={group.groupname}
-          />
-
+          <img src={group.groupimage} alt={group.groupname} />
         </div>
 
         <div className={styles["group-content"]}>
-
-          <h3>
-            {group.groupname}
-          </h3>
+          <h3>{group.groupname}</h3>
 
           <div className={styles["group-footer"]}>
-
             <p
               className={styles["members-count"]}
               onClick={handleOpenMembers}
@@ -72,13 +58,10 @@ const isAdmin =
             </p>
 
             <div className={styles["group-buttons"]}>
-
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(
-                    `/group/chat/${group._id}`
-                  );
+                  navigate(`/group/chat/${group._id}`);
                 }}
               >
                 Open Group
@@ -87,20 +70,14 @@ const isAdmin =
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(
-                    `/group/details/${group._id}`
-                  );
+                  navigate(`/group/details/${group._id}`);
                 }}
               >
                 Add Member
               </button>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       <Dialog
@@ -108,50 +85,38 @@ const isAdmin =
         onClose={handleCloseMembers}
         fullWidth
         maxWidth="sm"
+        PaperProps={{
+          style: {
+            borderRadius: "20px",
+            border: "1px solid #e2e8f0",
+          },
+        }}
       >
-
         <DialogTitle
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             fontWeight: 700,
+            color: "#0f172a",
           }}
         >
-
           Group Members
-
-          <IconButton
-            onClick={handleCloseMembers}
-          >
+          <IconButton onClick={handleCloseMembers} sx={{ color: "#64748b" }}>
             <CloseIcon />
           </IconButton>
-
         </DialogTitle>
 
-        <DialogContent
-          className={styles.membersDialog}
-        >
-                    {/* Members Section */}
-
-          <Typography
-            variant="h6"
-            className={styles.sectionTitle}
-          >
+        <DialogContent className={styles.membersDialog}>
+          {/* Members Section */}
+          <Typography variant="h6" className={styles.sectionTitle}>
             👥 Members ({group.members?.length || 0})
           </Typography>
 
           {group.members?.length > 0 ? (
-
             group.members.map((member) => (
-
-              <div
-                key={member._id}
-                className={styles.memberCard}
-              >
-
+              <div key={member._id} className={styles.memberCard}>
                 <div className={styles.memberLeft}>
-
                   <Avatar
                     src={member.profilepic}
                     alt={member.user?.username}
@@ -159,132 +124,71 @@ const isAdmin =
                   />
 
                   <div>
-
                     <div className={styles.memberName}>
-
                       {member.user?.username}
 
                       {String(member._id) ===
                         String(group.createdby?._id) && (
-
-                        <span
-                          className={styles.adminBadge}
-                        >
-                          Admin
-                        </span>
-
+                        <span className={styles.adminBadge}>Admin</span>
                       )}
-
                     </div>
 
-                    <div
-                      className={styles.memberBio}
-                    >
-                      {member.bio ||
-                        "No bio available"}
+                    <div className={styles.memberBio}>
+                      {member.bio || "No bio available"}
                     </div>
-
                   </div>
-
                 </div>
-
               </div>
-
             ))
-
           ) : (
-
-            <Typography
-              className={styles.emptyRejected}
-            >
+            <Typography className={styles.emptyRejected}>
               No members found.
             </Typography>
-
           )}
-{isAdmin && (
-  <>
-          <Divider sx={{ my: 3 }} />
 
-          {/* Rejected Invitations */}
+          {isAdmin && (
+            <>
+              <Divider sx={{ my: 3, borderColor: "#e2e8f0" }} />
 
-          <Typography
-            variant="h6"
-            className={
-              styles.sectionTitleRejected
-            }
-          >
-            ❌ Rejected Invitations (
-            {rejectedInvites.length})
-          </Typography>
-
-          {rejectedInvites.length > 0 ? (
-
-            rejectedInvites.map((invite) => (
-
-              <div
-                key={invite._id}
-                className={styles.rejectedCard}
+              {/* Rejected Invitations */}
+              <Typography
+                variant="h6"
+                className={styles.sectionTitleRejected}
               >
+                ❌ Rejected Invitations ({rejectedInvites.length})
+              </Typography>
 
-                <div className={styles.memberLeft}>
+              {rejectedInvites.length > 0 ? (
+                rejectedInvites.map((invite) => (
+                  <div key={invite._id} className={styles.rejectedCard}>
+                    <div className={styles.memberLeft}>
+                      <Avatar
+                        src={invite.receiver?.profilepic}
+                        alt={invite.receiver?.user?.username}
+                        className={styles.avatar}
+                      />
 
-                  <Avatar
-                    src={
-                      invite.receiver?.profilepic
-                    }
-                    alt={
-                      invite.receiver?.user
-                        ?.username
-                    }
-                    className={styles.avatar}
-                  />
+                      <div>
+                        <div className={styles.memberName}>
+                          {invite.receiver?.user?.username}
+                        </div>
 
-                  <div>
-
-                    <div
-                      className={
-                        styles.memberName
-                      }
-                    >
-                      {
-                        invite.receiver?.user
-                          ?.username
-                      }
+                        <div className={styles.rejectedText}>
+                          Invitation Rejected
+                        </div>
+                      </div>
                     </div>
-
-                    <div
-                      className={
-                        styles.rejectedText
-                      }
-                    >
-                      Invitation Rejected
-                    </div>
-
                   </div>
-
-                </div>
-
-              </div>
-
-            ))
-
-          )
-           : (
-
-            <Typography
-              className={styles.emptyRejected}
-            >
-              No rejected invitations.
-            </Typography>
-
+                ))
+              ) : (
+                <Typography className={styles.emptyRejected}>
+                  No rejected invitations.
+                </Typography>
+              )}
+            </>
           )}
-</>
-)}
         </DialogContent>
-
       </Dialog>
-
     </>
   );
-
 }

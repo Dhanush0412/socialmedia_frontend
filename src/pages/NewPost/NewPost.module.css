@@ -1,3 +1,4 @@
+
 .container {
   width: 100%;
   max-width: 700px;
@@ -7,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 55%, #eff6ff 100%);
 }
 
 .card {
@@ -14,8 +16,8 @@
   border-radius: 20px !important;
   padding: 24px !important;
   width: 100% !important;
-  border: 1px solid rgba(246, 139, 31, 0.08) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06) !important;
   position: relative;
   overflow: hidden;
   max-height: 90vh;
@@ -24,30 +26,33 @@
 }
 
 .card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #f68b1f, #f9a84c, #f68b1f);
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #2563eb);
   background-size: 200% 100%;
   animation: gradientMove 3s ease infinite;
 }
 
 @keyframes gradientMove {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
-/* ================= HEADER ================= */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #e2e8f0;
   flex-shrink: 0;
 }
 
@@ -60,30 +65,29 @@
 .headerAvatar {
   width: 36px !important;
   height: 36px !important;
-  background: linear-gradient(135deg, #f68b1f, #f9a84c) !important;
-  color: white !important;
+  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  color: #ffffff !important;
 }
 
 .headerTitle {
   font-weight: 700 !important;
-  color: #1a1a1a !important;
+  color: #0f172a !important;
   font-size: 1.1rem !important;
   line-height: 1.2 !important;
 }
 
 .headerSubtitle {
-  color: #999 !important;
+  color: #64748b !important;
   font-size: 0.7rem !important;
 }
 
-/* ================= UPLOAD AREA ================= */
 .uploadArea {
-  border: 2px dashed #e0e0e0;
+  border: 2px dashed #cbd5e1;
   border-radius: 16px;
   padding: 24px 16px;
   text-align: center;
   transition: all 0.3s ease;
-  background: #fafafa;
+  background: #f8fafc;
   min-height: 180px;
   display: flex;
   align-items: center;
@@ -93,15 +97,15 @@
 }
 
 .uploadArea:hover {
-  border-color: #f68b1f;
-  background: #fffaf4;
+  border-color: #2563eb;
+  background: #eff6ff;
 }
 
 .dragOver {
-  border-color: #f68b1f !important;
-  background: #fff8f0 !important;
+  border-color: #2563eb !important;
+  background: #eff6ff !important;
   transform: scale(1.02);
-  box-shadow: 0 0 0 4px rgba(246, 139, 31, 0.08);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
 .uploadLabel {
@@ -121,7 +125,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(246, 139, 31, 0.1), rgba(249, 168, 76, 0.1));
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(59, 130, 246, 0.10));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,17 +133,17 @@
 
 .uploadIcon {
   font-size: 32px !important;
-  color: #f68b1f;
+  color: #2563eb;
 }
 
 .uploadTitle {
   font-weight: 600 !important;
-  color: #1a1a1a !important;
+  color: #0f172a !important;
   font-size: 0.95rem !important;
 }
 
 .uploadSubtitle {
-  color: #999 !important;
+  color: #64748b !important;
   font-size: 0.75rem !important;
 }
 
@@ -155,26 +159,25 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
   padding: 2px 10px;
   border-radius: 12px;
   font-size: 0.6rem;
-  color: #666;
-  background: white;
+  color: #475569;
+  background: #ffffff;
   height: 20px;
 }
 
 .badgeChip svg {
   font-size: 14px;
-  color: #666;
+  color: #64748b;
 }
 
-/* ================= PREVIEW ================= */
 .previewContainer {
   border-radius: 12px;
   overflow: hidden;
-  background: #fafafa;
-  border: 1px solid #f0f0f0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   flex-shrink: 0;
 }
 
@@ -183,25 +186,25 @@
   justify-content: space-between;
   align-items: center;
   padding: 6px 12px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #f0f0f0;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .previewLabel {
   font-weight: 600 !important;
-  color: #333 !important;
+  color: #334155 !important;
   font-size: 0.7rem !important;
 }
 
 .removeButton {
-  color: #999 !important;
+  color: #94a3b8 !important;
   padding: 2px !important;
   transition: all 0.2s ease !important;
 }
 
 .removeButton:hover {
-  color: #ed4956 !important;
-  background: rgba(237, 73, 86, 0.1) !important;
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.1) !important;
   transform: rotate(90deg);
 }
 
@@ -222,8 +225,8 @@
 
 .previewActions {
   padding: 6px 12px;
-  background: #f8f9fa;
-  border-top: 1px solid #f0f0f0;
+  background: #f1f5f9;
+  border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: center;
 }
@@ -232,7 +235,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #f68b1f;
+  color: #2563eb;
   cursor: pointer;
   font-size: 0.7rem;
   font-weight: 500;
@@ -242,10 +245,9 @@
 }
 
 .changeFileLabel:hover {
-  background: rgba(246, 139, 31, 0.08);
+  background: rgba(37, 99, 235, 0.08);
 }
 
-/* ================= CAPTION ================= */
 .captionSection {
   margin: 12px 0;
   flex-shrink: 0;
@@ -260,12 +262,12 @@
 
 .captionLabel {
   font-weight: 600 !important;
-  color: #333 !important;
+  color: #334155 !important;
   font-size: 0.75rem !important;
 }
 
 .characterCount {
-  color: #999 !important;
+  color: #64748b !important;
   font-weight: 500 !important;
   font-size: 0.7rem !important;
 }
@@ -279,26 +281,26 @@
   line-height: 1.4 !important;
   padding: 10px !important;
   border-radius: 12px !important;
-  background: #fafafa !important;
+  background: #f8fafc !important;
   min-height: 40px !important;
   max-height: 60px !important;
 }
 
 .captionTextArea textarea:focus {
-  background: white !important;
+  background: #ffffff !important;
 }
 
 .captionTextArea fieldset {
-  border-color: #e0e0e0 !important;
+  border-color: #e2e8f0 !important;
   border-radius: 12px !important;
 }
 
 .captionTextArea:hover fieldset {
-  border-color: #f68b1f !important;
+  border-color: #2563eb !important;
 }
 
 .captionTextArea.Mui-focused fieldset {
-  border-color: #f68b1f !important;
+  border-color: #2563eb !important;
   border-width: 2px !important;
 }
 
@@ -309,21 +311,20 @@
 }
 
 .emojiButton {
-  color: #999 !important;
+  color: #94a3b8 !important;
   transition: all 0.2s ease !important;
   padding: 2px !important;
 }
 
 .emojiButton:hover {
-  color: #f68b1f !important;
-  background: rgba(246, 139, 31, 0.1) !important;
+  color: #2563eb !important;
+  background: rgba(37, 99, 235, 0.1) !important;
 }
 
-/* ================= PROGRESS ================= */
 .progressSection {
   margin: 8px 0;
   padding: 8px 12px;
-  background: #f8f9fa;
+  background: #f1f5f9;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -334,22 +335,21 @@
 .progressBar {
   height: 4px !important;
   border-radius: 8px !important;
-  background-color: #f0f0f0 !important;
+  background-color: #e2e8f0 !important;
 }
 
 .progressBar .MuiLinearProgress-bar {
-  background: linear-gradient(90deg, #f68b1f, #f9a84c) !important;
+  background: linear-gradient(90deg, #2563eb, #3b82f6) !important;
   border-radius: 8px !important;
 }
 
 .progressText {
-  color: #666 !important;
+  color: #64748b !important;
   font-weight: 500 !important;
   text-align: center;
   font-size: 0.7rem !important;
 }
 
-/* ================= ACTION BUTTONS ================= */
 .actionButtons {
   display: flex;
   gap: 10px;
@@ -361,18 +361,18 @@
   flex: 1 !important;
   padding: 10px !important;
   border-radius: 12px !important;
-  background: linear-gradient(135deg, #f68b1f, #f9a84c) !important;
-  color: white !important;
+  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  color: #ffffff !important;
   font-weight: 600 !important;
   text-transform: none !important;
   font-size: 0.9rem !important;
   transition: all 0.3s ease !important;
-  box-shadow: 0 4px 16px rgba(246, 139, 31, 0.3) !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25) !important;
 }
 
 .postButton:hover:not(:disabled) {
   transform: translateY(-2px) !important;
-  box-shadow: 0 6px 24px rgba(246, 139, 31, 0.4) !important;
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35) !important;
 }
 
 .postButton:disabled {
@@ -380,7 +380,6 @@
   cursor: not-allowed !important;
 }
 
-/* ================= TIPS ================= */
 .tipsSection {
   margin-top: 4px;
   flex-shrink: 0;
@@ -388,76 +387,76 @@
 
 .tipsAlert {
   border-radius: 10px !important;
-  background: #fff8f0 !important;
-  border-color: rgba(246, 139, 31, 0.15) !important;
+  background: #eff6ff !important;
+  border-color: rgba(37, 99, 235, 0.15) !important;
   padding: 4px 12px !important;
 }
 
 .tipsAlert .MuiAlert-icon {
   font-size: 16px !important;
   padding: 4px 0 !important;
+  color: #2563eb !important;
 }
 
 .tipsText {
-  color: #666 !important;
+  color: #475569 !important;
   font-size: 0.7rem !important;
 }
 
-/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .container {
     padding: 12px;
     height: calc(100vh - 56px);
   }
-  
+
   .card {
     padding: 16px !important;
     border-radius: 16px !important;
   }
-  
+
   .headerTitle {
     font-size: 0.95rem !important;
   }
-  
+
   .headerAvatar {
     width: 32px !important;
     height: 32px !important;
   }
-  
+
   .uploadArea {
     min-height: 140px;
     padding: 16px;
   }
-  
+
   .iconWrapper {
     width: 44px;
     height: 44px;
   }
-  
+
   .uploadIcon {
     font-size: 24px !important;
   }
-  
+
   .uploadTitle {
     font-size: 0.85rem !important;
   }
-  
+
   .uploadBadges {
     flex-direction: row;
     gap: 4px;
   }
-  
+
   .previewMedia {
     max-height: 150px;
   }
-  
+
   .captionTextArea textarea {
     font-size: 0.8rem !important;
     padding: 8px !important;
     min-height: 36px !important;
     max-height: 50px !important;
   }
-  
+
   .postButton {
     padding: 8px !important;
     font-size: 0.85rem !important;
@@ -469,87 +468,87 @@
     padding: 8px;
     height: calc(100vh - 48px);
   }
-  
+
   .card {
     padding: 12px !important;
     border-radius: 12px !important;
   }
-  
+
   .header {
     margin-bottom: 10px;
     padding-bottom: 8px;
   }
-  
+
   .headerLeft {
     gap: 8px;
   }
-  
+
   .headerAvatar {
     width: 28px !important;
     height: 28px !important;
   }
-  
+
   .headerTitle {
     font-size: 0.85rem !important;
   }
-  
+
   .headerSubtitle {
     font-size: 0.6rem !important;
   }
-  
+
   .uploadArea {
     min-height: 120px;
     padding: 12px;
     border-radius: 12px;
   }
-  
+
   .iconWrapper {
     width: 36px;
     height: 36px;
   }
-  
+
   .uploadIcon {
     font-size: 20px !important;
   }
-  
+
   .uploadTitle {
     font-size: 0.75rem !important;
   }
-  
+
   .uploadSubtitle {
     font-size: 0.65rem !important;
   }
-  
+
   .badgeChip {
     font-size: 0.5rem !important;
     height: 16px !important;
     padding: 1px 8px !important;
   }
-  
+
   .badgeChip svg {
     font-size: 10px !important;
   }
-  
+
   .previewMedia {
     max-height: 120px;
   }
-  
+
   .previewContainer {
     border-radius: 8px;
   }
-  
+
   .previewHeader {
     padding: 4px 10px;
   }
-  
+
   .previewActions {
     padding: 4px 10px;
   }
-  
+
   .captionSection {
     margin: 8px 0;
   }
-  
+
   .captionTextArea textarea {
     font-size: 0.75rem !important;
     padding: 6px !important;
@@ -557,145 +556,163 @@
     max-height: 40px !important;
     border-radius: 8px !important;
   }
-  
+
   .actionButtons {
     gap: 8px;
     margin: 8px 0 6px 0;
   }
-  
+
   .postButton {
     padding: 8px !important;
     font-size: 0.8rem !important;
     border-radius: 10px !important;
   }
-  
+
   .tipsSection {
     margin-top: 2px;
   }
-  
+
   .tipsAlert {
     padding: 2px 8px !important;
     border-radius: 6px !important;
   }
-  
+
   .tipsText {
     font-size: 0.6rem !important;
   }
 }
 
-/* ================= DARK MODE ================= */
 @media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+
   .card {
-    background: #1a1a1a !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
+    background: #0f172a !important;
+    border-color: #1e293b !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
   }
-  
+
   .header {
-    border-bottom-color: #2a2a2a !important;
+    border-bottom-color: #1e293b !important;
   }
-  
+
   .headerTitle {
-    color: #e0e0e0 !important;
+    color: #f8fafc !important;
   }
-  
+
   .headerSubtitle {
-    color: #888 !important;
+    color: #94a3b8 !important;
   }
-  
+
   .uploadArea {
-    background: #222 !important;
-    border-color: #333 !important;
+    background: #1e293b !important;
+    border-color: #334155 !important;
   }
-  
+
   .uploadArea:hover {
-    background: #2a2a2a !important;
-    border-color: #f68b1f !important;
+    background: rgba(37, 99, 235, 0.10) !important;
+    border-color: #3b82f6 !important;
   }
-  
+
   .dragOver {
-    background: #2a2a2a !important;
+    background: rgba(37, 99, 235, 0.15) !important;
   }
-  
+
   .uploadTitle {
-    color: #e0e0e0 !important;
+    color: #f8fafc !important;
   }
-  
+
   .uploadSubtitle {
-    color: #888 !important;
+    color: #94a3b8 !important;
   }
-  
+
   .badgeChip {
-    border-color: #444 !important;
-    color: #aaa !important;
-    background: #2a2a2a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+    background: #1e293b !important;
   }
-  
+
   .badgeChip svg {
-    color: #aaa !important;
+    color: #94a3b8 !important;
   }
-  
+
   .previewContainer {
-    background: #222 !important;
-    border-color: #333 !important;
+    background: #1e293b !important;
+    border-color: #334155 !important;
   }
-  
+
   .previewHeader {
-    background: #2a2a2a !important;
-    border-bottom-color: #333 !important;
+    background: #1e293b !important;
+    border-bottom-color: #334155 !important;
   }
-  
+
   .previewLabel {
-    color: #d0d0d0 !important;
+    color: #cbd5e1 !important;
   }
-  
+
   .previewActions {
-    background: #2a2a2a !important;
-    border-top-color: #333 !important;
+    background: #1e293b !important;
+    border-top-color: #334155 !important;
   }
-  
+
   .captionLabel {
-    color: #d0d0d0 !important;
+    color: #cbd5e1 !important;
   }
-  
+
   .captionTextArea textarea {
-    background: #222 !important;
-    color: #d0d0d0 !important;
+    background: #1e293b !important;
+    color: #f8fafc !important;
   }
-  
+
   .captionTextArea textarea:focus {
-    background: #2a2a2a !important;
+    background: #1e293b !important;
   }
-  
+
   .captionTextArea fieldset {
-    border-color: #333 !important;
+    border-color: #334155 !important;
   }
-  
+
   .captionTextArea:hover fieldset {
-    border-color: #f68b1f !important;
+    border-color: #3b82f6 !important;
   }
-  
+
   .characterCount {
-    color: #777 !important;
+    color: #94a3b8 !important;
   }
-  
+
   .progressSection {
-    background: #2a2a2a !important;
+    background: #1e293b !important;
   }
-  
+
   .progressText {
-    color: #aaa !important;
+    color: #94a3b8 !important;
   }
-  
+
   .progressBar {
-    background-color: #333 !important;
+    background-color: #334155 !important;
   }
-  
+
   .tipsAlert {
-    background: #2a2a2a !important;
-    border-color: rgba(246, 139, 31, 0.15) !important;
+    background: rgba(37, 99, 235, 0.12) !important;
+    border-color: rgba(59, 130, 246, 0.20) !important;
   }
-  
+
+  .tipsAlert .MuiAlert-icon {
+    color: #3b82f6 !important;
+  }
+
   .tipsText {
-    color: #aaa !important;
+    color: #cbd5e1 !important;
+  }
+
+  .emojiButton {
+    color: #94a3b8 !important;
+  }
+
+  .emojiButton:hover {
+    color: #3b82f6 !important;
+    background: rgba(59, 130, 246, 0.12) !important;
   }
 }
+

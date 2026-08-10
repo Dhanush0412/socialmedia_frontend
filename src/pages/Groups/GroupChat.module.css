@@ -1,14 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root{
---primary:#ff6b1a;
---primary-hover:#ff7f36;
+--primary:#1d4ed8;
+--primary-hover:#1d4ed8;
 --bg:#f5f7fb;
 --white:#ffffff;
 --border:#e5e7eb;
 --text:#1f2937;
 --muted:#6b7280;
---sent:#ff6b1a;
+--sent:#1d4ed8;
 --received:#ffffff;
 --shadow:0 8px 24px rgba(0,0,0,.08);
 }

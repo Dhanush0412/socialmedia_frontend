@@ -1,221 +1,350 @@
-/* Sidebar Container */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 260px;
-  background: linear-gradient(180deg, #fffdf9, #fff6ea);
-  border-right: 1px solid #ffd9b3;
+  top: 14px;
+  left: 14px;
+  width: 248px;
+  height: calc(100vh - 28px);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
   display: flex;
   flex-direction: column;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
-  overflow: hidden;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+  overflow: visible;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: width 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-/* Collapsed State */
+.sidebar:hover {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.11);
+}
+
 .sidebar.collapsed {
-  width: 72px;
+  width: 76px;
 }
 
 .sidebarContent {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 18px 14px;
-  overflow-y: auto;
+  padding: 14px;
+  overflow: hidden;
+  min-height: 0;
 }
 
-/* Scrollbar */
-.sidebarContent::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sidebarContent::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.sidebarContent::-webkit-scrollbar-thumb {
-  background: #ffd9b3;
-  border-radius: 10px;
-}
-
-.sidebarContent::-webkit-scrollbar-thumb:hover {
-  background: #f68b1f;
-}
-
-/* Logo */
 .logoContainer {
-  margin-bottom: 25px;
-  text-align: center;
+  height: 78px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 55%, #60a5fa 100%);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+  overflow: hidden;
+  position: relative;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
-.logoText {
-  color: #f68b1f;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0;
-  white-space: nowrap;
+.logoContainer::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  right: -28px;
+  top: -25px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.logoContainer::before {
+  content: "";
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  right: 18px;
+  bottom: -35px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .logoIcon {
-  font-size: 32px;
-  line-height: 1;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  z-index: 1;
 }
 
-/* Menu List */
+.logoText {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.logoSubText {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 8px;
+  font-weight: 600;
+  margin: 2px 0 0;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  z-index: 1;
+}
+
 .menuList {
   list-style: none;
   padding: 0;
   margin: 0;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .menuItem {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-/* Navigation Link */
 .navLink {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #64748b;
   text-decoration: none;
-  color: #555;
-  padding: 12px 14px;
-  border-radius: 14px;
-  font-size: 15px;
-  font-weight: 500;
-  transition: all 0.25s ease;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
   white-space: nowrap;
   overflow: hidden;
 }
 
 .navLink:hover {
-  background: rgba(246, 139, 31, 0.1);
-  color: #d96f00;
-  transform: translateX(4px);
+  background: #f8fafc;
+  color: #1e293b;
+  border-color: #eef2f7;
+}
+
+.navLink:hover .icon {
+  background: #eff6ff;
+  color: #2563eb;
+  transform: scale(1.04);
 }
 
 .navLink.active {
-  background: linear-gradient(135deg, #f68b1f, #ff9f43);
-  color: white;
-  box-shadow: 0 6px 15px rgba(246, 139, 31, 0.25);
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #dbeafe;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.07);
+}
+
+.navLink.active::after {
+  content: "";
+  position: absolute;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 3px #dbeafe;
 }
 
 .navLink.active .icon {
-  color: white;
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 9px rgba(37, 99, 235, 0.22);
 }
 
-/* Icon */
 .icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  font-size: 18px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 15px;
+  transition: all 0.2s ease;
   flex-shrink: 0;
-  color: inherit;
 }
 
-/* Label */
 .label {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   white-space: nowrap;
 }
 
-/* Settings Link */
 .settingsContainer {
   margin-top: auto;
-  border-top: 1px solid #ffd9b3;
-  padding-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #eef2f7;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.settingsContainer::before {
+  content: "ACCOUNT";
+  padding: 0 10px 5px;
+  color: #94a3b8;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
 }
 
 .settingsLink {
   margin-top: 0;
 }
 
-/* Collapsed State Overrides */
-.sidebar.collapsed .navLink {
-  justify-content: center;
-  padding: 12px;
-  gap: 0;
+.logoutBtn {
+  color: #64748b;
 }
 
-.sidebar.collapsed .navLink:hover {
-  transform: translateX(0);
+.logoutBtn:hover {
+  background: #fff7f7;
+  border-color: #fee2e2;
+  color: #dc2626;
+}
+
+.logoutBtn:hover .icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.sidebar.collapsed .sidebarContent {
+  padding: 14px 9px;
+}
+
+.sidebar.collapsed .logoContainer {
+  width: 52px;
+  height: 58px;
+  padding: 0;
+  margin-left: 1px;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.sidebar.collapsed .logoText,
+.sidebar.collapsed .logoSubText {
+  display: none;
+}
+
+.sidebar.collapsed .logoIcon {
+  width: 40px;
+  height: 40px;
+  font-size: 21px;
+}
+
+.sidebar.collapsed .navLink {
+  justify-content: center;
+  padding: 7px;
+  gap: 0;
 }
 
 .sidebar.collapsed .label {
   display: none;
 }
 
-.sidebar.collapsed .logoText {
-  display: none;
+.sidebar.collapsed .icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  font-size: 16px;
+}
+
+.sidebar.collapsed .navLink.active::after {
+  right: 1px;
+  width: 5px;
+  height: 5px;
+  box-shadow: 0 0 0 2px #dbeafe;
 }
 
 .sidebar.collapsed .settingsContainer {
   border-top: none;
+  padding-top: 5px;
 }
 
-/* Toggle Button */
+.sidebar.collapsed .settingsContainer::before {
+  display: none;
+}
+
 .toggleButton {
   position: absolute;
-  top: 140px;
-  right: -14px;
+  top: 78px;
+  right: -13px;
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 1px solid #dbeafe;
+  border-radius: 50%;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  background: white;
-  border: 2px solid #ffd9b3;
-  border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
   z-index: 1001;
-  padding: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  transition: all 0.2s ease;
 }
 
 .toggleButton:hover {
-  background: #f68b1f;
-  border-color: #f68b1f;
-  transform: scale(1.1);
+  background: #eff6ff;
+  border-color: #93c5fd;
+  transform: scale(1.08);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.15);
 }
 
-.toggleButton:hover .line {
-  background: white;
-}
-
-/* Hamburger Icon */
 .hamburgerIcon {
+  width: 14px;
+  height: 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3px;
-  width: 16px;
-  height: 16px;
 }
 
 .line {
   display: block;
-  width: 14px;
+  width: 13px;
   height: 2px;
-  background-color: #f68b1f;
   border-radius: 2px;
+  background: #64748b;
   transition: all 0.3s ease;
 }
 
-/* When sidebar is OPEN (not minimized) - shows X */
+.toggleButton:hover .line {
+  background: #2563eb;
+}
+
 .sidebar:not(.collapsed) .toggleButton .line:nth-child(1) {
-  transform: rotate(45deg) translate(3px, 3px);
+  transform: rotate(45deg) translate(3.5px, 3.5px);
 }
 
 .sidebar:not(.collapsed) .toggleButton .line:nth-child(2) {
@@ -223,12 +352,11 @@
 }
 
 .sidebar:not(.collapsed) .toggleButton .line:nth-child(3) {
-  transform: rotate(-45deg) translate(3px, -3px);
+  transform: rotate(-45deg) translate(3.5px, -3.5px);
 }
 
-/* When sidebar is COLLAPSED (minimized) - shows hamburger */
 .sidebar.collapsed .toggleButton .line:nth-child(1) {
-  transform: rotate(0deg) translate(0, 0);
+  transform: rotate(0) translate(0, 0);
 }
 
 .sidebar.collapsed .toggleButton .line:nth-child(2) {
@@ -236,31 +364,72 @@
 }
 
 .sidebar.collapsed .toggleButton .line:nth-child(3) {
-  transform: rotate(0deg) translate(0, 0);
+  transform: rotate(0) translate(0, 0);
 }
 
-.sidebar.collapsed .toggleButton {
-  right: -14px;
-  top: 140px;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
-    width: 72px;
+    top: 8px;
+    left: 8px;
+    width: 248px;
+    height: calc(100vh - 16px);
   }
 
-  .sidebar:not(.collapsed) {
-    width: 260px;
+  .sidebar.collapsed {
+    width: 70px;
   }
 
   .sidebar .logoText,
+  .sidebar .logoSubText,
   .sidebar .label {
     display: none;
   }
 
+  .sidebar .logoContainer {
+    width: 52px;
+    height: 58px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .sidebar .logoIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar .navLink {
+    justify-content: center;
+    padding: 7px;
+    gap: 0;
+  }
+
+  .sidebar .icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .sidebar:not(.collapsed) .logoContainer {
+    width: auto;
+    height: 78px;
+    justify-content: flex-start;
+    padding: 12px 14px;
+  }
+
   .sidebar:not(.collapsed) .logoText,
+  .sidebar:not(.collapsed) .logoSubText,
   .sidebar:not(.collapsed) .label {
     display: block;
+  }
+
+  .sidebar:not(.collapsed) .logoIcon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .sidebar:not(.collapsed) .navLink {
+    justify-content: flex-start;
+    padding: 9px 10px;
+    gap: 12px;
   }
 }
