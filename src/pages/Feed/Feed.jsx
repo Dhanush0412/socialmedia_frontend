@@ -145,7 +145,7 @@ function Feed() {
 
     {!hasNextPage && posts.length > 0 && (
       <div className={styles.endMessage}>
-        🎉 You've reached the end.
+       No more post
       </div>
     )}
   </>

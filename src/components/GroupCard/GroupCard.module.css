@@ -1,442 +1,441 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* ===========================
    Group Card
 =========================== */
 
-.group-card{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  width:100%;
-  background:#ffffff;
-  border:1px solid #ececec;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,.08);
-  transition:.35s ease;
-  cursor:pointer;
+.group-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+  transition: .35s ease;
+  cursor: pointer;
 }
 
-.group-card:hover{
-  transform:translateY(-5px);
-  border-color:#ff6b1a;
-  box-shadow:0 15px 35px rgba(255,107,26,.18);
+.group-card:hover {
+  transform: translateY(-5px);
+  border-color: #2563eb;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
 }
 
 /* ===========================
    Group Image
 =========================== */
 
-.group-image{
-  width:90px;
-  height:90px;
-  border-radius:18px;
-  overflow:hidden;
-  flex-shrink:0;
-  background:#f3f3f3;
+.group-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f1f5f9;
 }
 
-.group-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+.group-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ===========================
    Content
 =========================== */
 
-.group-content{
-  flex:1;
-  display:flex;
-  flex-direction:column;
+.group-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.group-content h3{
-  font-size:22px;
-  font-weight:700;
-  color:#222;
-  margin-bottom:15px;
+.group-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 15px;
 }
 
 /* ===========================
    Footer
 =========================== */
 
-.group-footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:18px;
-  flex-wrap:wrap;
+.group-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
 }
 
-.group-footer p{
-  font-size:15px;
-  font-weight:600;
-  color:#666;
+.group-footer p {
+  font-size: 15px;
+  font-weight: 600;
+  color: #64748b;
 }
 
 /* ===========================
    Members Count
 =========================== */
 
-.members-count{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  color:#F68B1F;
-  cursor:pointer;
-  font-weight:700;
-  transition:.3s;
+.members-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2563eb;
+  cursor: pointer;
+  font-weight: 700;
+  transition: .3s;
 }
 
-.members-count:hover{
-  color:#d96f00;
-  transform:scale(1.03);
-  text-decoration:underline;
+.members-count:hover {
+  color: #1d4ed8;
+  transform: scale(1.03);
+  text-decoration: underline;
 }
 
 /* ===========================
    Buttons
 =========================== */
 
-.group-buttons{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
+.group-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-.group-buttons button{
-  min-width:140px;
-  height:42px;
-  border:none;
-  outline:none;
-  border-radius:10px;
-  background:#ff6b1a;
-  color:#fff;
-  font-size:14px;
-  font-weight:600;
-  cursor:pointer;
-  transition:.3s;
+.group-buttons button {
+  min-width: 140px;
+  height: 42px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
 }
 
-.group-buttons button:hover{
-  background:#e95d0f;
-  transform:translateY(-2px);
-  box-shadow:0 8px 18px rgba(255,107,26,.25);
+.group-buttons button:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
 }
 
-.group-buttons button:last-child{
-  background:#fff;
-  border:2px solid #ff6b1a;
-  color:#ff6b1a;
+.group-buttons button:last-child {
+  background: #fff;
+  border: 2px solid #2563eb;
+  color: #2563eb;
 }
 
-.group-buttons button:last-child:hover{
-  background:#ff6b1a;
-  color:#fff;
+.group-buttons button:last-child:hover {
+  background: #2563eb;
+  color: #fff;
 }
 
 /* ===========================
    Dialog
 =========================== */
 
-.membersDialog{
-  padding:18px;
-  max-height:550px;
-  overflow-y:auto;
+.membersDialog {
+  padding: 18px;
+  max-height: 550px;
+  overflow-y: auto;
 }
 
-.membersDialog::-webkit-scrollbar{
-  width:6px;
+.membersDialog::-webkit-scrollbar {
+  width: 6px;
 }
 
-.membersDialog::-webkit-scrollbar-thumb{
-  background:#F68B1F;
-  border-radius:20px;
+.membersDialog::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
 }
 
-.membersDialog::-webkit-scrollbar-track{
-  background:#f4f4f4;
+.membersDialog::-webkit-scrollbar-thumb:hover {
+  background: #2563eb;
 }
 
-.member-info{
-  display:flex;
-  flex-direction:column;
-  flex:1;
+.membersDialog::-webkit-scrollbar-track {
+  background: #f8fafc;
 }
 
-.member-name-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.member-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.member-name{
-  margin:0;
-  font-size:16px;
-  font-weight:600;
-  color:#222;
+.member-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.admin-badge{
-  background:#F68B1F;
-  color:#fff;
-  padding:4px 10px;
-  border-radius:30px;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:.4px;
-  text-transform:uppercase;
+.member-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
 }
+
+.admin-badge {
+  background: #2563eb;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+
 /* ===========================
    Section Titles
 =========================== */
 
-.sectionTitle{
-  font-size:20px !important;
-  font-weight:700 !important;
-  color:#222;
-  margin-bottom:16px !important;
+.sectionTitle {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #0f172a;
+  margin-bottom: 16px !important;
 }
 
-.sectionTitleRejected{
-  font-size:20px !important;
-  font-weight:700 !important;
-  color:#e53935;
-  margin:20px 0 15px !important;
+.sectionTitleRejected {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #ef4444;
+  margin: 20px 0 15px !important;
 }
 
 /* ===========================
    Member Card
 =========================== */
 
-.memberCard{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#ffffff;
-  border:1px solid #ececec;
-  border-radius:16px;
-  padding:15px;
-  margin-bottom:12px;
-  transition:.3s;
+.memberCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: .3s;
 }
 
-.memberCard:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
+.memberCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
 }
 
 /* ===========================
    Rejected Card
 =========================== */
 
-.rejectedCard{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#fff5f5;
-  border:1px solid #ffd9d9;
-  border-radius:16px;
-  padding:15px;
-  margin-bottom:12px;
-  transition:.3s;
+.rejectedCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: .3s;
 }
 
-.rejectedCard:hover{
-  background:#ffecec;
+.rejectedCard:hover {
+  background: #fee2e2;
 }
 
 /* ===========================
    Member Layout
 =========================== */
 
-.memberLeft{
-  display:flex;
-  align-items:center;
-  gap:15px;
+.memberLeft {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.avatar{
-  width:58px !important;
-  height:58px !important;
-  border:3px solid #F68B1F;
+.avatar {
+  width: 58px !important;
+  height: 58px !important;
+  border: 3px solid #2563eb;
 }
 
 /* ===========================
    Member Name
 =========================== */
 
-.memberName{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:16px;
-  font-weight:700;
-  color:#222;
+.memberName {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.memberBio{
-  margin-top:4px;
-  color:#777;
-  font-size:13px;
-  line-height:1.5;
+.memberBio {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.adminBadge{
-  background:linear-gradient(135deg,#F68B1F,#ffb347);
-  color:#fff;
-  padding:4px 10px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:700;
+.adminBadge {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
-.rejectedText{
-  margin-top:5px;
-  color:#e53935;
-  font-size:13px;
-  font-weight:600;
+.rejectedText {
+  margin-top: 5px;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 /* ===========================
    Empty State
 =========================== */
 
-.emptyRejected{
-  text-align:center;
-  padding:25px;
-  color:#888;
-  font-style:italic;
+.emptyRejected {
+  text-align: center;
+  padding: 25px;
+  color: #94a3b8;
+  font-style: italic;
 }
 
 /* ===========================
    Tablet
 =========================== */
 
-@media(max-width:992px){
+@media(max-width:992px) {
+  .group-card {
+    padding: 18px;
+  }
 
-.group-card{
-  padding:18px;
-}
+  .group-image {
+    width: 80px;
+    height: 80px;
+  }
 
-.group-image{
-  width:80px;
-  height:80px;
-}
+  .group-content h3 {
+    font-size: 20px;
+  }
 
-.group-content h3{
-  font-size:20px;
-}
-
-.group-buttons button{
-  min-width:120px;
-}
-
+  .group-buttons button {
+    min-width: 120px;
+  }
 }
 
 /* ===========================
    Mobile
 =========================== */
 
-@media(max-width:768px){
+@media(max-width:768px) {
+  .group-card {
+    flex-direction: column;
+    text-align: center;
+  }
 
-.group-card{
-  flex-direction:column;
-  text-align:center;
-}
+  .group-image {
+    width: 110px;
+    height: 110px;
+  }
 
-.group-image{
-  width:110px;
-  height:110px;
-}
+  .group-footer {
+    flex-direction: column;
+  }
 
-.group-footer{
-  flex-direction:column;
-}
+  .group-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
 
-.group-buttons{
-  width:100%;
-  flex-direction:column;
-}
+  .group-buttons button {
+    width: 100%;
+  }
 
-.group-buttons button{
-  width:100%;
-}
+  .memberCard,
+  .rejectedCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.memberCard,
-.rejectedCard{
-  flex-direction:column;
-  align-items:flex-start;
-}
+  .memberLeft {
+    width: 100%;
+  }
 
-.memberLeft{
-  width:100%;
-}
+  .avatar {
+    width: 52px !important;
+    height: 52px !important;
+  }
 
-.avatar{
-  width:52px !important;
-  height:52px !important;
-}
-
-.sectionTitle,
-.sectionTitleRejected{
-  font-size:18px !important;
-}
-
+  .sectionTitle,
+  .sectionTitleRejected {
+    font-size: 18px !important;
+  }
 }
 
 /* ===========================
    Small Mobile
 =========================== */
 
-@media(max-width:480px){
+@media(max-width:480px) {
+  .group-card {
+    padding: 15px;
+  }
 
-.group-card{
-  padding:15px;
-}
+  .group-image {
+    width: 95px;
+    height: 95px;
+  }
 
-.group-image{
-  width:95px;
-  height:95px;
-}
+  .group-content h3 {
+    font-size: 18px;
+  }
 
-.group-content h3{
-  font-size:18px;
-}
+  .group-buttons button {
+    height: 40px;
+    font-size: 13px;
+  }
 
-.group-buttons button{
-  height:40px;
-  font-size:13px;
-}
+  .memberCard,
+  .rejectedCard {
+    padding: 12px;
+  }
 
-.memberCard,
-.rejectedCard{
-  padding:12px;
-}
+  .avatar {
+    width: 46px !important;
+    height: 46px !important;
+  }
 
-.avatar{
-  width:46px !important;
-  height:46px !important;
-}
+  .memberName {
+    font-size: 15px;
+  }
 
-.memberName{
-  font-size:15px;
-}
-
-.memberBio{
-  font-size:12px;
-}
-
+  .memberBio {
+    font-size: 12px;
+  }
 }

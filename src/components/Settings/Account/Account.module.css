@@ -4,13 +4,14 @@
 
 .contentTitle {
   font-weight: 600 !important;
-  color: #1a1a2e;
+  color: #0f172a;
   margin-bottom: 4px !important;
 }
 
 .contentSubtitle {
   margin-bottom: 24px !important;
   opacity: 0.7;
+  color: #64748b;
 }
 
 /* Profile Container */
@@ -26,7 +27,7 @@
   align-items: center;
   gap: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e2e8f0;
   flex-wrap: wrap;
 }
 
@@ -39,15 +40,15 @@
   width: 80px !important;
   height: 80px !important;
   font-size: 32px !important;
-  background: linear-gradient(135deg, #ff9f1a 0%, #ff7900 100%) !important;
-  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.4);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .cameraButton {
   position: absolute !important;
   bottom: 0;
   right: 0;
-  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: white !important;
   padding: 8px !important;
   border: 2px solid white !important;
@@ -56,7 +57,7 @@
 }
 
 .cameraButton:hover {
-  background: #ff8200 !important;
+  background: #1d4ed8 !important;
 }
 
 .verifiedBadge {
@@ -70,23 +71,23 @@
 
 .verifiedBadge svg {
   font-size: 20px;
-  color: #ff9417;
+  color: #2563eb;
 }
 
 /* Avatar Bio Container */
 .avatarBioContainer {
   flex: 1;
   padding: 8px 16px;
-  background: #f8f9fa;
+  background: #f8fafc;
   border-radius: 12px;
   min-height: 60px;
   display: flex;
   align-items: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
 }
 
 .avatarBioText {
-  color: #333;
+  color: #334155;
   font-size: 14px !important;
   line-height: 1.6 !important;
   font-style: italic;
@@ -106,13 +107,13 @@
   text-transform: none !important;
   border-radius: 20px !important;
   padding: 6px 20px !important;
-  border-color: #ff9417 !important;
-  color: #ff9417 !important;
+  border-color: #2563eb !important;
+  color: #2563eb !important;
 }
 
 .editProfileBtn:hover {
-  background: #fff3e0 !important;
-  border-color: #ff8200 !important;
+  background: #eff6ff !important;
+  border-color: #1d4ed8 !important;
 }
 
 /* Profile Info Grid */
@@ -127,18 +128,20 @@
   align-items: flex-start;
   gap: 12px;
   padding: 12px;
-  background: #f8f9fa;
+  background: #f8fafc;
   border-radius: 12px;
   transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
 }
 
 .infoItem:hover {
-  background: #fff3e0;
+  background: #eff6ff;
+  border-color: #dbeafe;
   transform: translateY(-2px);
 }
 
 .infoIcon {
-  color: #ff9417;
+  color: #2563eb;
   font-size: 20px;
   margin-top: 2px;
 }
@@ -150,23 +153,25 @@
   justify-content: space-between;
   gap: 16px;
   padding: 12px 16px;
-  background: #f8f9fa;
+  background: #f8fafc;
   border-radius: 12px;
   transition: all 0.2s ease;
   grid-column: 1 / -1;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
 }
 
 .usernameContainer:hover {
-  background: #fff3e0;
+  background: #eff6ff;
+  border-color: #dbeafe;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .usernameContainer .infoItem {
   flex: 1;
   background: transparent !important;
   padding: 0 !important;
+  border: none !important;
 }
 
 .usernameContainer .infoItem:hover {
@@ -181,16 +186,16 @@
   padding: 8px 24px !important;
   font-weight: 500 !important;
   font-size: 13px !important;
-  background: linear-gradient(135deg, #ff9f1a 0%, #ff7900 100%) !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
   color: white !important;
   transition: all 0.3s ease !important;
-  box-shadow: 0 2px 8px rgba(255, 145, 0, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
   flex-shrink: 0;
 }
 
 .changePasswordBtn:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 4px 16px rgba(255, 145, 0, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35) !important;
 }
 
 .changePasswordBtn .MuiButton-startIcon {
@@ -206,19 +211,20 @@
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  background: #f8f9fa;
+  background: #f8fafc;
   border-radius: 12px;
   transition: all 0.2s ease;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
   min-height: 70px;
   width: 100%;
   grid-column: 1 / -1;
 }
 
 .profileIdBox:hover {
-  background: #fff3e0;
+  background: #eff6ff;
+  border-color: #dbeafe;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
 }
 
 .profileIdContent {
@@ -234,13 +240,13 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: #fff3e0;
+  background: #eff6ff;
   border-radius: 10px;
   flex-shrink: 0;
 }
 
 .profileIdIcon {
-  color: #ff9417;
+  color: #2563eb;
   font-size: 24px;
 }
 
@@ -255,12 +261,12 @@
   font-weight: 500 !important;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #666 !important;
+  color: #64748b !important;
 }
 
 .profileIdValue {
   font-weight: 500 !important;
-  color: #1a1a2e !important;
+  color: #0f172a !important;
   font-family: 'Courier New', monospace !important;
   font-size: 15px !important;
   letter-spacing: 0.5px;
@@ -276,12 +282,13 @@
 
 .editFormPaper {
   padding: 16px !important;
-  background: #f8f9fa !important;
+  background: #f8fafc !important;
   border-radius: 16px !important;
+  border: 1px solid #e2e8f0 !important;
 }
 
 .inputIcon {
-  color: #ff9417;
+  color: #2563eb;
   margin-right: 8px;
   font-size: 20px;
 }
@@ -297,14 +304,14 @@
   text-transform: none !important;
   border-radius: 20px !important;
   padding: 8px 32px !important;
-  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: white !important;
-  box-shadow: 0 18px 40px rgba(255, 145, 0, 0.28) !important;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25) !important;
 }
 
 .saveBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 55px rgba(255, 145, 0, 0.35) !important;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35) !important;
 }
 
 /* Preview Container */
@@ -321,8 +328,8 @@
   height: 150px !important;
   font-size: 90px !important;
   border: 8px solid #fff;
-  background: linear-gradient(135deg, #ff9f1a, #ff7900) !important;
-  box-shadow: 0 20px 55px rgba(255, 145, 0, 0.28);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.25);
 }
 
 /* Use Photo Button */
@@ -332,9 +339,9 @@
   border-radius: 12px !important;
   text-transform: none !important;
   font-weight: 700 !important;
-  background: linear-gradient(135deg, #ff9d1b, #ff7b00) !important;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
   color: #fff !important;
-  box-shadow: 0 10px 30px rgba(255, 145, 0, 0.22) !important;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2) !important;
 }
 
 .usePhotoBtn:hover {
@@ -357,7 +364,7 @@
 }
 
 .dialogIcon {
-  color: #ff9417;
+  color: #2563eb;
   font-size: 28px;
 }
 
@@ -367,7 +374,7 @@
 
 .dialogText {
   margin-bottom: 16px !important;
-  color: #666;
+  color: #64748b;
 }
 
 .passwordAlert {
@@ -387,7 +394,7 @@
   justify-content: center;
   padding: 60px 0;
   gap: 16px;
-  color: #666;
+  color: #64748b;
 }
 
 /* Animations */
@@ -419,6 +426,7 @@
   .changePasswordBtn {
     width: 100%;
     justify-content: center;
+    margin-left: 0;
   }
 
   .profileIdBox {
@@ -452,19 +460,6 @@
 
   .profileActions button {
     width: 100%;
-  }
-
-  .profileIdBox {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .changePasswordBtn {
-    width: 100%;
-    justify-content: center;
-    margin-left: 0;
   }
 
   .profileIdValue {
@@ -513,16 +508,63 @@
     font-size: 12px !important;
   }
 
-  .changePasswordBtn {
-    padding: 6px 16px !important;
-    font-size: 12px !important;
-  }
-
   .dialogActions {
     flex-direction: column;
   }
 
   .dialogActions button {
     width: 100%;
+  }
+}
+
+/* Dark Mode Palette Extensions */
+@media (prefers-color-scheme: dark) {
+  .contentTitle {
+    color: #f8fafc;
+  }
+
+  .contentSubtitle {
+    color: #94a3b8;
+  }
+
+  .profileAvatarContainer {
+    border-bottom-color: #1e293b;
+  }
+
+  .avatarBioContainer,
+  .infoItem,
+  .usernameContainer,
+  .profileIdBox,
+  .editFormPaper {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+  }
+
+  .avatarBioText {
+    color: #cbd5e1;
+  }
+
+  .infoItem:hover,
+  .usernameContainer:hover,
+  .profileIdBox:hover {
+    background: #334155 !important;
+    border-color: #2563eb !important;
+  }
+
+  .profileIdIconWrapper {
+    background: #0f172a;
+  }
+
+  .profileIdLabel {
+    color: #94a3b8 !important;
+  }
+
+  .profileIdValue {
+    color: #f8fafc !important;
+  }
+
+  .dialogText,
+  .loadingContainer {
+    color: #94a3b8;
   }
 }

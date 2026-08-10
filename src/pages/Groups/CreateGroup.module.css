@@ -1,239 +1,253 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-background:#f5f7fb;
+.create-group-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: #f8fafc;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-.icon-btn{
-width:42px !important;
-height:42px !important;
-padding:0 !important;
-margin-bottom:20px;
-display:flex !important;
-align-items:center;
-justify-content:center;
-border:none !important;
-border-radius:50% !important;
-background:#fff3eb !important;
-color:#ff6b1a !important;
-cursor:pointer;
-font-size:18px;
-box-shadow:0 4px 10px rgba(255,107,26,.2);
+.create-group-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
 }
 
-.icon-btn:hover{
-background:#ff6b1a !important;
-color:#fff !important;
+.create-group-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
-.icon-btn:active{
-transform:scale(.95);
+/* Back Button */
+.icon-btn {
+  width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  margin-bottom: 20px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbeafe !important;
+  border-radius: 50% !important;
+  background: #eff6ff !important;
+  color: #2563eb !important;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.1);
 }
 
-.icon-btn svg{
-font-size:18px;
+.icon-btn:hover {
+  background: #2563eb !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
 }
 
-@media(max-width:768px){
-
-.icon-btn{
-width:40px;
-height:40px;
-font-size:17px;
-margin-bottom:18px;
+.icon-btn:active {
+  transform: scale(0.95);
 }
 
+.icon-btn svg {
+  font-size: 16px;
 }
 
-@media(max-width:480px){
-
-.icon-btn{
-width:38px;
-height:38px;
-font-size:16px;
-margin-bottom:15px;
+/* Card Header */
+.create-group-card h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
 }
 
-}
-.create-group-page{
-width:100%;
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:30px;
-background:#f5f7fb;
+.create-group-card p {
+  color: #64748b;
+  font-size: 15px;
+  margin-bottom: 28px;
 }
 
-.create-group-card{
-width:100%;
-max-width:520px;
-background:#ffffff;
-border-radius:20px;
-padding:35px;
-box-shadow:0 8px 25px rgba(0,0,0,.08);
-border:1px solid #ececec;
-transition:.3s;
+/* Image Upload Preview */
+.image-preview {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #eff6ff;
+  outline: 2px solid #2563eb;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+  transition: all 0.3s ease;
 }
 
-.create-group-card:hover{
-box-shadow:0 12px 30px rgba(255,107,26,.15);
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.create-group-card h1{
-font-size:30px;
-font-weight:700;
-color:#222;
-margin-bottom:8px;
+.placeholder {
+  padding: 20px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.5;
 }
 
-.create-group-card p{
-color:#666;
-font-size:15px;
-margin-bottom:28px;
+/* Upload Button */
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 
-.image-preview{
-width:170px;
-height:170px;
-margin:0 auto 22px;
-border-radius:50%;
-overflow:hidden;
-background:#fafafa;
-display:flex;
-justify-content:center;
-align-items:center;
-border:4px solid #ff6b1a;
-box-shadow:0 8px 20px rgba(255,107,26,.18);
+.upload-btn-wrapper {
+  text-align: center;
 }
 
-.image-preview img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
+.upload-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
-.placeholder{
-padding:20px;
-text-align:center;
-font-size:14px;
-color:#999;
-line-height:1.5;
+/* Text Input */
+.create-group-card input[type="text"] {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 25px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  background: #ffffff;
+  color: #0f172a;
 }
 
-.upload-btn{
-display:block;
-width:200px;
-margin:18px auto;
-padding:12px;
-background:#ff6b1a;
-color:#fff;
-text-align:center;
-font-size:15px;
-font-weight:600;
-border-radius:10px;
-cursor:pointer;
-transition:.3s;
+.create-group-card input[type="text"]::placeholder {
+  color: #94a3b8;
 }
 
-.upload-btn:hover{
-background:#e85b0d;
-transform:translateY(-2px);
+.create-group-card input[type="text"]:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-.create-group-card input[type="text"]{
-width:100%;
-padding:14px 16px;
-margin-top:20px;
-margin-bottom:25px;
-border:2px solid #e6e6e6;
-border-radius:10px;
-outline:none;
-font-size:15px;
-transition:.3s;
-background:#fff;
+/* Submit Button */
+.create-group-card form button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
 }
 
-.create-group-card input[type="text"]:focus{
-border-color:#ff6b1a;
-box-shadow:0 0 0 4px rgba(255,107,26,.12);
+.create-group-card form button[type="submit"]:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
 }
 
-.create-group-card form button{
-width:100%;
-padding:14px;
-background:#ff6b1a;
-border:none;
-border-radius:10px;
-color:#fff;
-font-size:16px;
-cursor:pointer;
-transition:.3s;
-}
-.create-group-card button:hover:not(:disabled){
-background:#e85b0d;
-transform:translateY(-2px);
+.create-group-card form button[type="submit"]:disabled {
+  background: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.create-group-card button:disabled{
-background:#cfcfcf;
-cursor:not-allowed;
-transform:none;
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 768px) {
+  .create-group-page {
+    padding: 20px;
+  }
+
+  .create-group-card {
+    padding: 28px 22px;
+  }
+
+  .image-preview {
+    width: 140px;
+    height: 140px;
+  }
+
+  .create-group-card h1 {
+    font-size: 24px;
+  }
+
+  .icon-btn {
+    width: 38px !important;
+    height: 38px !important;
+    margin-bottom: 16px;
+  }
 }
 
-@media(max-width:768px){
+@media (max-width: 480px) {
+  .create-group-page {
+    padding: 15px;
+  }
 
-.create-group-page{
-padding:20px;
-}
+  .create-group-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
 
-.create-group-card{
-padding:28px 22px;
-}
+  .image-preview {
+    width: 120px;
+    height: 120px;
+  }
 
-.image-preview{
-width:150px;
-height:150px;
-}
+  .create-group-card h1 {
+    font-size: 22px;
+  }
 
-.create-group-card h1{
-font-size:26px;
-}
+  .create-group-card p {
+    font-size: 14px;
+  }
 
-}
-
-@media(max-width:480px){
-
-.create-group-page{
-padding:15px;
-}
-
-.create-group-card{
-padding:20px;
-border-radius:16px;
-}
-
-.image-preview{
-width:120px;
-height:120px;
-}
-
-.create-group-card h1{
-font-size:22px;
-}
-
-.create-group-card p{
-font-size:14px;
-}
-
-.upload-btn{
-width:100%;
-}
-
+  .upload-btn {
+    width: 100%;
+  }
 }

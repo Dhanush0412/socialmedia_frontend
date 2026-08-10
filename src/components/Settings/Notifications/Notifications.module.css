@@ -7,13 +7,14 @@
 
 .contentTitle {
   font-weight: 600 !important;
-  color: #1a1a2e;
+  color: #0f172a;
   margin-bottom: 4px !important;
 }
 
 .contentSubtitle {
   margin-bottom: 24px !important;
   opacity: 0.7;
+  color: #64748b;
 }
 
 .notificationHeader {
@@ -25,7 +26,7 @@
 
 .notificationBadgeIcon {
   font-size: 32px;
-  color: #ff9417;
+  color: #2563eb;
 }
 
 .notificationList {
@@ -37,60 +38,61 @@
   border-radius: 12px !important;
   margin-bottom: 8px !important;
   background: #ffffff;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
   transition: all 0.2s ease;
   cursor: pointer;
+  animation: slideIn 0.3s ease-out;
 }
 
 .notificationItem:hover {
-  background: #f5f5f5;
+  background: #f8fafc;
   transform: translateX(4px);
 }
 
 .unread {
-  background: #fff8f0 !important;
-  border-color: #ff9417 !important;
-  border-left: 4px solid #ff9417 !important;
+  background: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  border-left: 4px solid #2563eb !important;
 }
 
 .unread:hover {
-  background: #fff3e0 !important;
+  background: #dbeafe !important;
 }
 
 .notificationTitle {
   font-weight: 500 !important;
-  color: #1a1a2e !important;
+  color: #0f172a !important;
 }
 
 .notificationMessage {
   margin-bottom: 4px !important;
-  color: #555 !important;
+  color: #334155 !important;
 }
 
 .notificationTime {
-  color: #999 !important;
+  color: #64748b !important;
   font-size: 12px !important;
 }
 
 /* Icons */
 .notificationIcon {
-  color: #ff9417;
+  color: #2563eb;
 }
 
 .likeIcon {
-  color: #ff4757;
+  color: #ef4444;
 }
 
 .commentIcon {
-  color: #2ed573;
+  color: #10b981;
 }
 
 .connectionIcon {
-  color: #1e90ff;
+  color: #2563eb;
 }
 
 .acceptedIcon {
-  color: #2ed573;
+  color: #10b981;
 }
 
 /* Loading State */
@@ -101,7 +103,7 @@
   justify-content: center;
   padding: 60px 0;
   gap: 16px;
-  color: #666;
+  color: #64748b;
 }
 
 /* Empty State */
@@ -112,12 +114,12 @@
   justify-content: center;
   padding: 80px 0;
   gap: 16px;
-  color: #999;
+  color: #94a3b8;
 }
 
 .emptyIcon {
   font-size: 64px !important;
-  color: #ddd !important;
+  color: #cbd5e1 !important;
 }
 
 /* Animations */
@@ -143,10 +145,6 @@
   }
 }
 
-.notificationItem {
-  animation: slideIn 0.3s ease-out;
-}
-
 /* Responsive */
 @media (max-width: 600px) {
   .notificationHeader {
@@ -156,5 +154,67 @@
   
   .notificationItem {
     padding: 10px 12px !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .contentTitle {
+    color: #f8fafc;
+  }
+
+  .contentSubtitle {
+    color: #94a3b8;
+  }
+
+  .notificationBadgeIcon {
+    color: #3b82f6;
+  }
+
+  .notificationItem {
+    background: #0f172a;
+    border-color: #1e293b;
+  }
+
+  .notificationItem:hover {
+    background: #1e293b;
+  }
+
+  .unread {
+    background: rgba(37, 99, 235, 0.15) !important;
+    border-color: #2563eb !important;
+    border-left: 4px solid #3b82f6 !important;
+  }
+
+  .unread:hover {
+    background: rgba(37, 99, 235, 0.25) !important;
+  }
+
+  .notificationTitle {
+    color: #f8fafc !important;
+  }
+
+  .notificationMessage {
+    color: #cbd5e1 !important;
+  }
+
+  .notificationTime {
+    color: #94a3b8 !important;
+  }
+
+  .notificationIcon {
+    color: #3b82f6;
+  }
+
+  .loadingContainer {
+    color: #94a3b8;
+  }
+
+  .emptyState {
+    color: #64748b;
+  }
+
+  .emptyIcon {
+    color: #334155 !important;
   }
 }
