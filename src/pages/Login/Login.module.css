@@ -300,6 +300,10 @@ body{
   font-size:12px;
   text-decoration:none;
 }
+.forgot-row a:hover{
+   color:#1d4ed8;
+  text-decoration:underline;
+}
 .form button{
   height:50px;
   border:none;
@@ -339,6 +343,10 @@ body{
   color:#2563eb;
   font-weight:600;
   text-decoration:none;
+}
+.register-row a:hover{
+ color:#1d4ed8;
+  text-decoration:underline;
 }
 @media(max-width:768px){
   .auth-card{

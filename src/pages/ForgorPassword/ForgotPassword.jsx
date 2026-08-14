@@ -1,5 +1,5 @@
 import styles from "./ForgotPassword.module.css";
-import PandaLogo from "../../assets/Panda.png";
+import PandaLogo from "../../assets/Panda.svg";
 
 import { useState } from "react";
 import axios from "axios";
@@ -22,16 +22,16 @@ function ForgotPassword() {
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
-const [sendingOTP, setSendingOTP] = useState(false);
+  const [sendingOTP, setSendingOTP] = useState(false);
 
   const {
     register,
     handleSubmit,
     watch,
-    formState:{errors},
+    formState: { errors },
   } = useForm({
 
-    resolver:yupResolver(
+    resolver: yupResolver(
       forgotPasswordSchema
     ),
 
@@ -41,72 +41,72 @@ const [sendingOTP, setSendingOTP] = useState(false);
   const login = watch("login");
 
 
-  const {mutate,isPending}=useForgotPassword();
+  const { mutate, isPending } = useForgotPassword();
 
 
 
   const sendOTP = async () => {
-  try {
-    if (!login) {
-      return toast.error("Enter email or phone first");
-    }
-
-    setSendingOTP(true); // <-- Add this
-
-    const response = await axios.post(
-      `${URL}/user/sendforgototp`,
-      {
-        login,
+    try {
+      if (!login) {
+        return toast.error("Enter email or phone first");
       }
-    );
 
-    toast.success(response.data);
-    setOtpSent(true);
+      setSendingOTP(true); // <-- Add this
 
-  } catch (error) {
-    toast.error(
-      error?.response?.data ||
-      "OTP sending failed"
-    );
-  } finally {
-    setSendingOTP(false);
-  }
-};
+      const response = await axios.post(
+        `${URL}/user/sendforgototp`,
+        {
+          login,
+        }
+      );
+
+      toast.success(response.data);
+      setOtpSent(true);
+
+    } catch (error) {
+      toast.error(
+        error?.response?.data ||
+        "OTP sending failed"
+      );
+    } finally {
+      setSendingOTP(false);
+    }
+  };
   const verifyOTP = async () => {
-  try {
+    try {
 
-    if (!otp) {
-      return toast.error("Enter OTP");
-    }
-
-    const response = await axios.post(
-      `${URL}/user/verifyforgototp`,
-      {
-        login,
-        otp,
+      if (!otp) {
+        return toast.error("Enter OTP");
       }
-    );
 
-    setEmailVerified(true);
+      const response = await axios.post(
+        `${URL}/user/verifyforgototp`,
+        {
+          login,
+          otp,
+        }
+      );
 
-    toast.success(
-      response.data.message || "OTP Verified Successfully 🎉"
-    );
+      setEmailVerified(true);
 
-  } catch (error) {
+      toast.success(
+        response.data.message || "OTP Verified Successfully 🎉"
+      );
 
-    setEmailVerified(false);
+    } catch (error) {
 
-    toast.error(
-      error?.response?.data?.message || "Invalid OTP"
-    );
+      setEmailVerified(false);
 
-  }
-};
-  const onSubmit=(data)=>{
+      toast.error(
+        error?.response?.data?.message || "Invalid OTP"
+      );
+
+    }
+  };
+  const onSubmit = (data) => {
 
 
-    if(!emailVerified){
+    if (!emailVerified) {
 
       return toast.error(
         "Please verify OTP first"
@@ -117,14 +117,14 @@ const [sendingOTP, setSendingOTP] = useState(false);
 
     mutate(
       {
-        login:data.login,
-        password:data.password,
-        confirmPassword:data.confirmPassword
+        login: data.login,
+        password: data.password,
+        confirmPassword: data.confirmPassword
       },
 
       {
 
-        onSuccess:()=>{
+        onSuccess: () => {
 
           toast.success(
             "Password Updated Successfully 🎉"
@@ -135,7 +135,7 @@ const [sendingOTP, setSendingOTP] = useState(false);
         },
 
 
-        onError:(error)=>{
+        onError: (error) => {
 
           toast.error(
             error?.response?.data ||
@@ -209,7 +209,7 @@ const [sendingOTP, setSendingOTP] = useState(false);
               to chatting with your friends.
 
             </p>
-                        <div className={styles["forgot-steps"]}>
+            <div className={styles["forgot-steps"]}>
               <div>
                 <span className={styles["step-num"]}>
                   1
@@ -233,7 +233,7 @@ const [sendingOTP, setSendingOTP] = useState(false);
         </div>
         {/* RIGHT SECTION */}
         <div className={styles["forgot-right"]}>
-          <div className={styles["forgot-right-bg"]}/>
+          <div className={styles["forgot-right-bg"]} />
           <div className={styles["brand-top"]}>
             <div className={styles["brand-icon"]}>
               <img
@@ -257,7 +257,7 @@ const [sendingOTP, setSendingOTP] = useState(false);
             <div className={styles["panda-bubble"]}>
               <p>
                 Forgot your password? 🐾
-                <br/>
+                <br />
                 No worries! Let's get you back in{" "}
                 <strong>quickly</strong>.
               </p>
@@ -273,65 +273,65 @@ const [sendingOTP, setSendingOTP] = useState(false);
             className={styles["forgot-form"]}
             onSubmit={handleSubmit(onSubmit)}
           >
-            
-            
-              
-              <div className={styles["email-row"]}>
 
-  <input
-    placeholder="Email or Phone"
-    {...register("login")}
-  />
 
-  {!emailVerified && ( 
-    <button
-  type="button"
-  className={styles["otp-button"]}
-  onClick={sendOTP}
-  disabled={otpSent || sendingOTP}
->
-  {sendingOTP ? (
-    <CircularProgress
-      size={18}
-      thickness={5}
-      sx={{ color: "#fff" }}
-    />
-  ) : otpSent ? (
-    "OTP Sent"
-  ) : (
-    "Send OTP"
-  )}
-</button>
 
-  )}
-</div>
+            <div className={styles["email-row"]}>
 
-<p className={styles["forgot-error"]}>
-  {errors.login?.message}
-</p>
+              <input
+                placeholder="Email or Phone"
+                {...register("login")}
+              />
 
-{otpSent && !emailVerified && (
-  <div className={styles["verify-section"]}>
+              {!emailVerified && (
+                <button
+                  type="button"
+                  className={styles["otp-button"]}
+                  onClick={sendOTP}
+                  disabled={otpSent || sendingOTP}
+                >
+                  {sendingOTP ? (
+                    <CircularProgress
+                      size={18}
+                      thickness={5}
+                      sx={{ color: "#fff" }}
+                    />
+                  ) : otpSent ? (
+                    "OTP Sent"
+                  ) : (
+                    "Send OTP"
+                  )}
+                </button>
 
-    <input
-      type="text"
-      placeholder="Enter OTP"
-      value={otp}
-      onChange={(e) => setOtp(e.target.value)}
-    />
+              )}
+            </div>
 
-    <button
-      type="button"
-      className={styles["verify-button"]}
-      onClick={verifyOTP}
-    >
-      Verify OTP
-    </button>
+            <p className={styles["forgot-error"]}>
+              {errors.login?.message}
+            </p>
 
-  </div>
-)}
+            {otpSent && !emailVerified && (
+              <div className={styles["verify-section"]}>
 
-                        <input
+                <input
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+
+                <button
+                  type="button"
+                  className={styles["verify-button"]}
+                  onClick={verifyOTP}
+                >
+                  Verify OTP
+                </button>
+
+              </div>
+            )}
+
+            <input
               type="password"
               disabled={!emailVerified}
               placeholder="New Password"
