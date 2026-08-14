@@ -1,4 +1,5 @@
 import styles from "./Register.module.css";
+import PandaLogo from "../../assets/Panda.svg";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -33,28 +34,28 @@ function Register() {
   const { mutate, isPending } = useRegister();
 
   const sendOTP = async () => {
-  try {
-    if (!email) {
-      return toast.error("Enter email first");
+    try {
+      if (!email) {
+        return toast.error("Enter email first");
+      }
+
+      setSendingOTP(true);
+
+      const response = await axios.post(
+        `${URL}/user/sentotp`,
+        { email }
+      );
+
+      toast.success(response.data);
+      setOtpSent(true);
+    } catch (error) {
+      toast.error(
+        error?.response?.data || "OTP sending failed"
+      );
+    } finally {
+      setSendingOTP(false);
     }
-
-    setSendingOTP(true);
-
-    const response = await axios.post(
-      `${URL}/user/sentotp`,
-      { email }
-    );
-
-    toast.success(response.data);
-    setOtpSent(true);
-  } catch (error) {
-    toast.error(
-      error?.response?.data || "OTP sending failed"
-    );
-  } finally {
-    setSendingOTP(false);
-  }
-};
+  };
 
   const verifyOTP = async () => {
     try {
@@ -91,7 +92,8 @@ function Register() {
       );
     }
   };
-    const onSubmit = (data) => {
+
+  const onSubmit = (data) => {
     if (!emailVerified) {
       return toast.error(
         "Please verify your email first"
@@ -144,7 +146,11 @@ function Register() {
             <div className={styles.brandTop}>
 
               <div className={styles.brandImage}>
-                💬
+                <img 
+                  src={PandaLogo} 
+                  alt="Panda Logo" 
+                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                />
               </div>
 
               <h3>
@@ -214,32 +220,54 @@ function Register() {
 
         {/* RIGHT SIDE */}
 
-        <div
-          className={styles.registerFormSection}
-        >
+        <div className={styles.registerFormSection}>
 
-          <h2>Create Account</h2>
+          {/* BRAND LOGO & TITLE HEADER */}
+          <div className={styles.brandTopRight}>
+            <div className={styles.brandIconRight}>
+              <img
+                src={PandaLogo}
+                alt="Panda Logo"
+                className={styles.pandaLogoRight}
+              />
+            </div>
 
-          <p className={styles.subtitle}>
-            Enter your details to start
-            chatting
-          </p>
+            <div className={styles.brandContentRight}>
+              <h3 className={styles.brandTitleRight}>
+                Panda<span>Chat</span>
+              </h3>
+              <p className={styles.brandSubtitleRight}>
+                Smart messaging companion
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.headerBlock}>
+            <div className={styles.welcomeBadge}>
+              <span className={styles.badgeDot}></span>
+              Get Started
+            </div>
+            <h2>Create an Account</h2>
+            <p className={styles.subtitle}>
+              Fill in your details below to start chatting with your friends
+            </p>
+          </div>
 
           <form
             className={styles.registerForm}
             onSubmit={handleSubmit(onSubmit)}
           >
             <div className={styles.formGroup}>
-  <input
-    type="text"
-    placeholder="Username"
-    {...register("username")}
-  />
+              <input
+                type="text"
+                placeholder="Username"
+                {...register("username")}
+              />
 
-  <p className={styles.error}>
-    {errors.username?.message}
-  </p>
-</div>
+              <p className={styles.error}>
+                {errors.username?.message}
+              </p>
+            </div>
 
             <div className={styles.emailRow}>
 
@@ -251,23 +279,23 @@ function Register() {
 
               {!emailVerified && (
                 <button
-  type="button"
-  className={styles.otpButton}
-  onClick={sendOTP}
-  disabled={otpSent || sendingOTP}
->
-  {sendingOTP ? (
-    <CircularProgress
-      size={18}
-      thickness={5}
-      sx={{ color: "#fff" }}
-    />
-  ) : otpSent ? (
-    "OTP Sent"
-  ) : (
-    "Send OTP"
-  )}
-</button>
+                  type="button"
+                  className={styles.otpButton}
+                  onClick={sendOTP}
+                  disabled={otpSent || sendingOTP}
+                >
+                  {sendingOTP ? (
+                    <CircularProgress
+                      size={18}
+                      thickness={5}
+                      sx={{ color: "#fff" }}
+                    />
+                  ) : otpSent ? (
+                    "OTP Sent"
+                  ) : (
+                    "Send OTP"
+                  )}
+                </button>
               )}
 
             </div>
@@ -354,7 +382,7 @@ function Register() {
               </Link>
 
             </div>
-                      </form>
+          </form>
 
         </div>
 

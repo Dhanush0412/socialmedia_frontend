@@ -1,5 +1,5 @@
 import styles from "./login.module.css";
-import PandaLogo from "../../assets/Panda.png";
+import PandaLogo from "../../assets/Panda.svg";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../validation/loginSchema";

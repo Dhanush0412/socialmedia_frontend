@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCreateProfile } from "../../hooks/useProfile";
-import PandaLogo from "../../assets/Panda1.png";
+import PandaLogo from "../../assets/Panda.svg";
 
 import {
   Box,
