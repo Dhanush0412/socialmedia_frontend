@@ -33,13 +33,13 @@ font-size:15px;
 font-weight:600;
 cursor:pointer;
 transition:.3s;
-box-shadow:0 8px 18px rgba(255,107,26,.28);
+box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
 }
 
 .create-group-btn:hover{
 background: #1d4ed8;
 transform:translateY(-2px);
-box-shadow:0 12px 24px rgba(255,107,26,.35);
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.35);
 }
 
 .create-group-btn:active{

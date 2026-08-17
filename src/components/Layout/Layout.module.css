@@ -1,31 +1,33 @@
 .layout {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
-  background: #fff8f0;
+  min-height: 100vh;
+  background: #f6f8fc;
 }
 
 .mainContent {
   flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+
   margin-left: 260px;
-  height: 100vh;
   padding: 16px 20px;
-  background: linear-gradient(135deg, #fff8f0, #fff3e6);
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  background: #f6f8fc;
+
   overflow-y: auto;
   overflow-x: hidden;
-  box-sizing: border-box;
+
+  transition: margin-left 0.3s ease;
 }
 
 .contentExpanded {
   margin-left: 72px;
 }
 
-/* Tablet & Mobile */
 @media (max-width: 768px) {
   .mainContent {
     margin-left: 72px;
-    padding: 16px;
+    padding: 12px;
   }
 
   .mobileContent {
