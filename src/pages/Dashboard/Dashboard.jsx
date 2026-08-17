@@ -3,7 +3,7 @@ import { FaUsers, FaUserFriends, FaNewspaper, FaArrowRight, FaShieldAlt, FaKey, 
 import { useDashboard } from "../../hooks/useDashboard";
 import { useNotifications } from "../../hooks/useSettings";
 import { useNavigate } from "react-router-dom";
-import pandaLoading from "../../assets/Panda1.png";
+import pandaLoading from "../../assets/pandalogo.svg";
 import Layout from "../../components/Layout/Layout.jsx";
 import Notifications from "../../components/Settings/Notifications/Notifications";
 import Badge from "@mui/material/Badge";

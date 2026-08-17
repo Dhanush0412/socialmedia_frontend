@@ -1,10 +1,9 @@
-
 .container {
   width: 100%;
-  max-width: 700px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 16px;
-  height: calc(100vh - 64px);
+  padding: 24px 16px;
+  min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,9 +19,6 @@
   box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06) !important;
   position: relative;
   overflow: hidden;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .card::before {
@@ -38,22 +34,17 @@
 }
 
 @keyframes gradientMove {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
   border-bottom: 1px solid #e2e8f0;
-  flex-shrink: 0;
 }
 
 .headerLeft {
@@ -81,6 +72,25 @@
   font-size: 0.7rem !important;
 }
 
+/* Two-column composer layout */
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.mediaColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsColumn {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .uploadArea {
   border: 2px dashed #cbd5e1;
   border-radius: 16px;
@@ -88,12 +98,11 @@
   text-align: center;
   transition: all 0.3s ease;
   background: #f8fafc;
-  min-height: 180px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
 .uploadArea:hover {
@@ -178,7 +187,9 @@
   overflow: hidden;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .previewHeader {
@@ -211,7 +222,8 @@
 .previewWrapper {
   position: relative;
   background: #000;
-  min-height: 120px;
+  flex: 1;
+  min-height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -219,7 +231,7 @@
 
 .previewMedia {
   width: 100%;
-  max-height: 180px;
+  max-height: 320px;
   object-fit: contain;
 }
 
@@ -249,8 +261,7 @@
 }
 
 .captionSection {
-  margin: 12px 0;
-  flex-shrink: 0;
+  margin-bottom: 12px;
 }
 
 .captionHeader {
@@ -278,12 +289,10 @@
 
 .captionTextArea textarea {
   font-size: 0.85rem !important;
-  line-height: 1.4 !important;
+  line-height: 1.5 !important;
   padding: 10px !important;
   border-radius: 12px !important;
   background: #f8fafc !important;
-  min-height: 40px !important;
-  max-height: 60px !important;
 }
 
 .captionTextArea textarea:focus {
@@ -306,7 +315,7 @@
 
 .captionActions {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding: 2px;
 }
 
@@ -322,14 +331,13 @@
 }
 
 .progressSection {
-  margin: 8px 0;
+  margin-bottom: 12px;
   padding: 8px 12px;
   background: #f1f5f9;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  flex-shrink: 0;
 }
 
 .progressBar {
@@ -350,39 +358,8 @@
   font-size: 0.7rem !important;
 }
 
-.actionButtons {
-  display: flex;
-  gap: 10px;
-  margin: 12px 0 8px 0;
-  flex-shrink: 0;
-}
-
-.postButton {
-  flex: 1 !important;
-  padding: 10px !important;
-  border-radius: 12px !important;
-  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
-  text-transform: none !important;
-  font-size: 0.9rem !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25) !important;
-}
-
-.postButton:hover:not(:disabled) {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35) !important;
-}
-
-.postButton:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-}
-
 .tipsSection {
-  margin-top: 4px;
-  flex-shrink: 0;
+  margin-bottom: 12px;
 }
 
 .tipsAlert {
@@ -403,15 +380,49 @@
   font-size: 0.7rem !important;
 }
 
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.postButton {
+  flex: 1 !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  font-size: 0.9rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25) !important;
+}
+
+.postButton:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 24px rgba(37, 99, 235, 0.35) !important;
+}
+
+.postButton:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 12px;
-    height: calc(100vh - 56px);
+    min-height: calc(100vh - 56px);
   }
 
   .card {
     padding: 16px !important;
     border-radius: 16px !important;
+  }
+
+  .layoutGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .headerTitle {
@@ -424,8 +435,16 @@
   }
 
   .uploadArea {
-    min-height: 140px;
+    min-height: 180px;
     padding: 16px;
+  }
+
+  .previewWrapper {
+    min-height: 160px;
+  }
+
+  .previewMedia {
+    max-height: 200px;
   }
 
   .iconWrapper {
@@ -442,23 +461,16 @@
   }
 
   .uploadBadges {
-    flex-direction: row;
     gap: 4px;
-  }
-
-  .previewMedia {
-    max-height: 150px;
   }
 
   .captionTextArea textarea {
     font-size: 0.8rem !important;
     padding: 8px !important;
-    min-height: 36px !important;
-    max-height: 50px !important;
   }
 
   .postButton {
-    padding: 8px !important;
+    padding: 10px !important;
     font-size: 0.85rem !important;
   }
 }
@@ -466,7 +478,6 @@
 @media (max-width: 480px) {
   .container {
     padding: 8px;
-    height: calc(100vh - 48px);
   }
 
   .card {
@@ -475,8 +486,8 @@
   }
 
   .header {
-    margin-bottom: 10px;
-    padding-bottom: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
   }
 
   .headerLeft {
@@ -497,7 +508,7 @@
   }
 
   .uploadArea {
-    min-height: 120px;
+    min-height: 150px;
     padding: 12px;
     border-radius: 12px;
   }
@@ -530,7 +541,7 @@
   }
 
   .previewMedia {
-    max-height: 120px;
+    max-height: 150px;
   }
 
   .previewContainer {
@@ -545,31 +556,20 @@
     padding: 4px 10px;
   }
 
-  .captionSection {
-    margin: 8px 0;
-  }
-
   .captionTextArea textarea {
     font-size: 0.75rem !important;
     padding: 6px !important;
-    min-height: 32px !important;
-    max-height: 40px !important;
     border-radius: 8px !important;
   }
 
   .actionButtons {
     gap: 8px;
-    margin: 8px 0 6px 0;
   }
 
   .postButton {
     padding: 8px !important;
     font-size: 0.8rem !important;
     border-radius: 10px !important;
-  }
-
-  .tipsSection {
-    margin-top: 2px;
   }
 
   .tipsAlert {
@@ -715,4 +715,3 @@
     background: rgba(59, 130, 246, 0.12) !important;
   }
 }
-

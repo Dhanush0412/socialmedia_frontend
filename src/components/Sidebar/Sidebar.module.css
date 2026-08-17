@@ -210,9 +210,9 @@
 }
 
 .settingsContainer::before {
-  content: "ACCOUNT";
+  content: "ACCOUNT INFO";
   padding: 0 10px 5px;
-  color: #94a3b8;
+  color: #5e94e0;
   font-size: 8px;
   font-weight: 800;
   letter-spacing: 0.14em;
