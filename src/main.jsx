@@ -23,6 +23,14 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 
+ 
+import { registerSW } from "virtual:pwa-register";
+ 
+registerSW({
+  immediate: true,
+});
+ 
+
 const queryClient = new QueryClient();
 
 let isLoggingOut = false;
